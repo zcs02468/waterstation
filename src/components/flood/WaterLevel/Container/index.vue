@@ -1,11 +1,7 @@
 <!--  -->
 <template>
-    <div class="box">
-        <div class="container" ref="container">
-            <canvas ref="canvas"></canvas>
-            <div class="text" :class="type">{{ percentage }}</div>
-        </div>
-        <div class="btn" :class="type">{{ btnText }}</div>
+    <div class="box" ref="container">
+        <canvas ref="canvas"></canvas>
     </div>
 </template>
 
@@ -13,23 +9,7 @@
 import Retina from "../../../common/wave/retina";
 import Wave from "../../../common/wave/wave";
 export default {
-    name: "Container",
-
-    props: {
-        percentage: {
-            type: String,
-            default: "90%",
-        },
-        btnText: {
-            type: String,
-            default: "东区",
-        },
-        type: {
-            type: String,
-            default: "east",
-        },
-    },
-
+    name: "canvas-container",
     data() {
         return {};
     },
@@ -52,7 +32,7 @@ export default {
             let fontSize = document.querySelector("html").style.fontSize;
             fontSize = fontSize.substring(0, fontSize.length - 2);
             let num = Math.round((Number(fontSize) / 80) * 100) / 100;
-            this.radius = 15 * num;
+            this.radius = 14 * num;
             setTimeout(() => {
                 this.drawStart();
             });
@@ -60,13 +40,15 @@ export default {
         drawStart() {
             let wave1Color, //前面波浪颜色
                 wave2Color; //后面波浪颜色
-            if (this.type == "west") {
-                wave1Color = "#BFE2AC";
-                wave2Color = "#8DAF96";
-            } else {
-                wave1Color = "#A1D1E7";
-                wave2Color = "#77a2bf";
-            }
+            // if (this.type == "west") {
+            //     wave1Color = "#BFE2AC";
+            //     wave2Color = "#8DAF96";
+            // } else {
+            //     wave1Color = "#A1D1E7";
+            //     wave2Color = "#77a2bf";
+            // }
+            wave1Color = "#68C8FF";
+            wave2Color = "#38A1DE";
             const canvas = this.$refs.canvas;
             canvas.height = Number(this.canvasHeight);
             canvas.width = Number(this.canvasWidth);
@@ -76,7 +58,7 @@ export default {
             Retina.run(canvas);
             this.nowRange = 0;
             //水位
-            this.rangeValue = 30;
+            this.rangeValue = 22;
             this.wave1 = new Wave({
                 canvasWidth: this.canvasWidth, // 轴长
                 canvasHeight: this.canvasHeight, // 轴高
@@ -172,48 +154,16 @@ export default {
 </script>
 <style lang="scss" scoped>
 .box {
-    width: 200px;
-    height: 154px;
-    margin: 0 20px;
-}
-.container {
-    width: 200px;
-    height: 108px;
-    background: #02214f;
-    border-bottom-left-radius: 15px;
-    border-bottom-right-radius: 15px;
+    width: 202.5px;
+    height: 105.5px;
+    border-bottom-left-radius: 14px;
+    border-bottom-right-radius: 14px;
     overflow: hidden;
-    position: relative;
-    .text {
-        font-size: 18px;
-        position: absolute;
-        top: 18px;
+    border:2px solid #2B3954;
+    border-top: none;
+    canvas {
         width: 100%;
-        text-align: center;
-    }
-    .east {
-        color: #baecff;
-    }
-    .west {
-        color: #ddffba;
-    }
-}
-.btn {
-    width: 100%;
-    height: 32px;
-    font-size: 16px;
-    text-align: center;
-    margin-top: 12px;
-    line-height: 32px;
-    &.east {
-        border: 1px solid #397bb4;
-        color: #baecff;
-        background: #142955;
-    }
-    &.west {
-        border: 1px solid #89a88f;
-        color: #ddffba;
-        background: #2a4053;
+        height: 100%;
     }
 }
 </style>
