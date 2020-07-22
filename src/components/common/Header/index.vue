@@ -1,6 +1,7 @@
 <!--  -->
 <template>
   <div class="header-box">
+      <!-- <div class="header-back">智慧水站防汛检测</div> -->
       <div class="header-back"></div>
   </div>
 </template>
@@ -32,8 +33,12 @@ export default {
         left: 0;
         height: 70px;
         width: 100%;
-        background: url("../../../assets/image/text.jpg");
+        background: url("../../../assets/image/title.jpg");
         background-size: 100% 100%;
+        color: #fff;
+        font-size: 35px;
+        line-height: 70px;
+        text-align: center;
     }
 }
 </style>

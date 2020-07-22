@@ -4,18 +4,18 @@
             <Header />
             <div class="main-box">
                 <div class="colum">
-                    <Broadcast />
+                    <!-- <Broadcast />
                     <DetectionRate />
                     <WaterSupply />
-                    <Effluent />
+                    <Effluent /> -->
                 </div>
                 <div class="colum center">
-                    <WaterLevel />
-                    <RoadworkInfo />
+                    <!-- <WaterLevel />
+                    <RoadworkInfo /> -->
                 </div>
                 <div class="colum">
-                    <WaterConsumption />
-                    <Pressure />
+                    <!-- <WaterConsumption />
+                    <Pressure /> -->
                 </div>
             </div>
         </div>
@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import Header from "../components/home/Header";
+import Header from "../components/common/Header";
 
 import Broadcast from "../components/home/Broadcast";
 import WaterSupply from "../components/home/WaterSupply";
