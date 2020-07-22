@@ -5,10 +5,10 @@
             <Time />
             <div class="main-box">
                 <div class="colum">
-                    <OnDuty />
+                    <!-- <OnDuty />
                     <Weather />
                     <Rainfall />
-                    <Hydrops />
+                    <Hydrops /> -->
                 </div>
                 <div class="colum center">
                     <Map />

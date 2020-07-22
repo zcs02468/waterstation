@@ -5,13 +5,13 @@ const postcss = px2rem({
 });
 module.exports = {
     productionSourceMap: false,
-    css: {
-        loaderOptions: {
-            postcss: {
-                plugins: [postcss],
-            },
-        },
-    },
+    // css: {
+    //     loaderOptions: {
+    //         postcss: {
+    //             plugins: [postcss],
+    //         },
+    //     },
+    // },
     lintOnSave: false, // 取消 eslint 验证
     configureWebpack: (config) => {
         // if (isProd) {

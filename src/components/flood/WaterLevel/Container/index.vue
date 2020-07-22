@@ -154,8 +154,8 @@ export default {
 </script>
 <style lang="scss" scoped>
 .box {
-    width: 202.5px;
-    height: 105.5px;
+    width: 100%;
+    height: 100%;
     border-bottom-left-radius: 14px;
     border-bottom-right-radius: 14px;
     overflow: hidden;
