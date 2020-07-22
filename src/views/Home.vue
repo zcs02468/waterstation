@@ -1,9 +1,3 @@
-<!--
- 描述: 酷屏首页模板
- 作者: Jack Chen
- 日期: 2020-04-29
--->
-
 <template>
     <div class="home-container">
         <div class="wrap" ref="editor">
