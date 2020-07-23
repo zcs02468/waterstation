@@ -16,11 +16,11 @@ export default {
 
     mounted() {
         this.drawInit();
-    //     window.addEventListener("resize", () => {
-    //         this.wave1 = null;
-    //         this.wave2 = null;
-    //         this.drawInit();
-    //     });
+        window.addEventListener("resize", () => {
+            this.wave1 = null;
+            this.wave2 = null;
+            this.drawInit();
+        });
     },
 
     components: {},
@@ -34,10 +34,15 @@ export default {
             let num = Math.round((Number(fontSize) / 80) * 100) / 100;
             this.radius = 14 * num;
             setTimeout(() => {
-                this.drawStart();
+                try {
+                    this.drawStart();
+                } catch (error) {
+                    console.log(error,'qqqqqqqq');
+                }
             });
         },
         drawStart() {
+            console.log("222222222");
             let wave1Color, //前面波浪颜色
                 wave2Color; //后面波浪颜色
             // if (this.type == "west") {
@@ -159,7 +164,7 @@ export default {
     border-bottom-left-radius: 14px;
     border-bottom-right-radius: 14px;
     overflow: hidden;
-    border:2px solid #2B3954;
+    border: 2px solid #2b3954;
     border-top: none;
     canvas {
         width: 100%;

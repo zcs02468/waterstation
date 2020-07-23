@@ -64,7 +64,8 @@ export default {
                 canvasHeight: this.canvasHeight, // 轴高
                 // waveWidth: 0.055, // 波浪宽度,数越小越宽
                 // waveHeight: 4, // 波浪高度,数越大越高
-                waveWidth: 0.018, // 波浪宽度,数越小越宽
+                // waveWidth: 0.018, // 波浪宽度,数越小越宽
+                waveWidth: 0.018, // 波浪宽度,数越小越宽0.3 6
                 waveHeight: 12, // 波浪高度,数越大越高
                 // colors: ["#F39C6B", "#A0563B"], // 波浪颜色
                 colors: [wave1Color], // 波浪颜色
@@ -74,7 +75,8 @@ export default {
             this.wave2 = new Wave({
                 canvasWidth: this.canvasWidth, // 轴长
                 canvasHeight: this.canvasHeight, // 轴高
-                waveWidth: 0.013, // 波浪宽度,数越小越宽
+                // waveWidth: 0.013, // 波浪宽度,数越小越宽
+                waveWidth: 0.013, // 波浪宽度,数越小越宽0.3 12
                 waveHeight: 6, // 波浪高度,数越大越高
                 // colors: ["rgba(243, 156, 107, 0.48)", "rgba(160, 86, 59, 0.48)"], // 波浪颜色
                 colors: [wave2Color], // 波浪颜色
