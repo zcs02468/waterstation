@@ -12,19 +12,25 @@ module.exports = {
     //         },
     //     },
     // },
+
     lintOnSave: false, // 取消 eslint 验证
-    configureWebpack: (config) => {
-        // if (isProd) {
-        // 配置webpack 压缩
-        config.plugins.push(
-            new CompressionWebpackPlugin({
-                test: /\.js$|\.html$|\.css$/,
-                // 超过4kb压缩
-                threshold: 4096,
-            })
-        );
-        // }
+    configureWebpack: {
+        externals: {
+            BMap: "BMap",
+        },
     },
+    // configureWebpack: (config) => {
+    //     // if (isProd) {
+    //     // 配置webpack 压缩
+    //     config.plugins.push(
+    //         new CompressionWebpackPlugin({
+    //             test: /\.js$|\.html$|\.css$/,
+    //             // 超过4kb压缩
+    //             threshold: 4096,
+    //         })
+    //     );
+    //     // }
+    // },
     // 压缩图片
     chainWebpack: (config) => {
         config.module
@@ -33,5 +39,8 @@ module.exports = {
             .loader("image-webpack-loader")
             .options({ bypassOnDebug: true })
             .end();
+    },
+    devServer: {
+        disableHostCheck: true,
     },
 };

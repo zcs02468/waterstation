@@ -32,6 +32,7 @@ export default {
     height: 47.5px;
     align-items: center;
     padding-left: 21px;
+    margin-top: 23px;
 }
 .left-container-angle::before {
     display: none !important;

@@ -87,6 +87,7 @@ export default {
     width: 540px;
     height: 607px;
     position: relative;
+    margin-top: 23px;
 }
 .panel-header {
     padding: 21px 0 0 22.5px;

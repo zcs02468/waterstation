@@ -1,26 +1,32 @@
 <!--  -->
 <template>
-  <div class="header-box">
-      <!-- <div class="header-back">智慧水站防汛检测</div> -->
-      <div class="header-back"></div>
-  </div>
+    <div class="header-box">
+        <!-- <div class="header-back">智慧水站防汛检测</div> -->
+        <div class="header-back">{{title}}</div>
+    </div>
 </template>
 
 <script>
 export default {
- name: "Header",
-  data () {
-    return {
-    };
-  },
+    name: "Header",
 
-  components: {},
+    props: {
+        title: {
+            type: String,
+            default: "",
+        },
+    },
 
-  methods: {},
+    data() {
+        return {};
+    },
 
-  computed: {},
-}
+    components: {},
 
+    methods: {},
+
+    computed: {},
+};
 </script>
 <style lang="scss" scoped>
 .header-box {

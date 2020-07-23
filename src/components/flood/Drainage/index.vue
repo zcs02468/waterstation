@@ -37,13 +37,16 @@
 </template>
 
 <script>
+import Title from "../../common/Title"
 export default {
     name: "Drainage",
     data() {
         return {};
     },
 
-    components: {},
+    components: {
+        Title
+    },
 
     methods: {},
 
@@ -60,12 +63,41 @@ export default {
 .panel-header {
     padding: 21.5px 0 0 22.5px;
 }
+%ul-line {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 1px;
+    background: #5075A6;
+    top: 0;
+}
 ul{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    width: 498px;
+    position: relative;
+    padding-left: 21px;
+    margin-top: 15px;
+    &::before{
+        @extend %ul-line;
+        left: 166px;
+    }
+    &::after{
+        @extend %ul-line;
+        right: 166px;
+    }
     li {
+        width: 100%;
+        height: 34px;
         display: flex;
+        // align-items: center;
+        margin-bottom: 15px;
+        border: 1px solid #57BDFF;
+        div{
+            width: 166px;
+            height: 34px;
+            font-size: 16px;
+            line-height: 34px;
+            text-align: center;
+        }
     }
 }
 </style>
