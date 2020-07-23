@@ -2,7 +2,7 @@
     <div class="home-container">
         <div class="wrap" ref="editor">
             <div class="main-head">
-                <Header title="智慧水站防汛检测"/>
+                <Header title="智慧水站防汛检测" />
                 <div class="info">
                     <Time />
                     <Phone />
@@ -13,9 +13,9 @@
                 <div class="colum">
                     <OnDuty />
                     <Weather />
-                    <Rainfall />
-                    <Hydrops />
-                    <!-- <WaterQuality /> -->
+                    <Rainfall v-show="!show" />
+                    <Hydrops v-show="!show" />
+                    <WaterQuality v-show="show" />
                 </div>
                 <div class="colum center">
                     <Map />
@@ -70,10 +70,16 @@ export default {
         Drainage,
     },
     data() {
-        return {};
+        return {
+            show: false,
+        };
     },
     computed: {},
-    created() {},
+    created() {
+        if (window.location.hash == '#111') {
+            this.show = true;
+        }
+    },
     mounted() {},
     methods: {},
 };

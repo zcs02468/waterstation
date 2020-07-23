@@ -44,14 +44,14 @@
                     <div class="left">ORP<br/>(mv)</div>
                     <div class="right">
                         <div class="target">标准：>9.10</div>
-                        <div class="now">当前：100.78</div>
+                        <div class="now select">当前：100.78</div>
                     </div>
                 </div>
                 <div class="block">
                     <div class="left">UVAS浓度<br/>(mg/L)</div>
                     <div class="right">
                         <div class="target">标准：>9.10</div>
-                        <div class="now">当前：8.10</div>
+                        <div class="now select">当前：8.10</div>
                     </div>
                 </div>
                 <div class="block">
@@ -97,6 +97,9 @@ export default {
     margin-top: 17px;
     display: flex;
     justify-content: center;
+}
+.select{
+    color: #F54336;
 }
 .content {
     width: 491px;

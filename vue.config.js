@@ -14,11 +14,11 @@ module.exports = {
     // },
 
     lintOnSave: false, // 取消 eslint 验证
-    configureWebpack: {
-        externals: {
-            BMap: "BMap",
-        },
-    },
+    // configureWebpack: {
+    //     externals: {
+    //         BMap: "BMap",
+    //     },
+    // },
     // configureWebpack: (config) => {
     //     // if (isProd) {
     //     // 配置webpack 压缩
@@ -31,15 +31,15 @@ module.exports = {
     //     );
     //     // }
     // },
-    // 压缩图片
-    chainWebpack: (config) => {
-        config.module
-            .rule("images")
-            .use("image-webpack-loader")
-            .loader("image-webpack-loader")
-            .options({ bypassOnDebug: true })
-            .end();
-    },
+    // // 压缩图片
+    // chainWebpack: (config) => {
+    //     config.module
+    //         .rule("images")
+    //         .use("image-webpack-loader")
+    //         .loader("image-webpack-loader")
+    //         .options({ bypassOnDebug: true })
+    //         .end();
+    // },
     devServer: {
         disableHostCheck: true,
     },

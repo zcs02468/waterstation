@@ -42,7 +42,7 @@
                         <span class="iconfont iconbolangn1"></span><span class="text">调节水池</span>
                     </div>
                     <div class="left-content">
-                        <Container />
+                        <Container waveType="small"/>
                     </div>
                 </div>
                 <div class="box-right adjust">

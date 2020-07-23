@@ -4,18 +4,18 @@
             <Header />
             <div class="main-box">
                 <div class="colum">
-                    <!-- <Broadcast />
+                    <Broadcast />
                     <DetectionRate />
                     <WaterSupply />
-                    <Effluent /> -->
+                    <Effluent />
                 </div>
                 <div class="colum center">
-                    <!-- <WaterLevel />
-                    <RoadworkInfo /> -->
+                    <WaterLevel />
+                    <RoadworkInfo />
                 </div>
                 <div class="colum">
-                    <!-- <WaterConsumption />
-                    <Pressure /> -->
+                    <WaterConsumption />
+                    <Pressure />
                 </div>
             </div>
         </div>

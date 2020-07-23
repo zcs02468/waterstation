@@ -10,6 +10,14 @@ import Retina from "../../../common/wave/retina";
 import Wave from "../../../common/wave/wave";
 export default {
     name: "canvas-container",
+
+    props:{
+        waveType:{
+            type:String,
+            default:"big"
+        }
+    },
+
     data() {
         return {};
     },
@@ -40,13 +48,6 @@ export default {
         drawStart() {
             let wave1Color, //前面波浪颜色
                 wave2Color; //后面波浪颜色
-            // if (this.type == "west") {
-            //     wave1Color = "#BFE2AC";
-            //     wave2Color = "#8DAF96";
-            // } else {
-            //     wave1Color = "#A1D1E7";
-            //     wave2Color = "#77a2bf";
-            // }
             wave1Color = "#68C8FF";
             wave2Color = "#38A1DE";
             const canvas = this.$refs.canvas;
@@ -62,11 +63,10 @@ export default {
             this.wave1 = new Wave({
                 canvasWidth: this.canvasWidth, // 轴长
                 canvasHeight: this.canvasHeight, // 轴高
-                // waveWidth: 0.055, // 波浪宽度,数越小越宽
-                // waveHeight: 4, // 波浪高度,数越大越高
-                // waveWidth: 0.018, // 波浪宽度,数越小越宽
-                waveWidth: 0.018, // 波浪宽度,数越小越宽0.3 6
-                waveHeight: 12, // 波浪高度,数越大越高
+                waveWidth: this.waveType == "small" ? 0.3 : 0.018, // 波浪宽度,数越小越宽
+                waveHeight: this.waveType == "small" ? 6 : 12, // 波浪高度,数越大越高
+                // waveWidth: 0.018, // 波浪宽度,数越小越宽0.3 6
+                // waveHeight: 12, // 波浪高度,数越大越高
                 // colors: ["#F39C6B", "#A0563B"], // 波浪颜色
                 colors: [wave1Color], // 波浪颜色
                 xOffset: 0, // 初始偏移
@@ -75,13 +75,15 @@ export default {
             this.wave2 = new Wave({
                 canvasWidth: this.canvasWidth, // 轴长
                 canvasHeight: this.canvasHeight, // 轴高
-                // waveWidth: 0.013, // 波浪宽度,数越小越宽
-                waveWidth: 0.013, // 波浪宽度,数越小越宽0.3 12
-                waveHeight: 6, // 波浪高度,数越大越高
+                waveWidth: this.waveType == "small" ? 0.3 : 0.013, // 波浪宽度,数越小越宽
+                waveHeight: this.waveType == "small" ? 6 : 6, // 波浪高度,数越大越高
+                // waveWidth: 0.013, // 波浪宽度,数越小越宽0.3 12
+                // waveHeight: 6, // 波浪高度,数越大越高
                 // colors: ["rgba(243, 156, 107, 0.48)", "rgba(160, 86, 59, 0.48)"], // 波浪颜色
                 colors: [wave2Color], // 波浪颜色
                 xOffset: 2, // 初始偏移
-                speed: 0.02, // 速度
+                speed: 0.04, // 速度
+                // speed: 0.02, // 速度
             });
             this.draw();
         },
@@ -103,11 +105,13 @@ export default {
                 this.nowRange -= 1;
             }
             this.wave2.update({
-                nowRange: this.nowRange,
+                nowRange: this.waveType == "small" ? 52 : this.nowRange,
+                // nowRange: 42,
             });
             this.wave2.draw(ctx);
             this.wave1.update({
-                nowRange: this.nowRange,
+                nowRange:  this.waveType == "small" ? 32 : this.nowRange,
+                // nowRange: 22,
             });
             this.wave1.draw(ctx);
             window.requestAnimationFrame(this.draw);
