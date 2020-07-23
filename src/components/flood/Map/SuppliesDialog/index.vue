@@ -93,6 +93,7 @@ export default {
     align-items: center;
     justify-content: center;
     background: rgba(7, 7, 7, 0.43);
+    z-index: 999;
     .dialog-box {
         width: 530px;
         height: 293px;
