@@ -29,7 +29,7 @@ export default {
 
     created() {
         // setTimeout(this.showLeftTime, 1000 * 60)
-        console.log("111111111", this.showLeftTime());
+        this.showLeftTime();
     },
 
     components: {},

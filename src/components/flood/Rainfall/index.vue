@@ -4,13 +4,14 @@
         <div class="panel-header">
             <Title class="title" title="雨量" />
             <ul>
-                <li v-for="(item,index) in color" :key="`Rainfall${index}`">
-                    <span class="iconfont iconquxian" :style="{ color:`${ item }` }"></span>
-                    <span>点位{{index+1}}雨量</span>
+                <li v-for="(item, index) in color" :key="`Rainfall${index}`">
+                    <span class="iconfont iconquxian" :style="{ color: `${item}` }"></span>
+                    <span>点位{{ index + 1 }}雨量</span>
                 </li>
             </ul>
         </div>
         <div class="warp-container">
+            <!-- <div class="back"></div> -->
             <div class="charts" id="chart_Rainfall"></div>
         </div>
     </div>
@@ -22,7 +23,7 @@ export default {
     name: "Rainfall",
     data() {
         return {
-            color:["#5C87ED", "#6FCCE6", "#F6BA16", "#E8764A", "#9270CA", "#DA4545", "#B2E76A"]
+            color: ["#5C87ED", "#6FCCE6", "#F6BA16", "#E8764A", "#9270CA", "#DA4545", "#B2E76A"],
         };
     },
 
@@ -55,7 +56,7 @@ export default {
                     left: "5%",
                     right: "7%",
                     bottom: "2%",
-                    top:"5%",
+                    top: "5%",
                     containLabel: true,
                 },
                 xAxis: {
@@ -195,4 +196,18 @@ ul {
         }
     }
 }
+
+// .warp-container {
+//     width: 540px;
+//     height: 258px;
+//     position: relative;
+//     .back {
+//         position: absolute;
+//         width: 82.5%;
+//         height: 86%;
+//         top: 5%;
+//         right: 7%;
+//         background: pink;
+//     }
+// }
 </style>
