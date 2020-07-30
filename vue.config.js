@@ -4,6 +4,15 @@ const postcss = px2rem({
     remUnit: 80, //基准大小 baseSize，需要和rem.js中相同
 });
 module.exports = {
+    devServer: {
+        // baseUrl: "/",
+        proxy: {
+            "/smartEnergy": {
+                target: "http://47.110.226.205:8980",
+                changeOrigin: true,
+            },
+        },
+    },
     productionSourceMap: false,
     css: {
         loaderOptions: {
@@ -40,7 +49,4 @@ module.exports = {
     //         .options({ bypassOnDebug: true })
     //         .end();
     // },
-    devServer: {
-        disableHostCheck: true,
-    },
 };

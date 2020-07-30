@@ -51,6 +51,7 @@
 
 <script>
 import Title from "../../common/Title";
+import { getConstructionInfo } from "../../../axios/index";
 export default {
     name: "roadworkInfo",
     data() {
@@ -69,12 +70,15 @@ export default {
         Title,
     },
 
-    created() {
-        this.$axios.get("http://47.110.226.205:8980/smartEnergy/build").then((res) => {
-            let data = JSON.parse(res.data.message);
-            console.log(data);
-            this.filterAjaxData(data.orderList);
-        });
+    async created() {
+        const [res] = await getConstructionInfo();
+        let data = JSON.parse(res.message);
+        this.filterAjaxData(data.orderList);
+        // this.$axios.get("http://47.110.226.205:8980/smartEnergy/build").then((res) => {
+        //     let data = JSON.parse(res.data.message);
+        //     console.log(data);
+        //     this.filterAjaxData(data.orderList);
+        // });
         // let axiosData = {
         //     result: "true",
         //     message:
@@ -115,7 +119,6 @@ export default {
                 console.log(item.buildType, "item.buildType");
                 switch (item.buildType) {
                     case "1":
-                        console.log("11111111");
                         //抢修
                         fixData.push(obj);
                         break;
@@ -136,7 +139,6 @@ export default {
             this.workData.fixData = fixData;
             this.workData.maintainData = maintainData;
             this.workData.roadworkData = roadworkData;
-            console.log("workData1", this.workData1);
         },
     },
 
