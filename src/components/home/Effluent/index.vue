@@ -15,6 +15,7 @@
 
 <script>
 import Title from "../../common/Title";
+import { getEffluentFlow } from "../../../axios";
 export default {
     name: "Effluent",
     data() {
@@ -26,10 +27,16 @@ export default {
     },
 
     mounted() {
+        this.getData();
         this.drawLine();
     },
 
     methods: {
+        async getData() {
+            const [res] = await getEffluentFlow();
+            let data = JSON.parse(res.message);
+            console.log(data, "qqqqqqqqqqq");
+        },
         drawLine() {
             this.option = {
                 tooltip: {
@@ -62,7 +69,19 @@ export default {
                                 color: "#fff",
                             },
                         },
-                        data: ["1:00", "1:15", "1:30", "1:45", "2:00", "2:15", "2:30", "2:45", "3:00", "3:15", "3:30"],
+                        data: [
+                            "1:00",
+                            "1:15",
+                            "1:30",
+                            "1:45",
+                            "2:00",
+                            "2:15",
+                            "2:30",
+                            "2:45",
+                            "3:00",
+                            "3:15",
+                            "3:30",
+                        ],
                     },
                 ],
                 yAxis: [
@@ -89,7 +108,7 @@ export default {
                 ],
                 series: [
                     {
-                        name: '出水瞬时流量',
+                        name: "出水瞬时流量",
                         smooth: true,
                         // showSymbol: false,
                         type: "line",
@@ -147,12 +166,26 @@ export default {
                                 },
                             },
                         },
-                        data: [847, 887, 987, 979, 909, 775, 846, 852, 920, 864, 927],
+                        data: [
+                            847,
+                            887,
+                            987,
+                            979,
+                            909,
+                            775,
+                            846,
+                            852,
+                            920,
+                            864,
+                            927,
+                        ],
                     },
                 ],
             };
             // 基于准备好的dom，初始化this.$echarts实例
-            let myChart = this.$echarts.init(document.getElementById("chart_effluent"));
+            let myChart = this.$echarts.init(
+                document.getElementById("chart_effluent")
+            );
             // 绘制图表
             myChart.setOption(this.option);
             window.addEventListener("resize", () => {

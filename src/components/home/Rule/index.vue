@@ -2,11 +2,17 @@
 <template>
     <div class="box">
         <section class="ruler">
-            <div class="line left-line">
-                <div class="num">300</div>
+            <div
+                class="line left-line"
+                :style="{ top: `${(1 - this.oneH / 500) * 100}%` }"
+            >
+                <div class="num">{{ this.oneH }}</div>
             </div>
-            <div class="line right-line">
-                <div class="num">240</div>
+            <div
+                class="line right-line"
+                :style="{ top: `${(1 - this.twoH / 500) * 100}%` }"
+            >
+                <div class="num">{{ this.twoH }}</div>
             </div>
             <section class="cm">
                 <section class="mm"></section>
@@ -54,7 +60,14 @@ export default {
 
     methods: {},
 
-    computed: {},
+    computed: {
+        oneH() {
+            return this.$store.state.home.waterLevel.oneH;
+        },
+        twoH() {
+            return this.$store.state.home.waterLevel.twoH;
+        },
+    },
 };
 </script>
 <style lang="scss" scoped>
@@ -69,31 +82,34 @@ export default {
     position: absolute;
     width: 290px;
     height: 2px;
-    background: #1E6AFF;
+    background: #1e6aff;
     z-index: -1;
 }
 .right-line {
-    top: 52%;
+    // top: 52%;
+    .num {
+        right: 0;
+    }
 }
 .left-line {
     right: 14px;
-    top: 40%;
+    // top: 40%;
     .num {
         left: 0;
     }
 }
 .num {
-    width: 48px;
+    min-width: 48px;
     height: 30px;
-    background: #1E6AFF;
+    background: #1e6aff;
     border-radius: 5px;
     text-align: center;
     line-height: 30px;
     color: #fff;
     font-size: 20px;
     position: absolute;
-    right: 0;
     bottom: 5px;
+    padding: 0 5px;
 }
 .ruler {
     position: relative;

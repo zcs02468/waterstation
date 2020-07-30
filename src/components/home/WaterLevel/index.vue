@@ -9,19 +9,25 @@
             <div class="left-cylinder">
                 <div class="top"></div>
                 <div class="bottom"></div>
-                <div class="left-inside-cylinder" :style="{ height: '60%' }">
+                <div
+                    class="left-inside-cylinder"
+                    :style="{ height: `${(oneH / 500) * 100}%` }"
+                >
                     <div class="inside-top"></div>
                     <div class="inside-bottom"></div>
                 </div>
                 <div class="title">蓄水池1</div>
             </div>
             <div class="line-box">
-                <Rule />
+                <Rule :oneH="oneH" :twoH="twoH" />
             </div>
             <div class="right-cylinder">
                 <div class="top"></div>
                 <div class="bottom"></div>
-                <div class="right-inside-cylinder" :style="{ height: '48%' }">
+                <div
+                    class="right-inside-cylinder"
+                    :style="{ height: `${(twoH / 500) * 100}%` }"
+                >
                     <div class="inside-top"></div>
                     <div class="inside-bottom"></div>
                 </div>
@@ -34,10 +40,14 @@
 <script>
 import Title from "../../common/Title";
 import Rule from "../Rule/index";
+import { getReservoirLevel } from "../../../axios";
 export default {
     name: "WaterLevel",
     data() {
-        return {};
+        return {
+            oneH: 0,
+            twoH: 0,
+        };
     },
 
     components: {
@@ -45,7 +55,25 @@ export default {
         Rule,
     },
 
-    methods: {},
+    created() {
+        this.getData();
+    },
+
+    methods: {
+        async getData() {
+            const [res] = await getReservoirLevel();
+            let data = JSON.parse(res.message);
+            this.oneH = data.sc1;
+            this.twoH = data.sc2;
+            setTimeout(() => {
+                this.$store.commit("setWaterLevel", {
+                    oneH: data.sc1,
+                    twoH: data.sc2,
+                });
+            }, 2000);
+            console.log(data, "$$$$$$$$$$$");
+        },
+    },
 
     computed: {},
 };
@@ -143,8 +171,8 @@ export default {
     z-index: 3;
     width: 156px;
     height: 30px;
-    border: 1px solid #3980C1;
-    background: rgba(20,54,116,.5);
+    border: 1px solid #3980c1;
+    background: rgba(20, 54, 116, 0.5);
     font-size: 18px;
     line-height: 30px;
     text-align: center;
@@ -152,10 +180,18 @@ export default {
 }
 .left-cylinder {
     @extend %cylinder;
-    background-image: linear-gradient(to bottom, rgba(0, 39, 115, 1) 0%, rgba(0, 40, 116, 0.7) 100%);
+    background-image: linear-gradient(
+        to bottom,
+        rgba(0, 39, 115, 1) 0%,
+        rgba(0, 40, 116, 0.7) 100%
+    );
     .top {
         @extend %cylinder-top;
-        background-image: linear-gradient(to bottom, rgba(4, 42, 130, 1) 0%, rgba(4, 42, 132, 1) 100%);
+        background-image: linear-gradient(
+            to bottom,
+            rgba(4, 42, 130, 1) 0%,
+            rgba(4, 42, 132, 1) 100%
+        );
     }
     .bottom {
         @extend %cylinder-bottom;
@@ -165,23 +201,43 @@ export default {
 
 .left-inside-cylinder {
     @extend %inside-cylinder;
-    background-image: linear-gradient(to left, rgba(85, 157, 254, 1) 0%, rgba(7, 65, 189, 1) 100%);
+    background-image: linear-gradient(
+        to left,
+        rgba(85, 157, 254, 1) 0%,
+        rgba(7, 65, 189, 1) 100%
+    );
     .inside-top {
         @extend %inside-cylinder-top;
-        background-image: linear-gradient(to bottom, rgba(4, 65, 194, 1) 0%, rgba(84, 157, 254, 1) 100%);
+        background-image: linear-gradient(
+            to bottom,
+            rgba(4, 65, 194, 1) 0%,
+            rgba(84, 157, 254, 1) 100%
+        );
     }
     .inside-bottom {
         @extend %inside-cylinder-bottom;
-        background-image: linear-gradient(to left, rgba(85, 157, 254, 1) 0%, rgba(7, 65, 189, 1) 100%);
+        background-image: linear-gradient(
+            to left,
+            rgba(85, 157, 254, 1) 0%,
+            rgba(7, 65, 189, 1) 100%
+        );
     }
 }
 
 .right-cylinder {
     @extend %cylinder;
-    background-image: linear-gradient(to bottom, rgba(0, 55, 114, 1) 0%, rgba(0, 55, 114, 0.7) 100%);
+    background-image: linear-gradient(
+        to bottom,
+        rgba(0, 55, 114, 1) 0%,
+        rgba(0, 55, 114, 0.7) 100%
+    );
     .top {
         @extend %cylinder-top;
-        background-image: linear-gradient(to bottom, rgba(4, 70, 132, 1) 0%, rgba(4, 71, 132, 1) 100%);
+        background-image: linear-gradient(
+            to bottom,
+            rgba(4, 70, 132, 1) 0%,
+            rgba(4, 71, 132, 1) 100%
+        );
     }
     .bottom {
         @extend %cylinder-bottom;
@@ -191,14 +247,26 @@ export default {
 
 .right-inside-cylinder {
     @extend %inside-cylinder;
-    background-image: linear-gradient(to left, rgba(105, 221, 233, 1) 0%, rgba(12, 142, 189, 1) 100%);
+    background-image: linear-gradient(
+        to left,
+        rgba(105, 221, 233, 1) 0%,
+        rgba(12, 142, 189, 1) 100%
+    );
     .inside-top {
         @extend %inside-cylinder-top;
-        background-image: linear-gradient(to bottom, rgba(4, 143, 194, 1) 0%, rgba(85, 237, 253, 1) 100%);
+        background-image: linear-gradient(
+            to bottom,
+            rgba(4, 143, 194, 1) 0%,
+            rgba(85, 237, 253, 1) 100%
+        );
     }
     .inside-bottom {
         @extend %inside-cylinder-bottom;
-        background-image: linear-gradient(to left, rgba(105, 221, 233, 1) 0%, rgba(12, 142, 189, 1) 100%);
+        background-image: linear-gradient(
+            to left,
+            rgba(105, 221, 233, 1) 0%,
+            rgba(12, 142, 189, 1) 100%
+        );
     }
 }
 </style>

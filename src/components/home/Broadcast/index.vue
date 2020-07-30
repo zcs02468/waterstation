@@ -13,43 +13,65 @@
             </span>
         </div>
         <div class="content">
-                    <text-scroll
-            :dataList="data"
-            scrollType="scroll-left-linear"
-        >
-        </text-scroll>
+            <!-- <text-scroll :dataList="data" scrollType="scroll-left-linear">
+            </text-scroll> -->
             <!-- <div class="wrap">
                 <div class="cont">
                     <p class="txt">1.文字如果超出了宽度自动向左滚动文字如果超出了宽度自动向左滚动。文字如果超出了宽度自动向左滚动文字如果超出了宽度自动向左滚动。</p>
                     <p class="txt">1.文字如果超出了宽度自动向左滚动文字如果超出了宽度自动向左滚动。文字如果超出了宽度自动向左滚动文字如果超出了宽度自动向左滚动。</p>
                 </div>
             </div> -->
+
+            <div class="TextScroll">
+                <ul>
+                    <li v-for="item in dataList" :key="item.id">
+                        <p>{{ item.text }}</p>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
-import TextScroll from './TextScroll'
+import TextScroll from "./TextScroll";
+import { getBroadcastContent } from "../../../axios";
 export default {
     name: "Broadcast",
     data() {
         return {
-            data: [
-                {id: 1, text: '滚动内容11111111111111'},
-                {id: 2, text: '滚动内容222222222222222'},
-                {id: 3, text: '滚动内容33333333333333'},
-                {id: 4, text: '滚动内容4444444444444444'}
-            ]
-        }
+            dataList: [
+                {
+                    id: 1,
+                    text:
+                        "滚动内容1111滚动内容滚动内容滚动内容滚动内容滚动内容滚动内容11111111111111111111111111111111111111",
+                },
+            ],
+        };
     },
-    components:{
+    components: {
         TextScroll,
     },
-    computed: {
-        optionSetting() {
-            return {};
+
+    created() {
+        this.getData();
+    },
+
+    methods: {
+        async getData() {
+            const [res] = await getBroadcastContent();
+            let data = JSON.parse(res.message);
+            this.dataList.splice(0, 1, {
+                id: Math.random() * 100,
+                text: data.broadcastContent,
+            });
+            // this.dataList.push({
+            //     id: Math.random() * 100,
+            //     text: data.broadcastContent,
+            // });
         },
     },
+    computed: {},
     mounted() {},
 };
 </script>
@@ -100,5 +122,49 @@ export default {
     top: -4px;
     border-bottom: 2px solid #224c72;
     transform: rotate(54deg);
+}
+
+.TextScroll {
+    width: 100%;
+}
+.TextScroll ul {
+    position: relative;
+    width: 100%;
+    height: 42px;
+    overflow: hidden;
+}
+.TextScroll li {
+    // width: 100%;
+    height: 42px;
+    line-height: 42px;
+    overflow: hidden;
+    position: absolute;
+    color: #fff;
+    min-width: 100%;
+}
+
+.TextScroll li p {
+    font-size: 16px;
+    padding: 0 0.2rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    position: absolute;
+    left: -100%;
+    animation: marginLeft 16s linear infinite;
+}
+
+@keyframes marginLeft {
+    0% {
+        left: 100%;
+    }
+
+    50% {
+        left: 0%;
+    }
+
+    100% {
+        left: -100%;
+    }
 }
 </style>

@@ -15,11 +15,15 @@
 
 <script>
 import Title from "../../common/Title";
+import { getWaterPressure } from "../../../axios";
 export default {
     name: "Pressure",
     data() {
         return {
             option: null,
+            xAxisData: [],
+            enterWaterData: [],
+            outWaterData: [],
         };
     },
 
@@ -28,10 +32,34 @@ export default {
     },
 
     mounted() {
-        this.drawLine();
+        this.getData();
     },
 
     methods: {
+        async getData() {
+            const [res] = await getWaterPressure();
+            let data = JSON.parse(res.message).waterPressure;
+
+            let xAxisData = [],
+                enterWaterData = [],
+                outWaterData = [];
+            data.forEach((ele) => {
+                let timeArr = ele.time.split(" ")[1].split(":");
+                xAxisData.push(`${timeArr[0]}:${timeArr[1]}`);
+                enterWaterData.push(ele.p1)
+                outWaterData.push(ele.p5)
+            });
+            this.xAxisData = xAxisData;
+            this.enterWaterData = enterWaterData;
+            this.outWaterData = outWaterData;
+        this.drawLine();
+
+            console.log(
+                "@@@@@@@",
+                data.waterPressure,
+                data.waterPressure[0].time.split(" ")[1].split(":")
+            );
+        },
         drawLine() {
             this.option = {
                 color: ["#375FB0", "#368A7E"],
@@ -71,7 +99,19 @@ export default {
                                 color: "#fff",
                             },
                         },
-                        data: ["1:00", "2:00", "3:00", "4:00", "5:00", "6:00", "7:00", "8:00", "9:00", "10:00"],
+                        data:this.xAxisData,
+                        // data: [
+                        //     "1:00",
+                        //     "2:00",
+                        //     "3:00",
+                        //     "4:00",
+                        //     "5:00",
+                        //     "6:00",
+                        //     "7:00",
+                        //     "8:00",
+                        //     "9:00",
+                        //     "10:00",
+                        // ],
                     },
                 ],
                 yAxis: [
@@ -104,7 +144,7 @@ export default {
                         name: "单位：Pa",
                         nameTextStyle: {
                             padding: [0, 50, 0, 0],
-                            color:"#fff"
+                            color: "#fff",
                         },
                         axisLine: {
                             //y轴
@@ -159,7 +199,8 @@ export default {
                                 },
                             },
                         },
-                        data: [180, 250, 210, 170, 80, 300, 210, 60, 80, 170],
+                        // data: [180, 250, 210, 170, 80, 300, 210, 60, 80, 170],
+                        data:this.enterWaterData,
                     },
                     {
                         smooth: true,
@@ -207,12 +248,26 @@ export default {
                                 },
                             },
                         },
-                        data: [280, 350, 390, 370, 350, 400, 310, 160, 180, 270],
+                        data:this.outWaterData,
+                        // data: [
+                        //     280,
+                        //     350,
+                        //     390,
+                        //     370,
+                        //     350,
+                        //     400,
+                        //     310,
+                        //     160,
+                        //     180,
+                        //     270,
+                        // ],
                     },
                 ],
             };
             // 基于准备好的dom，初始化this.$echarts实例
-            let myChart = this.$echarts.init(document.getElementById("chart_pressure"));
+            let myChart = this.$echarts.init(
+                document.getElementById("chart_pressure")
+            );
             // 绘制图表
             myChart.setOption(this.option);
             window.addEventListener("resize", () => {

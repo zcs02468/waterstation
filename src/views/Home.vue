@@ -1,7 +1,7 @@
 <template>
     <div class="home-container">
         <div class="wrap" ref="editor">
-            <Header />
+            <Header title="智慧水站供水检测"/>
             <div class="main-box">
                 <div class="colum">
                     <Broadcast />
