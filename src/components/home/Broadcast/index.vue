@@ -65,6 +65,9 @@ export default {
                 id: Math.random() * 100,
                 text: data.broadcastContent,
             });
+            setTimeout(()=> {
+                this.getData();
+            },60000)
             // this.dataList.push({
             //     id: Math.random() * 100,
             //     text: data.broadcastContent,

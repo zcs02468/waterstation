@@ -32,6 +32,7 @@ export default {
     },
 
     mounted() {
+        this.drawLine();
         this.getData();
     },
 
@@ -52,7 +53,13 @@ export default {
             this.xAxisData = xAxisData;
             this.enterWaterData = enterWaterData;
             this.outWaterData = outWaterData;
-            this.drawLine();
+            this.option.xAxis[0].data = this.xAxisData;
+            this.option.series[0].data = this.enterWaterData;
+            this.option.series[1].data = this.outWaterData;
+            this.myChart.setOption(this.option);
+            setTimeout(()=> {
+                this.getData()
+            },60000)
         },
         drawLine() {
             this.option = {
@@ -259,13 +266,13 @@ export default {
                 ],
             };
             // 基于准备好的dom，初始化this.$echarts实例
-            let myChart = this.$echarts.init(
+            this.myChart = this.$echarts.init(
                 document.getElementById("chart_pressure")
             );
             // 绘制图表
-            myChart.setOption(this.option);
+            this.myChart.setOption(this.option);
             window.addEventListener("resize", () => {
-                myChart.resize();
+                this.myChart.resize();
             });
         },
     },

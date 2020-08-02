@@ -25,15 +25,23 @@ export default {
     },
 
     async created() {
-        const [res] = await getDetectionRate();
-        let message = JSON.parse(res.message);
-        this.water_detectionRate_west = message.water_detectionRate_west;
-        this.water_detectionRate_east = message.water_detectionRate_east;
         // this.$axios.get("http://47.110.226.205:8980/smartEnergy/detectionrate").then((res) => {
         //     let message = JSON.parse(res.data.message);
         //     this.water_detectionRate_west = message.water_detectionRate_west;
         //     this.water_detectionRate_east = message.water_detectionRate_east;
         // });
+    },
+
+    methods:{
+        async getData() {
+            const [res] = await getDetectionRate();
+            let message = JSON.parse(res.message);
+            this.water_detectionRate_west = message.water_detectionRate_west;
+            this.water_detectionRate_east = message.water_detectionRate_east;
+            setTimeout(()=> {
+                this.getData();
+            },60000)
+        }
     },
 
     components: {

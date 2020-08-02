@@ -31,6 +31,10 @@ export default {
 
     mounted() {
         this.getData();
+        // 基于准备好的dom，初始化this.$echarts实例
+        this.myChart = this.$echarts.init(
+            document.getElementById("chart_effluent")
+        );
         this.drawLine();
     },
 
@@ -38,14 +42,29 @@ export default {
         async getData() {
             const [res] = await getEffluentFlow();
             let data = JSON.parse(res.message).effluentFlow;
+            console.log(data,"#####");
+            let arr = [[],[],[],[]];
+            let xAxisData = [];
             data.forEach(item => {
                 let time = item.time.split(' ')[1].split(':');
-                this.xAxisData.push( `${time[0]}:${time[1]}` );
-                this.effluentFlow[0].push(item.ssll5);
-                this.effluentFlow[1].push(item.ssll4);
-                this.effluentFlow[2].push(item.ssll3);
-                this.effluentFlow[3].push(item.ssll2);
+                xAxisData.push( `${time[0]}:${time[1]}` );
+                arr[0].push(item.ssll5);
+                arr[1].push(item.ssll4);
+                arr[2].push(item.ssll3);
+                arr[3].push(item.ssll2);
             });
+            console.log( 'xAxisData', xAxisData );
+            this.$set(this.effluentFlow,0,arr[0]);
+            this.$set(this.effluentFlow,1,arr[1]);
+            this.$set(this.effluentFlow,2,arr[2]);
+            this.$set(this.effluentFlow,3,arr[3]);
+            this.$set(this.xAxisData,xAxisData);
+            
+            this.option.series[0].data = this.effluentFlow[0];
+            this.option.series[1].data = this.effluentFlow[1];
+            this.option.series[2].data = this.effluentFlow[2];
+            this.option.series[3].data = this.effluentFlow[3];
+            this.option.xAxis[0].data = this.xAxisData;
             this.myChart.setOption(this.option);
             setTimeout(()=> {
                 this.getData()
@@ -355,10 +374,6 @@ export default {
                     },
                 ],
             };
-            // 基于准备好的dom，初始化this.$echarts实例
-            this.myChart = this.$echarts.init(
-                document.getElementById("chart_effluent")
-            );
             // 绘制图表
             this.myChart.setOption(this.option);
             window.addEventListener("resize", () => {
