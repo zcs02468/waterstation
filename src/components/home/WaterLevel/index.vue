@@ -71,7 +71,6 @@ export default {
                     twoH: data.sc2,
                 });
             }, 2000);
-            console.log(data, "$$$$$$$$$$$");
         },
     },
 

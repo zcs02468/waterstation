@@ -116,7 +116,6 @@ export default {
                     deptHeadName: item.deptHeadName,
                     supervisorNames: item.supervisorNames,
                 };
-                console.log(item.buildType, "item.buildType");
                 switch (item.buildType) {
                     case "1":
                         //抢修
@@ -124,7 +123,6 @@ export default {
                         break;
                     case "2" || "3":
                         //施工
-                        console.log("222");
                         roadworkData.push(obj);
                         break;
                     case "4":
@@ -132,7 +130,6 @@ export default {
                         maintainData.push(obj);
                         break;
                     default:
-                        console.log("55");
                         break;
                 }
             });

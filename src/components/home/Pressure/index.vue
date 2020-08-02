@@ -52,13 +52,7 @@ export default {
             this.xAxisData = xAxisData;
             this.enterWaterData = enterWaterData;
             this.outWaterData = outWaterData;
-        this.drawLine();
-
-            console.log(
-                "@@@@@@@",
-                data.waterPressure,
-                data.waterPressure[0].time.split(" ")[1].split(":")
-            );
+            this.drawLine();
         },
         drawLine() {
             this.option = {

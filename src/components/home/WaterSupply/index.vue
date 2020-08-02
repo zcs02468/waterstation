@@ -10,7 +10,7 @@
                     <span :class="selectIndex == 2 ? 'select' : ''" @click="selectClick(2)">月</span>
                 </div>
             </div>
-            <div class="unit">供水总量：XXXXX m<sup>3</sup></div>
+            <div class="unit">供水总量：{{waterVolumeData[selectIndex]}} m<sup>3</sup></div>
         </div>
         <div class="warp-container">
             <div class="charts" id="chart_water_supply"></div>
@@ -20,6 +20,7 @@
 
 <script>
 import Title from "../../common/Title";
+import {getWaterVolume} from "../../../axios/index"
 export default {
     name: "WaterSupply",
     data() {
@@ -27,29 +28,97 @@ export default {
             option: null,
             selectIndex: 0,
             xAxisData: [
-                ["1:00", "2:00", "3:00", "4:00", "5:00", "6:00", "7:00", "8:00", "9:00", "10:00", "11:00"],
-                ["星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"],
-                ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+                [],
+                [],
+                [],
             ],
             waterData: [
-                [480, 220, 270, 330, 370, 290, 150, 220, 360, 70, 290],
-                [480, 220, 270, 330, 370, 290, 150],
-                [480, 220, 270, 330, 370, 290, 150, 220, 360, 70, 290, 300],
+                [],
+                [],
+                [],
             ],
+            waterVolumeData: [
+                0,
+                0,
+                0
+            ],
+            // xAxisData: [
+            //     ["1:00", "2:00", "3:00", "4:00", "5:00", "6:00", "7:00", "8:00", "9:00", "10:00", "11:00"],
+            //     ["星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"],
+            //     ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+            // ],
+            // waterData: [
+            //     [480, 220, 270, 330, 370, 290, 150, 220, 360, 70, 290],
+            //     [480, 220, 270, 330, 370, 290, 150],
+            //     [480, 220, 270, 330, 370, 290, 150, 220, 360, 70, 290, 300],
+            // ],
+            monthArr: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"]
         };
     },
 
     components: {
         Title,
     },
+    
+    
 
     mounted() {
+        this.getData()
         // 基于准备好的dom，初始化this.$echarts实例
         this.myChart = this.$echarts.init(document.getElementById("chart_water_supply"));
         this.drawLine();
     },
 
     methods: {
+        async getData() {
+            let [res] = await getWaterVolume();
+            let data = JSON.parse(res.message);
+            let hourX = [],
+                houtY = [],
+                dayX = [],
+                dayY = [],
+                monthX = [],
+                monthY = [];
+            let hourSum = 0;
+            let daySum = 0;
+            let monthSum = 0;
+            data.hourList.reverse();
+            data.hourList.forEach(item => {
+                hourSum += Number(item.waterVolume);
+                hourX.push( `${item.hour}:00` );
+                houtY.push( item.waterVolume );
+            });
+            data.dayList.reverse();
+            data.dayList.forEach(item => {
+                daySum += Number(item.waterVolume);
+                let time = item.gatherDay.split(' ')[0].split('-')[2];
+                dayX.push( time );
+                dayY.push( item.waterVolume );
+            });
+            data.monthList.reverse();
+            data.monthList.forEach(item => {
+                monthSum += Number(item.waterVolume);
+                let month = Number(item.month);
+                monthX.push( this.monthArr[month] );
+                monthY.push( item.waterVolume );
+            });
+            this.xAxisData[0]= hourX;
+            this.xAxisData[1]= dayX;
+            this.xAxisData[2]= monthX;
+            
+            this.waterData[0]= houtY;
+            this.waterData[1]= dayY;
+            this.waterData[2]= monthY;
+
+            this.$set(this.waterVolumeData, 0, hourSum)
+            // this.waterVolumeData[0] = hourSum;
+            this.waterVolumeData[1] = daySum;
+            this.waterVolumeData[2] = monthSum;
+            this.selectClick(this.selectIndex);
+            setTimeout(()=> {
+                this.getData()
+            },60000)
+        },
         selectClick(index) {
             this.selectIndex = index;
             this.option.xAxis.data = this.xAxisData[index];

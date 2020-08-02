@@ -19,3 +19,6 @@ export const getEffluentFlow = async () => await get({ url: baseUrl + "/smartEne
 
 //进水/出水压力趋势接口
 export const getWaterPressure = async () => await get({ url: baseUrl + "/smartEnergy/waterPressure" });
+
+//泵站供水量接口
+export const getWaterVolume = async () => await get({ url: baseUrl + "/smartEnergy/waterVolume" });
