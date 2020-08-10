@@ -5,6 +5,7 @@ const postcss = px2rem({
 });
 module.exports = {
     devServer: {
+        disableHostCheck: true,
         // baseUrl: "/",
         proxy: {
             "/smartEnergy": {

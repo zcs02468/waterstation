@@ -20,15 +20,19 @@
 </template>
 
 <script>
+import {getBulletinBoard} from "../../../axios"
 export default {
     name: "Time",
     data() {
         return {
             time: "",
+            bbList:[]
         };
     },
 
     components: {},
+
+    mounted() {},
 
     methods: {},
 

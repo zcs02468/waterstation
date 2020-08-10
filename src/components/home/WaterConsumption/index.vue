@@ -16,17 +16,20 @@
             </div>
         </div>
         <div class="tip">
-            其他用户用水量计量：600m&sup3;
+            其他用户用水量计量：{{expLevel}}m&sup3;
         </div>
     </div>
 </template>
 
 <script>
 import Title from "../../common/Title";
+import {getWaterConsumption} from "../../../axios";
 export default {
     name: "WaterConsumption",
     data() {
         return {
+            expLevel:0,
+            levelList:[],
             option: null,
             color: ["#64AB28", "#336FCF", "#4FA0F7", "#7053D9", "#05B1AB", "#0052D2", "#7C3735", "#0E9355", "#B3B810", "#349DC8"],
         };
@@ -37,10 +40,31 @@ export default {
     },
 
     mounted() {
+        this.getData()
         this.drawLine();
     },
 
     methods: {
+        async getData() {
+            // let [res] = await getWaterConsumption();
+            let res = this.getAjaxData()
+            let data = JSON.parse(res.message)
+            console.log('data', data);
+            let arr =[];
+            data.levelList.forEach(item => {
+                arr.push({
+                    value: item.total,
+                    name: item.devicename
+                })
+            });
+            this.expLevel = data.expLevel;
+            this.levelList = arr;
+            this.option.series[0].data = this.levelList;
+            this.myChart.setOption(this.option);
+            setTimeout(()=> {
+                this.getData()
+            },60000)
+        },
         drawLine() {
             this.option = {
                 color: ["#64AB28", "#336FCF", "#4FA0F7", "#7053D9", "#05B1AB", "#0052D2", "#7C3735", "#0E9355", "#B3B810", "#349DC8"],
@@ -56,6 +80,8 @@ export default {
                         // radius: [50, 109],
                         radius: ["20%", "70%"],
                         roseType: "radius",
+                        minAngle: 20,
+                        avoidLabelOverlap: true,
                         label: {
                             // show: false,
                             normal: {
@@ -70,7 +96,7 @@ export default {
                                     },
                                     b: {
                                         fontSize: 12,
-                                        lineHeight: 20,
+                                        lineHeight: 18,
                                         align:"left",
                                     },
                                 },
@@ -86,18 +112,7 @@ export default {
                                 show: true,
                             },
                         },
-                        data: [
-                            { value: 200, name: "用户3" },
-                            { value: 100, name: "用户2" },
-                            { value: 200, name: "用户1" },
-                            { value: 300, name: "用户10" },
-                            { value: 160, name: "用户9" },
-                            { value: 180, name: "用户8" },
-                            { value: 140, name: "用户7" },
-                            { value: 120, name: "用户6" },
-                            { value: 170, name: "用户5" },
-                            { value: 140, name: "用户4" },
-                        ],
+                        data: this.levelList,
                     },
                 ],
             };
@@ -110,6 +125,9 @@ export default {
                 myChart.resize();
             });
         },
+        getAjaxData() {
+            return {"result":"true","message":"{\"levelList\":[{\"pageNo\":null,\"pageSize\":null,\"id\":\"能源中心水表2#20200804\",\"isNewRecord\":false,\"orderBy\":null,\"createByName\":null,\"updateByName\":null,\"updateBy\":null,\"lastUpdateDateTime\":null,\"status\":null,\"createDate\":null,\"updateDate\":null,\"remarks\":null,\"createBy\":null,\"devicename\":\"能源中心水表2\",\"total\":284900,\"regionname\":\"西区\",\"lastUpdateTime\":null,\"lastUpdateAcc\":null,\"startdata\":120891300,\"enddata\":121176200,\"day\":\"20200804\",\"deviceno\":\"1138\",\"typename\":\"累计流量\",\"channelno\":\"331\",\"metername\":\"水表\",\"remark\":null,\"createDate_lte\":null,\"status_in\":null,\"updateDate_lte\":null,\"createDate_between\":null,\"createDate_gte\":null,\"updateDate_gte\":null,\"updateDate_between\":null,\"id_in\":null},{\"pageNo\":null,\"pageSize\":null,\"id\":\"东航城北区西侧生活S-1#20200804\",\"isNewRecord\":false,\"orderBy\":null,\"createByName\":null,\"updateByName\":null,\"updateBy\":null,\"lastUpdateDateTime\":null,\"status\":null,\"createDate\":null,\"updateDate\":null,\"remarks\":null,\"createBy\":null,\"devicename\":\"东航城北区西侧生活S-1\",\"total\":60700,\"regionname\":\"西区\",\"lastUpdateTime\":null,\"lastUpdateAcc\":null,\"startdata\":61063000,\"enddata\":61123700,\"day\":\"20200804\",\"deviceno\":\"1097\",\"typename\":\"累计流量\",\"channelno\":\"331\",\"metername\":\"水表\",\"remark\":null,\"createDate_lte\":null,\"status_in\":null,\"updateDate_lte\":null,\"createDate_between\":null,\"createDate_gte\":null,\"updateDate_gte\":null,\"updateDate_between\":null,\"id_in\":null},{\"pageNo\":null,\"pageSize\":null,\"id\":\"T2航站楼（合用）S-12#20200804\",\"isNewRecord\":false,\"orderBy\":null,\"createByName\":null,\"updateByName\":null,\"updateBy\":null,\"lastUpdateDateTime\":null,\"status\":null,\"createDate\":null,\"updateDate\":null,\"remarks\":null,\"createBy\":null,\"devicename\":\"T2航站楼（合用）S-12\",\"total\":28800,\"regionname\":\"西区\",\"lastUpdateTime\":null,\"lastUpdateAcc\":null,\"startdata\":14927300,\"enddata\":14956100,\"day\":\"20200804\",\"deviceno\":\"1087\",\"typename\":\"累计流量\",\"channelno\":\"331\",\"metername\":\"WPD200\",\"remark\":null,\"createDate_lte\":null,\"status_in\":null,\"updateDate_lte\":null,\"createDate_between\":null,\"createDate_gte\":null,\"updateDate_gte\":null,\"updateDate_between\":null,\"id_in\":null},{\"pageNo\":null,\"pageSize\":null,\"id\":\"T2航站楼（合用）S-9#20200804\",\"isNewRecord\":false,\"orderBy\":null,\"createByName\":null,\"updateByName\":null,\"updateBy\":null,\"lastUpdateDateTime\":null,\"status\":null,\"createDate\":null,\"updateDate\":null,\"remarks\":null,\"createBy\":null,\"devicename\":\"T2航站楼（合用）S-9\",\"total\":25300,\"regionname\":\"西区\",\"lastUpdateTime\":null,\"lastUpdateAcc\":null,\"startdata\":12136000,\"enddata\":12161300,\"day\":\"20200804\",\"deviceno\":\"1093\",\"typename\":\"累计流量\",\"channelno\":\"331\",\"metername\":\"WPD200\",\"remark\":null,\"createDate_lte\":null,\"status_in\":null,\"updateDate_lte\":null,\"createDate_between\":null,\"createDate_gte\":null,\"updateDate_gte\":null,\"updateDate_between\":null,\"id_in\":null},{\"pageNo\":null,\"pageSize\":null,\"id\":\"T2航站楼（合用）S-8#20200804\",\"isNewRecord\":false,\"orderBy\":null,\"createByName\":null,\"updateByName\":null,\"updateBy\":null,\"lastUpdateDateTime\":null,\"status\":null,\"createDate\":null,\"updateDate\":null,\"remarks\":null,\"createBy\":null,\"devicename\":\"T2航站楼（合用）S-8\",\"total\":24700,\"regionname\":\"西区\",\"lastUpdateTime\":null,\"lastUpdateAcc\":null,\"startdata\":15506400,\"enddata\":15531100,\"day\":\"20200804\",\"deviceno\":\"1091\",\"typename\":\"累计流量\",\"channelno\":\"331\",\"metername\":\"WPD200\",\"remark\":null,\"createDate_lte\":null,\"status_in\":null,\"updateDate_lte\":null,\"createDate_between\":null,\"createDate_gte\":null,\"updateDate_gte\":null,\"updateDate_between\":null,\"id_in\":null},{\"pageNo\":null,\"pageSize\":null,\"id\":\"东航城南区西侧生活S-1#20200804\",\"isNewRecord\":false,\"orderBy\":null,\"createByName\":null,\"updateByName\":null,\"updateBy\":null,\"lastUpdateDateTime\":null,\"status\":null,\"createDate\":null,\"updateDate\":null,\"remarks\":null,\"createBy\":null,\"devicename\":\"东航城南区西侧生活S-1\",\"total\":23900,\"regionname\":\"西区\",\"lastUpdateTime\":null,\"lastUpdateAcc\":null,\"startdata\":16712300,\"enddata\":16736200,\"day\":\"20200804\",\"deviceno\":\"1098\",\"typename\":\"累计流量\",\"channelno\":\"331\",\"metername\":\"水表\",\"remark\":null,\"createDate_lte\":null,\"status_in\":null,\"updateDate_lte\":null,\"createDate_between\":null,\"createDate_gte\":null,\"updateDate_gte\":null,\"updateDate_between\":null,\"id_in\":null},{\"pageNo\":null,\"pageSize\":null,\"id\":\"国航泊悦酒店(合用)S-1#20200804\",\"isNewRecord\":false,\"orderBy\":null,\"createByName\":null,\"updateByName\":null,\"updateBy\":null,\"lastUpdateDateTime\":null,\"status\":null,\"createDate\":null,\"updateDate\":null,\"remarks\":null,\"createBy\":null,\"devicename\":\"国航泊悦酒店(合用)S-1\",\"total\":23700,\"regionname\":\"西区\",\"lastUpdateTime\":null,\"lastUpdateAcc\":null,\"startdata\":22700800,\"enddata\":22724500,\"day\":\"20200804\",\"deviceno\":\"1044\",\"typename\":\"累计流量\",\"channelno\":\"331\",\"metername\":\"WPD200\",\"remark\":null,\"createDate_lte\":null,\"status_in\":null,\"updateDate_lte\":null,\"createDate_between\":null,\"createDate_gte\":null,\"updateDate_gte\":null,\"updateDate_between\":null,\"id_in\":null},{\"pageNo\":null,\"pageSize\":null,\"id\":\"西区吉祥航空S-1#20200804\",\"isNewRecord\":false,\"orderBy\":null,\"createByName\":null,\"updateByName\":null,\"updateBy\":null,\"lastUpdateDateTime\":null,\"status\":null,\"createDate\":null,\"updateDate\":null,\"remarks\":null,\"createBy\":null,\"devicename\":\"西区吉祥航空S-1\",\"total\":19200,\"regionname\":\"西区\",\"lastUpdateTime\":null,\"lastUpdateAcc\":null,\"startdata\":17964900,\"enddata\":17984080,\"day\":\"20200804\",\"deviceno\":\"1028\",\"typename\":\"累计流量\",\"channelno\":\"331\",\"metername\":\"WPD100\",\"remark\":null,\"createDate_lte\":null,\"status_in\":null,\"updateDate_lte\":null,\"createDate_between\":null,\"createDate_gte\":null,\"updateDate_gte\":null,\"updateDate_between\":null,\"id_in\":null},{\"pageNo\":null,\"pageSize\":null,\"id\":\"西区东航机库S-1#20200804\",\"isNewRecord\":false,\"orderBy\":null,\"createByName\":null,\"updateByName\":null,\"updateBy\":null,\"lastUpdateDateTime\":null,\"status\":null,\"createDate\":null,\"updateDate\":null,\"remarks\":null,\"createBy\":null,\"devicename\":\"西区东航机库S-1\",\"total\":17000,\"regionname\":\"西区\",\"lastUpdateTime\":null,\"lastUpdateAcc\":null,\"startdata\":10516130,\"enddata\":10533080,\"day\":\"20200804\",\"deviceno\":\"1020\",\"typename\":\"累计流量\",\"channelno\":\"331\",\"metername\":\"WSD80\",\"remark\":null,\"createDate_lte\":null,\"status_in\":null,\"updateDate_lte\":null,\"createDate_between\":null,\"createDate_gte\":null,\"updateDate_gte\":null,\"updateDate_between\":null,\"id_in\":null},{\"pageNo\":null,\"pageSize\":null,\"id\":\"T2航站楼（合用）S-7#20200804\",\"isNewRecord\":false,\"orderBy\":null,\"createByName\":null,\"updateByName\":null,\"updateBy\":null,\"lastUpdateDateTime\":null,\"status\":null,\"createDate\":null,\"updateDate\":null,\"remarks\":null,\"createBy\":null,\"devicename\":\"T2航站楼（合用）S-7\",\"total\":16300,\"regionname\":\"西区\",\"lastUpdateTime\":null,\"lastUpdateAcc\":null,\"startdata\":6381900,\"enddata\":6398200,\"day\":\"20200804\",\"deviceno\":\"1092\",\"typename\":\"累计流量\",\"channelno\":\"331\",\"metername\":\"WPD200\",\"remark\":null,\"createDate_lte\":null,\"status_in\":null,\"updateDate_lte\":null,\"createDate_between\":null,\"createDate_gte\":null,\"updateDate_gte\":null,\"updateDate_between\":null,\"id_in\":null}],\"expLevel\":46000}"}
+        }
     },
 
     computed: {},
@@ -170,10 +188,11 @@ export default {
     position: absolute;
     left: 24px;
     bottom: 17px;
-    width: 200px;
+    min-width: 200px;
     height: 25px;
     line-height: 25px;
     padding-left: 8px;
+    padding-right: 8px;
     font-size: 14px;
     color: #327BB9;
     border: 1px solid #327BB9;

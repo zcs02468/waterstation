@@ -6,20 +6,35 @@
             <div class="block"></div>
             <div class="block"></div>
         </div>
-        <div class="text"><span class="tag">当日值班：</span> 部总值班 张三； <span class="tag">平台值班：</span>李四</div>
+        <div class="text"><span class="tag">当日值班：</span> 部总值班 {{this.platformClass}}； <span class="tag">平台值班：</span>{{this.charageClass}}</div>
     </div>
 </template>
 
 <script>
+import {getTodayDuty} from "../../../axios"
 export default {
     name: "OnDuty",
     data() {
-        return {};
+        return {
+            platformClass:'', //平台值班
+            charageClass:'',  //部总值班
+        };
     },
 
     components: {},
 
-    methods: {},
+    mounted() {
+        this.getData()
+    },
+
+    methods: {
+        async getData() {
+            let [res] = await getTodayDuty();
+            let data = JSON.parse(res.message);
+            this.platformClass = data.platformClass;
+            this.charageClass = data.charageClass;
+        }
+    },
 
     computed: {},
 };

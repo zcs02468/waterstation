@@ -146,6 +146,9 @@ export default {
                                 color: "#6DFFEB",
                             },
                         },
+                        tooltip: {
+                            show: false
+                        },
                         areaStyle: {
                             normal: {
                                 color: new this.$echarts.graphic.LinearGradient(
@@ -206,6 +209,9 @@ export default {
                             textStyle: {
                                 color: "#6DFFEB",
                             },
+                        },
+                        tooltip: {
+                            show: false
                         },
                         areaStyle: {
                             normal: {
@@ -268,6 +274,9 @@ export default {
                                 color: "#6DFFEB",
                             },
                         },
+                        tooltip: {
+                            show: false
+                        },
                         areaStyle: {
                             normal: {
                                 color: new this.$echarts.graphic.LinearGradient(
@@ -328,6 +337,9 @@ export default {
                             textStyle: {
                                 color: "#6DFFEB",
                             },
+                        },
+                        tooltip: {
+                            show: false
                         },
                         areaStyle: {
                             normal: {

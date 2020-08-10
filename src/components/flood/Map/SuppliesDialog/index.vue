@@ -15,16 +15,16 @@
                         </li>
                     </ul>
                     <ul class="body">
-                        <li v-for="(item, i) in phoneData" :key="`phone${i}`">
-                            <div>{{ item.location }}</div>
-                            <div>{{ item.name }}</div>
-                            <div>{{ item.num }}</div>
+                        <li v-for="(item, i) in propList" :key="`supplies${i}`">
+                            <div>{{ item.materialsWarehouse }}</div>
+                            <div>{{ item.materialsName }}</div>
+                            <div>{{ item.materials }}</div>
                             <div>{{ item.phone }}</div>
                         </li>
                     </ul>
                 </div>
                 <div class="pagination">
-                    <el-pagination background layout="total, prev, pager, next" prev-text="上一页" next-text="下一页" :page-size="5" :total="45"> </el-pagination>
+                    <el-pagination background layout="total, prev, pager, next" prev-text="上一页" next-text="下一页" :page-size="5" :total="propList.length"> </el-pagination>
                 </div>
             </div>
         </div>
@@ -33,42 +33,16 @@
 
 <script>
 export default {
+
+    props:{
+        propList:{
+            default:Array
+        }
+    },
+
     name: "Dialog",
     data() {
-        return {
-            phoneData: [
-                {
-                    location: "维修科仓库",
-                    name: "雨鞋",
-                    num: 200,
-                    phone: "13512345678",
-                },
-                {
-                    location: "维修科仓库",
-                    name: "阻水袋",
-                    num: 500,
-                    phone: "13512345678",
-                },
-                {
-                    location: "维修科仓库",
-                    name: "潜水泵",
-                    num: 10,
-                    phone: "13512345678",
-                },
-                {
-                    location: "维修科仓库",
-                    name: "雨鞋",
-                    num: 20,
-                    phone: "13512345678",
-                },
-                {
-                    location: "维修科仓库",
-                    name: "阻水袋",
-                    num: 500,
-                    phone: "13512345678",
-                },
-            ],
-        };
+        return {};
     },
 
     components: {},
@@ -124,6 +98,7 @@ export default {
         }
         .content {
             margin-top: 8px;
+            min-height: 205px;
         }
         li {
             display: flex;

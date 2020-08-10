@@ -16,17 +16,17 @@
                         </li>
                     </ul>
                     <ul class="body">
-                        <li v-for="(item, i) in phoneData" :key="`phone${i}`">
-                            <div>{{ item.location }}</div>
-                            <div>{{ item.name }}</div>
-                            <div>{{ item.num }}</div>
-                            <div>{{ item.user }}</div>
+                        <li v-for="(item, i) in propList" :key="`phone${i}`">
+                            <div>{{ item.armyPlace }}</div>
+                            <div>{{ item.armyName }}</div>
+                            <div>{{ item.headcount }}</div>
+                            <div>{{ item.chargeLeadName }}</div>
                             <div>{{ item.phone }}</div>
                         </li>
                     </ul>
                 </div>
                 <div class="pagination">
-                    <el-pagination background layout="total, prev, pager, next" prev-text="上一页" next-text="下一页" :page-size="5" :total="45"> </el-pagination>
+                    <el-pagination background layout="total, prev, pager, next" prev-text="上一页" next-text="下一页" :page-size="5" :total="propList.length"> </el-pagination>
                 </div>
             </div>
         </div>
@@ -36,46 +36,20 @@
 <script>
 export default {
     name: "Dialog",
+
+    props:{
+        propList:{
+            default:Array
+        }
+    },
+
     data() {
-        return {
-            phoneData: [
-                {
-                    location: "北水塔1",
-                    name: "维修可",
-                    num: 5,
-                    user: "张三",
-                    phone: "13512345678",
-                },
-                {
-                    location: "北水塔2",
-                    name: "浦东建设实业有限公司",
-                    num: 5,
-                    user: "张三",
-                    phone: "13512345678",
-                },
-                {
-                    location: "北水塔3",
-                    name: "维修科室",
-                    num: 5,
-                    user: "张三",
-                    phone: "13512345678",
-                },
-                {
-                    location: "北水塔4",
-                    name: "维修可",
-                    num: 5,
-                    user: "张三",
-                    phone: "13512345678",
-                },
-                {
-                    location: "北水塔5",
-                    name: "维修可",
-                    num: 5,
-                    user: "张三",
-                    phone: "13512345678",
-                },
-            ],
-        };
+        return {};
+    },
+    
+    created() {
+        
+        console.log( 'this.propList', this.propList );
     },
 
     components: {},
@@ -131,6 +105,7 @@ export default {
         }
         .content {
             margin-top: 8px;
+            min-height: 205px;
         }
         li {
             display: flex;

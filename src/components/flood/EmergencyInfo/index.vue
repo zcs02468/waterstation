@@ -6,7 +6,7 @@
         </div>
         <div class="panel-bodyer">
             <ul>
-                <li v-for="(item, i) in 6" :key="`EmergencyInfo${i}`"><span>电话{{ item }}:</span>&nbsp;&nbsp;13888888288</li>
+                <li v-for="(item, i) in bbList" :key="`EmergencyInfo${i}`"><span>{{ item.napeName }}:</span>&nbsp;&nbsp;{{item.napeValue}}</li>
             </ul>
         </div>
     </div>
@@ -14,18 +14,33 @@
 
 <script>
 import Title from "../../common/Title";
+import {getBulletinBoard} from "../../../axios";
 
 export default {
     name: "EmergencyInfo",
     data() {
-        return {};
+        return {
+            bbList:[]
+        };
     },
 
     components: {
         Title,
     },
 
-    methods: {},
+    mounted() {
+        this.getData()
+    },
+
+    methods: {
+        
+        async getData() {
+            let [res] = await getBulletinBoard();
+            let data = JSON.parse(res.message)
+            this.bbList = data.bbList;
+        }
+    
+    },
 
     computed: {},
 };
