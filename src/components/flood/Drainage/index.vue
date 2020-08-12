@@ -13,23 +13,23 @@
                 </li>
                 <li>
                     <div>南调东侧</div>
-                    <div>10</div>
-                    <div>1000</div>
+                    <div>{{list.south_east_open}}</div>
+                    <div>{{list.south_east_displacement}}</div>
                 </li>
                 <li>
                     <div>南调西侧</div>
-                    <div>10</div>
-                    <div>1000</div>
+                    <div>{{list.south_west_open}}</div>
+                    <div>{{list.south_west_displacement}}</div>
                 </li>
                 <li>
                     <div>北调东侧</div>
-                    <div>10</div>
-                    <div>1000</div>
+                    <div>{{list.north_east_open}}</div>
+                    <div>{{list.north_east_displacement}}</div>
                 </li>
                 <li>
                     <div>北调西侧</div>
-                    <div>10</div>
-                    <div>1000</div>
+                    <div>{{list.north_west_open}}</div>
+                    <div>{{list.north_west_displacement}}</div>
                 </li>
             </ul>
         </div>
@@ -37,18 +37,43 @@
 </template>
 
 <script>
-import Title from "../../common/Title"
+import Title from "../../common/Title";
+import { getDrainagePumpingPlant } from "../../../axios";
 export default {
     name: "Drainage",
     data() {
-        return {};
+        return {
+            list: {
+                north_east_displacement: 0,
+                north_east_open: 0,
+                north_west_displacement: 0,
+                north_west_open: 0,
+                south_east_displacement: 0,
+                south_east_open: 0,
+                south_west_displacement: 0,
+                south_west_open: 0,
+            },
+        };
     },
 
     components: {
-        Title
+        Title,
     },
 
-    methods: {},
+    created() {
+        this.getData();
+    },
+
+    methods: {
+        async getData() {
+            let [res] = await getDrainagePumpingPlant();
+            let data = JSON.parse(res.message);
+            Object.assign(this.list, data)
+            setTimeout(()=> {
+                this.getData();
+            },60000)
+        },
+    },
 
     computed: {},
 };
@@ -64,23 +89,23 @@ export default {
     padding: 21.5px 0 0 22.5px;
 }
 %ul-line {
-    content: '';
+    content: "";
     position: absolute;
     height: 100%;
     width: 1px;
-    background: #5075A6;
+    background: #5075a6;
     top: 0;
 }
-ul{
+ul {
     width: 498px;
     position: relative;
     padding-left: 21px;
     margin-top: 15px;
-    &::before{
+    &::before {
         @extend %ul-line;
         left: 166px;
     }
-    &::after{
+    &::after {
         @extend %ul-line;
         right: 166px;
     }
@@ -90,8 +115,8 @@ ul{
         display: flex;
         // align-items: center;
         margin-bottom: 15px;
-        border: 1px solid #57BDFF;
-        div{
+        border: 1px solid #57bdff;
+        div {
             width: 166px;
             height: 34px;
             font-size: 16px;

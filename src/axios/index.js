@@ -32,3 +32,16 @@ export const getTodayDuty = async () => await get({ url: baseUrl + "/smartEnergy
 
 //应急看板接口
 export const getBulletinBoard = async () => await get({ url: baseUrl + "/smartEnergy/bulletinBoard" });
+
+//积水接口
+export const getPondingStandard = async () => await get({ url: baseUrl + "/smartEnergy/pondingStandard" });
+
+//排水泵站运行情况接口
+export const getDrainagePumpingPlant = async () => await get({ url: baseUrl + "/smartEnergy/drainagePumpingPlant" });
+
+//河道及水池水位接口
+export const getRiverCourseLevel = async () => await get({ url: baseUrl + "/smartEnergy/riverCourseLevel" });
+
+//雨量接口
+export const getRainfall = async () => await get({ url: baseUrl + "/smartEnergy/rainfall" });
+

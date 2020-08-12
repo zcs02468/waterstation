@@ -46,10 +46,8 @@ export default {
 
     methods: {
         async getData() {
-            // let [res] = await getWaterConsumption();
-            let res = this.getAjaxData()
-            let data = JSON.parse(res.message)
-            console.log('data', data);
+            let [res] = await getWaterConsumption();
+            let data = JSON.parse(res.message);
             let arr =[];
             data.levelList.forEach(item => {
                 arr.push({

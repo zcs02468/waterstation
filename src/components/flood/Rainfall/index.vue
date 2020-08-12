@@ -4,9 +4,9 @@
         <div class="panel-header">
             <Title class="title" title="雨量" />
             <ul>
-                <li v-for="(item, index) in color" :key="`Rainfall${index}`">
-                    <span class="iconfont iconquxian" :style="{ color: `${item}` }"></span>
-                    <span>点位{{ index + 1 }}雨量</span>
+                <li v-for="(item, index) in tooltipArr" :key="`Rainfall${index}`">
+                    <span class="iconfont iconquxian" :style="{ color: `${color[index]}` }"></span>
+                    <span>{{item}}</span>
                 </li>
             </ul>
         </div>
@@ -19,11 +19,16 @@
 
 <script>
 import Title from "../../common/Title";
+import {getRainfall} from "../../../axios"
 export default {
     name: "Rainfall",
     data() {
         return {
             color: ["#5C87ED", "#6FCCE6", "#F6BA16", "#E8764A", "#9270CA", "#DA4545", "#B2E76A"],
+            xAxisData: [],
+            yAxisData: [],
+            tooltipArr:['北调节泵站雨量','南调节泵站雨量','北雨污水泵站雨量','南雨污水泵站雨量'],
+            myChart: null
         };
     },
 
@@ -33,19 +38,40 @@ export default {
 
     mounted() {
         this.drawLine();
+        this.getData()
     },
 
     methods: {
+        async getData() {
+            // northLevel	北调节泵站雨量
+            // southLevel	南调节泵站雨量
+            // northSewageLevel	北雨污水泵站雨量
+            // southSewageLevel	南雨污水泵站雨量
+
+            let [res] = await getRainfall()
+            let data = JSON.parse(res.message).rainfallList;
+            let xAxisData = [];
+            let yAxisData =[[],[],[],[]];
+            data.forEach((item) => {
+                xAxisData.push( `${item.hour}:00` );
+                yAxisData[0].push(item.northLevel)
+                yAxisData[1].push(item.southLevel)
+                yAxisData[2].push(item.northSewageLevel)
+                yAxisData[3].push(item.southSewageLevel)
+            });
+            this.xAxisData = xAxisData;
+            this.yAxisData = yAxisData;
+            this.option.series[0].data = this.yAxisData[0];
+            this.option.series[1].data = this.yAxisData[1];
+            this.option.series[2].data = this.yAxisData[2];
+            this.option.series[3].data = this.yAxisData[3];
+            this.option.xAxis.data =this.xAxisData;
+            this.myChart.setOption(this.option);
+            setTimeout(()=> {
+                this.getData()
+            },60000)
+        },
         drawLine() {
-            var rainData = [
-                [47, 45, 43, 38, 35, 38, 45, 50, 50, 50, 50, 49],
-                [39, 39, 34, 35, 39, 34, 34, 36, 36, 39, 39, 36],
-                [70, 63, 76, 66, 79, 63, 67, 65, 69, 76, 79, 68],
-                [34, 40, 33, 29, 35, 37, 33, 38, 31, 34, 34, 39],
-                [98, 95, 101, 99, 92, 98, 94, 101, 93, 98, 93, 94],
-                [88, 72, 89, 84, 72, 73, 82, 80, 72, 73, 85, 70],
-                [62, 56, 59, 51, 61, 59, 52, 53, 64, 53, 53, 53],
-            ];
 
             this.option = {
                 color: this.color,
@@ -79,7 +105,7 @@ export default {
                             color: "#fff",
                         },
                     },
-                    data: ["00:00", "00:01", "00:02", "00:03", "00:04", "00:05", "00:06", "00:07", "00:08", "00:09", "00:10", "00:11"],
+                    data: this.xAxisData,
                 },
                 yAxis: {
                     type: "value",
@@ -103,55 +129,55 @@ export default {
                 },
                 series: [
                     {
-                        data: rainData[0],
+                        data: this.yAxisData[0],
                         type: "line",
                         smooth: true,
                         symbolSize: 1,
                     },
                     {
-                        data: rainData[1],
+                        data: this.yAxisData[1],
                         type: "line",
                         smooth: true,
                         symbolSize: 1,
                     },
                     {
-                        data: rainData[2],
+                        data: this.yAxisData[2],
                         type: "line",
                         smooth: true,
                         symbolSize: 1,
                     },
                     {
-                        data: rainData[3],
+                        data: this.yAxisData[3],
                         type: "line",
                         smooth: true,
                         symbolSize: 1,
                     },
-                    {
-                        data: rainData[4],
-                        type: "line",
-                        smooth: true,
-                        symbolSize: 1,
-                    },
-                    {
-                        data: rainData[5],
-                        type: "line",
-                        smooth: true,
-                        symbolSize: 1,
-                    },
-                    {
-                        data: rainData[6],
-                        type: "line",
-                        smooth: true,
-                        symbolSize: 1,
-                    },
+                    // {
+                    //     data: rainData[4],
+                    //     type: "line",
+                    //     smooth: true,
+                    //     symbolSize: 1,
+                    // },
+                    // {
+                    //     data: rainData[5],
+                    //     type: "line",
+                    //     smooth: true,
+                    //     symbolSize: 1,
+                    // },
+                    // {
+                    //     data: rainData[6],
+                    //     type: "line",
+                    //     smooth: true,
+                    //     symbolSize: 1,
+                    // },
                 ],
             };
             // 基于准备好的dom，初始化this.$echarts实例
-            let myChart = this.$echarts.init(document.getElementById("chart_Rainfall"));
+            this.myChart = this.$echarts.init(document.getElementById("chart_Rainfall"));
             // 绘制图表
-            myChart.setOption(this.option);
+            this.myChart.setOption(this.option);
             window.addEventListener("resize", () => {
-                myChart.resize();
+                this.myChart.resize();
             });
         },
     },
@@ -185,9 +211,11 @@ export default {
 ul {
     display: flex;
     flex-wrap: wrap;
-    padding-left: 35px;
+    // padding-left: 35px;
+    // padding-left: 115px;
     li {
-        width: 83.5px;
+        // width: 83.5px;
+        width: 150px;
         height: 16.5px;
         margin-right: 18px;
         margin-bottom: 6.5px;
