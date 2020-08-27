@@ -11,12 +11,18 @@ export default new Vuex.Store({
                 twoH: 0,
             },
         },
+        flood:{
+            autoUrlNum: ''
+        }
     },
     mutations: {
         setWaterLevel(state, obj) {
             state.home.waterLevel.oneH = obj.oneH;
             state.home.waterLevel.twoH = obj.twoH;
         },
+        setAutoUrlNum(state) {
+            state.flood.autoUrlNum = Math.random();
+        }
     },
     actions: {},
     modules: {},

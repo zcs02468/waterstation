@@ -15,7 +15,7 @@
                         </li>
                     </ul>
                     <ul class="body">
-                        <li v-for="(item, i) in propList" :key="`supplies${i}`">
+                        <li v-for="(item, i) in dataList" :key="`supplies${i}`">
                             <div>{{ item.materialsWarehouse }}</div>
                             <div>{{ item.materialsName }}</div>
                             <div>{{ item.materials }}</div>
@@ -24,7 +24,16 @@
                     </ul>
                 </div>
                 <div class="pagination">
-                    <el-pagination background layout="total, prev, pager, next" prev-text="上一页" next-text="下一页" :page-size="5" :total="propList.length"> </el-pagination>
+                    <el-pagination
+                        background
+                        layout="total, prev, pager, next"
+                        prev-text="上一页"
+                        next-text="下一页"
+                        :page-size="pageSize"
+                        :total="propList.length"
+                        @current-change="currentChange"
+                    >
+                    </el-pagination>
                 </div>
             </div>
         </div>
@@ -33,23 +42,36 @@
 
 <script>
 export default {
-
-    props:{
-        propList:{
-            default:Array
-        }
+    props: {
+        propList: {
+            default: Array,
+        },
     },
 
     name: "Dialog",
     data() {
-        return {};
+        return {
+            dataList: [],
+            pageSize: 5,
+        };
     },
 
     components: {},
 
+    created() {
+        let lastVal = 0;
+        let nextVal = this.pageSize;
+        this.dataList = this.propList.slice(lastVal, nextVal);
+    },
+
     methods: {
         closeDailog() {
             this.$emit("closeDailog");
+        },
+        currentChange(val) {
+            let lastVal = val * this.pageSize - this.pageSize;
+            let nextVal = val * this.pageSize;
+            this.dataList = this.propList.slice(lastVal, nextVal);
         },
     },
 

@@ -32,8 +32,8 @@
                 </div>
                 <div class="box-right peripheral">
                     <div><span class="region">东区</span><span>友乐路泵站:-1.01m</span></div>
-                    <div><span class="region">西区</span><span>南泵站:-1.01m</span></div>
-                    <div><span class="region"></span><span>北泵站:-0.47m</span></div>
+                    <div><span class="region">西区</span><span :class="classType.south_out_level">南泵站:{{list.south_out_level}}m</span></div>
+                    <div><span class="region"></span><span :class="classType.north_out_leve">北泵站:{{list.north_out_leve}}m</span></div>
                 </div>
             </div>
             <div class="body-content body-bottom">
@@ -46,10 +46,10 @@
                     </div>
                 </div>
                 <div class="box-right adjust">
-                    <div><span class="region">南</span><span class="orange">东侧：2.96m</span></div>
-                    <div><span class="region"></span><span>西侧:1.39m</span></div>
-                    <div><span class="region">北</span><span>东侧:1.39m</span></div>
-                    <div><span class="region"></span><span class="yellow">西侧:2.30m</span></div>
+                    <div><span class="region">南</span><span :class="classType.south_east_level">东侧：{{list.south_east_level}}m</span></div>
+                    <div><span class="region"></span><span :class="classType.south_west_level">西侧:{{list.south_west_level}}m</span></div>
+                    <div><span class="region">北</span><span :class="classType.north_east_level">东侧:{{list.north_east_level}}m</span></div>
+                    <div><span class="region"></span><span :class="classType.north_west_level">西侧:{{list.north_west_level}}m</span></div>
                 </div>
             </div>
         </div>
@@ -59,11 +59,30 @@
 <script>
 import Title from "../../common/Title";
 import Container from "./Container"
+import {getRiverCourseLevel} from "../../../axios/index"
 
 export default {
     name: "WaterLevel",
     data() {
-        return {};
+        return {
+            list:{
+                north_out_leve:'',
+                south_out_level:'',
+                south_east_level:'',
+                south_west_level:'',
+                north_east_level:'',
+                north_west_level:'',
+                standardList:[]
+            },
+            classType: {
+                north_out_leve:1,
+                south_out_level:1,
+                south_east_level:1,
+                south_west_level:1,
+                north_east_level:1,
+                north_west_level:1,
+            }
+        };
     },
 
     components: {
@@ -71,9 +90,54 @@ export default {
         Container
     },
 
-    methods: {},
+    created() {
+        this.getData()
+    },
 
-    computed: {},
+    methods: {
+        async getData() {
+            let [res] = await getRiverCourseLevel();
+            let data = JSON.parse(res.message);
+            let standardList = data.standardList;
+            Object.assign(this.list, data);
+            let arr = []
+            standardList.forEach(item => {
+                arr.push( item.dictValue )
+            })
+            this.classType.north_out_leve = this.getClass(arr,'north_out_leve');
+            this.classType.south_out_level = this.getClass(arr,'south_out_level');
+            this.classType.south_east_level = this.getClass(arr,'south_east_level');
+            this.classType.south_west_level = this.getClass(arr,'south_west_level');
+            this.classType.north_east_level = this.getClass(arr,'north_east_level');
+            this.classType.north_west_level = this.getClass(arr,'north_west_level');
+            // console.log( '111111111111111111111111', data );
+            // 北调节池外河水位 north_out_leve
+            // 南调节池外河水位 south_out_level
+
+            // 对应  外围河道，
+
+            // 南调节东侧前水位 south_east_level	南调节东侧前水位
+            // 南调节西侧前水位 south_west_level	南调节西侧前水位
+            // 北调节东侧前水位 north_east_level	北调节东侧前水位
+            // 北调节西侧前水位 north_west_level	北调节西侧前水位
+            
+            // 对应   调节水池
+        },
+        getClass(arr,value) {
+            if( this.list[value] > arr[2] ) {
+                this.$store.commit('setAutoUrlNum');
+                return 'orange';
+            }
+            if( this.list[value] > arr[1] ) {
+                this.$store.commit('setAutoUrlNum');
+                return 'yellow';
+            }
+            return '';
+        }
+    },
+
+    computed: {
+    },
 };
 </script>
 <style lang="scss" scoped>

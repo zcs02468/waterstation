@@ -16,7 +16,7 @@
                         </li>
                     </ul>
                     <ul class="body">
-                        <li v-for="(item, i) in propList" :key="`phone${i}`">
+                        <li v-for="(item, i) in dataList" :key="`phone${i}`">
                             <div>{{ item.armyPlace }}</div>
                             <div>{{ item.armyName }}</div>
                             <div>{{ item.headcount }}</div>
@@ -26,7 +26,16 @@
                     </ul>
                 </div>
                 <div class="pagination">
-                    <el-pagination background layout="total, prev, pager, next" prev-text="上一页" next-text="下一页" :page-size="5" :total="propList.length"> </el-pagination>
+                    <el-pagination
+                        background
+                        layout="total, prev, pager, next"
+                        prev-text="上一页"
+                        next-text="下一页"
+                        :page-size="pageSize"
+                        :total="propList.length"
+                        @current-change="currentChange"
+                    >
+                    </el-pagination>
                 </div>
             </div>
         </div>
@@ -37,19 +46,23 @@
 export default {
     name: "Dialog",
 
-    props:{
-        propList:{
-            default:Array
-        }
+    props: {
+        propList: {
+            default: Array,
+        },
     },
 
     data() {
-        return {};
+        return {
+            dataList: [],
+            pageSize: 5,
+        };
     },
-    
+
     created() {
-        
-        console.log( 'this.propList', this.propList );
+        let lastVal = 0;
+        let nextVal = this.pageSize;
+        this.dataList = this.propList.slice(lastVal, nextVal);
     },
 
     components: {},
@@ -57,6 +70,11 @@ export default {
     methods: {
         closeDailog() {
             this.$emit("closeDailog");
+        },
+        currentChange(val) {
+            let lastVal = val * this.pageSize - this.pageSize;
+            let nextVal = val * this.pageSize;
+            this.dataList = this.propList.slice(lastVal, nextVal);
         },
     },
 

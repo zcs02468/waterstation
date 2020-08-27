@@ -12,7 +12,7 @@ export const get = ({ url, params }) =>
     })
         .then((res) => [res.data])
         .catch((err) => {
-            console.log(err);
+            console.log("报错接口："+ url,err);
             return [null];
         });
 

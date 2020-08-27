@@ -47,18 +47,34 @@ export default {
             // southLevel	南调节泵站雨量
             // northSewageLevel	北雨污水泵站雨量
             // southSewageLevel	南雨污水泵站雨量
-
             let [res] = await getRainfall()
-            let data = JSON.parse(res.message).rainfallList;
+            // console.log( 'res', JSON.parse(res.message));
+            let data = JSON.parse(res.message);
+            let rainfallList = data.rainfallList;
+            // let rainfallList = [{"pageNo":null,"pageSize":null,"id":"1293105993393008641","isNewRecord":false,"orderBy":null,"createByName":null,"updateByName":null,"updateBy":null,"lastUpdateDateTime":null,"status":null,"createDate":null,"updateDate":null,"remarks":null,"createBy":null,"gatherDate":"2020-08-12 00:00:00","hour":17,"northLevel":234.21,"southLevel":433.32,"northSewageLevel":543.23,"southSewageLevel":231.23,"updateDate_between":null,"updateDate_gte":null,"createDate_between":null,"createDate_gte":null,"createDate_lte":null,"status_in":null,"updateDate_lte":null,"id_in":null},{"pageNo":null,"pageSize":null,"id":"1293105993393008640","isNewRecord":false,"orderBy":null,"createByName":null,"updateByName":null,"updateBy":null,"lastUpdateDateTime":null,"status":null,"createDate":null,"updateDate":null,"remarks":null,"createBy":null,"gatherDate":"2020-08-12 00:00:00","hour":16,"northLevel":232.23,"southLevel":344.34,"northSewageLevel":774.76,"southSewageLevel":983.35,"updateDate_between":null,"updateDate_gte":null,"createDate_between":null,"createDate_gte":null,"createDate_lte":null,"status_in":null,"updateDate_lte":null,"id_in":null}]
+            
+            let standardList = data.standardList;
+            let markLineArr = [];
+            standardList.forEach((item,index) => {
+                markLineArr.push(this.getMarkLine(item,index))
+            });
+            this.option.series[4].markLine.data = markLineArr;
             let xAxisData = [];
             let yAxisData =[[],[],[],[]];
-            data.forEach((item) => {
+            let standardArr = [];
+            rainfallList.forEach((item) => {
                 xAxisData.push( `${item.hour}:00` );
                 yAxisData[0].push(item.northLevel)
                 yAxisData[1].push(item.southLevel)
                 yAxisData[2].push(item.northSewageLevel)
                 yAxisData[3].push(item.southSewageLevel)
+                standardArr.push( item.northLevel, item.southLevel, item.northSewageLevel, item.southSewageLevel );
             });
+            //警戒值判断
+            let maxNum = Math.max(...standardArr)
+            if( standardArr.length > 0  &&  (maxNum > standardList[0].dictValue) )  {
+                this.$store.commit('setAutoUrlNum')
+            }
             this.xAxisData = xAxisData;
             this.yAxisData = yAxisData;
             this.option.series[0].data = this.yAxisData[0];
@@ -70,6 +86,22 @@ export default {
             setTimeout(()=> {
                 this.getData()
             },60000)
+        },
+        getMarkLine(data,index) {
+            let colorArr = ['rgba(0,244,255,1)','#F6BA16','red','red','red']
+            return {
+                    yAxis: data.dictValue,
+                    lineStyle: {
+                        width: 1.6,
+                        color: colorArr[index]
+                    },
+                    label: {
+                        show: true,
+                        position: "middle",
+                        formatter: "{b}"
+                    },
+                    name:data.dictLabel
+                }
         },
         drawLine() {
 
@@ -170,6 +202,115 @@ export default {
                     //     smooth: true,
                     //     symbolSize: 1,
                     // },
+                    {
+                        name: "最大库存",
+                        type: "line",
+                        markLine: {
+                            symbol: "none",
+                            silent: true,
+                            lineStyle: {
+                                normal: {
+                                    type: "solid"
+                                }
+                            },
+                            label: {
+                                position: "start"
+                            },
+                            data: [{
+                                yAxis: 300,
+                                lineStyle: {
+                                    width: 1.6,
+                                    color: "rgba(0,244,255,1)"
+                                },
+                                label: {
+                                    show: true,
+                                    position: "middle",
+                                    formatter: "{b}"
+                                },
+                                name:"11111"
+                            },
+                            {
+                                yAxis: 500,
+                                lineStyle: {
+                                    width: 1.6,
+                                    color: "#F6BA16"
+                                },
+                                label: {
+                                    show: true,
+                                    position: "middle",
+                                    formatter: "{b}"
+                                },
+                                name:"2222"
+                            },{
+                                yAxis: 600,
+                                lineStyle: {
+                                    width: 1.6,
+                                    color: "red"
+                                },
+                                label: {
+                                    show: true,
+                                    position: "middle",
+                                    formatter: "{b}"
+                                },
+                                name:"3333"
+                            }
+                            ]
+                        }
+                    },
+                    // {
+                    //     name: "安全库存",
+                    //     type: "line",
+                    //     markLine: {
+                    //         symbol: "none",
+                    //         silent: true,
+                    //         lineStyle: {
+                    //             normal: {
+                    //                 type: "solid"
+                    //             }
+                    //         },
+                    //         label: {
+                    //             position: "start"
+                    //         },
+                    //         data: [{
+                    //             yAxis: 500,
+                    //             lineStyle: {
+                    //                 width: 1.6560000000000001,
+                    //                 color: "rgba(0,244,255,1)"
+                    //             },
+                    //             label: {
+                    //                 show: true,
+                    //                 position: '',
+                    //             }
+                    //         }]
+                    //     }
+                    // },
+                    // {
+                    //     name: "安全库存",
+                    //     type: "line",
+                    //     markLine: {
+                    //         symbol: "none",
+                    //         silent: true,
+                    //         lineStyle: {
+                    //             normal: {
+                    //                 type: "solid"
+                    //             }
+                    //         },
+                    //         label: {
+                    //             position: "start"
+                    //         },
+                    //         data: [{
+                    //             yAxis: 600,
+                    //             lineStyle: {
+                    //                 width: 1.6560000000000001,
+                    //                 // color: "rgba(0,244,255,1)"
+                    //             },
+                    //             label: {
+                    //                 show: true,
+                    //                 position: '',
+                    //             }
+                    //         }]
+                    //     }
+                    // },
                 ],
             };
             // 基于准备好的dom，初始化this.$echarts实例
@@ -212,7 +353,7 @@ ul {
     display: flex;
     flex-wrap: wrap;
     // padding-left: 35px;
-    // padding-left: 115px;
+    padding-left: 115px;
     li {
         // width: 83.5px;
         width: 150px;

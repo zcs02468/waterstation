@@ -46,19 +46,23 @@ export default {
 
     methods: {
         async getData() {
-            let [res] = await getWaterConsumption();
-            let data = JSON.parse(res.message);
-            let arr =[];
-            data.levelList.forEach(item => {
-                arr.push({
-                    value: item.total,
-                    name: item.devicename
-                })
-            });
-            this.expLevel = data.expLevel;
-            this.levelList = arr;
-            this.option.series[0].data = this.levelList;
-            this.myChart.setOption(this.option);
+            try {
+                let [res] = await getWaterConsumption();
+                let data = JSON.parse(res.message);
+                let arr =[];
+                data.levelList.forEach(item => {
+                    arr.push({
+                        value: item.total,
+                        name: item.devicename
+                    })
+                });
+                this.expLevel = data.expLevel;
+                this.levelList = arr;
+                this.option.series[0].data = this.levelList;
+                this.myChart.setOption(this.option);
+            } catch (error) {
+                console.log('error', error);
+            }
             setTimeout(()=> {
                 this.getData()
             },60000)

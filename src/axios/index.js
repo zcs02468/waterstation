@@ -1,6 +1,7 @@
 import { get } from "./tools";
 
-const baseUrl = 'http://47.110.226.205:8980'
+// const baseUrl = 'http://47.110.226.205:8980'
+const baseUrl = ''
 
 //供水检测率接口
 export const getDetectionRate = async () => await get({ url: baseUrl + "/smartEnergy/detectionrate" });
@@ -25,6 +26,10 @@ export const getWaterVolume = async () => await get({ url: baseUrl + "/smartEner
 
 //用户累计用水量接口
 export const getWaterConsumption = async () => await get({ url: baseUrl + "/smartEnergy/waterConsumption" });
+
+//应急物资接口 
+export const getEmergencyInfo = async () => await get({ url: baseUrl + "/smartEnergy/emergencyInfo" });
+
 
 //flood
 //当日值班接口

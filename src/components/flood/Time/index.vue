@@ -46,11 +46,11 @@ export default {
             var dd = now.getDay();
             var d = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
             this.time = `${year}-${month}-${day}  ${hours}:${minutes} ${d[dd]} `;
-            //document.all.show.innerHTML=" 系统管理部门     超级管理员   "+year+"年"+month+"月"+day+"日 "+d[dd+1]+"";
-            // document.all.show.innerHTML = "${loginUser.username}   " + year + "——" + month + "——" + day + "日 " + d[dd + 1] + "";
-            //一分刷新一次显示时间
+
+            // this.date.day = `${year}-${String(month).padStart(2,"0")}-${String(day).padStart(2,"0")}`;
+            // this.date.time = `${String(hours).padStart(2,"0")}:${String(minutes).padStart(2,"0")}:${String(seconds).padStart(2,"0")}`;
+            // this.date.week = `${d[dd]}`;
             var timeID = setTimeout(this.showLeftTime, 1000 * 60);
-            // return time
         },
     },
 
