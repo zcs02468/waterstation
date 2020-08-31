@@ -71,9 +71,7 @@ export default {
     },
 
     async created() {
-        const [res] = await getConstructionInfo();
-        let data = JSON.parse(res.message);
-        this.filterAjaxData(data.orderList);
+        this.getData();
         // this.$axios.get("http://47.110.226.205:8980/smartEnergy/build").then((res) => {
         //     let data = JSON.parse(res.data.message);
         //     console.log(data);
@@ -90,6 +88,14 @@ export default {
     },
 
     methods: {
+        async getData() {
+            const [res] = await getConstructionInfo();
+            let data = JSON.parse(res.message);
+            this.filterAjaxData(data.orderList);
+            setTimeout(()=> {
+                this.getData();
+            },60000)
+        },
         selectClick(value) {
             this.selectIndex = value;
         },

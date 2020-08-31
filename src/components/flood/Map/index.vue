@@ -23,7 +23,7 @@
         <div class="map-bodyer">
             <div id="eaMap" v-show="selectType == 'team'"></div>
             <div id="emMap" v-show="selectType == 'supplices'"></div>
-            <div class="team-mark">
+            <div class="team-mark" v-show="isShowList" @click="closeList">
                 <div class="team-info">
                     <div class="info-back"></div>
                     <ul>
@@ -59,6 +59,7 @@ export default {
         return {
             selectType: "team",
             showDialog: false,
+            isShowList: false,
             teamIndex: '',
             eaList: [],
             emList: [],
@@ -111,7 +112,8 @@ export default {
                     that.info.location = `队伍驻点：${eaList.armyPlace}`   //队伍驻点：
                     that.info.name = `队伍名称：${eaList.armyName}`      //队伍名称：XXXXX
                     that.info.num = `人数：${eaList.headcount}`        //人数：XXXXX
-                    that.info.phone = `现场负责人联系电话：${eaList.phone}`          //现场负责人联系电话：13555555555
+                    that.info.phone = `现场负责人联系电话：${eaList.phone}`       //现场负责人联系电话：13555555555
+                    that.isShowList = true
                 });
             }
             this.eaList.forEach( (item,index)=> {
@@ -147,6 +149,7 @@ export default {
                     that.info.name = `物资名称：${emList.materialsName}`      //队伍名称：XXXXX
                     that.info.num = `数量：${emList.materials}`        //人数：XXXXX
                     that.info.phone = `保管联系人电话：${emList.phone}`          //现场负责人联系电话：13555555555
+                    that.isShowList = true
                 });
             }
             this.emList.forEach( (item,index)=> {
@@ -155,6 +158,7 @@ export default {
         },
         openDialog() {
             this.showDialog = true;
+            this.isShowList = false;
         },
         closeDailog() {
             this.showDialog = false;
@@ -183,6 +187,9 @@ export default {
                 this.getData()
             },60000)
         },
+        closeList() {
+            this.isShowList = false
+        }
     },
 
     computed: {},
@@ -272,7 +279,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    pointer-events: none;
+    // pointer-events: none;
 }
 //rgba(109, 214, 255, 0.44)
 .info-back {

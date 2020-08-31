@@ -33,7 +33,7 @@
                 <div class="box-right peripheral">
                     <div><span class="region">东区</span><span>友乐路泵站:-1.01m</span></div>
                     <div><span class="region">西区</span><span :class="classType.south_out_level">南泵站:{{list.south_out_level}}m</span></div>
-                    <div><span class="region"></span><span :class="classType.north_out_leve">北泵站:{{list.north_out_leve}}m</span></div>
+                    <div><span class="region"></span><span :class="classType.north_out_level">北泵站:{{list.north_out_level}}m</span></div>
                 </div>
             </div>
             <div class="body-content body-bottom">
@@ -66,7 +66,7 @@ export default {
     data() {
         return {
             list:{
-                north_out_leve:'',
+                north_out_level:'',
                 south_out_level:'',
                 south_east_level:'',
                 south_west_level:'',
@@ -75,7 +75,7 @@ export default {
                 standardList:[]
             },
             classType: {
-                north_out_leve:1,
+                north_out_level:1,
                 south_out_level:1,
                 south_east_level:1,
                 south_west_level:1,
@@ -104,12 +104,15 @@ export default {
             standardList.forEach(item => {
                 arr.push( item.dictValue )
             })
-            this.classType.north_out_leve = this.getClass(arr,'north_out_leve');
+            this.classType.north_out_level = this.getClass(arr,'north_out_leve');
             this.classType.south_out_level = this.getClass(arr,'south_out_level');
             this.classType.south_east_level = this.getClass(arr,'south_east_level');
             this.classType.south_west_level = this.getClass(arr,'south_west_level');
             this.classType.north_east_level = this.getClass(arr,'north_east_level');
             this.classType.north_west_level = this.getClass(arr,'north_west_level');
+            setTimeout(()=> {
+                this.getData()
+            },60000)
             // console.log( '111111111111111111111111', data );
             // 北调节池外河水位 north_out_leve
             // 南调节池外河水位 south_out_level
