@@ -38,6 +38,9 @@ export default {
             let [res] = await getBulletinBoard();
             let data = JSON.parse(res.message)
             this.bbList = data.bbList;
+            setTimeout(()=> {
+                this.getData();
+            },60000)
         }
     
     },

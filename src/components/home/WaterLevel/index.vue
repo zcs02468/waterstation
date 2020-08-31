@@ -71,6 +71,9 @@ export default {
                     twoH: data.sc2,
                 });
             }, 2000);
+            setTimeout(()=> {
+                this.getData()
+            },60000)
         },
     },
 

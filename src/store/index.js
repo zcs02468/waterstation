@@ -13,7 +13,8 @@ export default new Vuex.Store({
         },
         flood:{
             autoUrlNum: ''
-        }
+        },
+        time: 0
     },
     mutations: {
         setWaterLevel(state, obj) {
@@ -22,6 +23,10 @@ export default new Vuex.Store({
         },
         setAutoUrlNum(state) {
             state.flood.autoUrlNum = Math.random();
+        },
+        SET_TIME(state) {
+            state.time = Math.random();
+            console.log('state.time', state.time);
         }
     },
     actions: {},

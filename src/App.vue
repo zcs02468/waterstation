@@ -5,8 +5,20 @@
 </template>
 
 <script>
+// import {mapMutations} from "vuex"
 export default {
-  name: "App"
+  name: "App",
+  created() {
+    this.setTime();
+  },
+  methods:{
+    // ...mapMutations([
+    //   "SET_TIME"
+    // ]),
+    // setTime() {
+    //   this.SET_TIME();
+    // }
+  }
 };
 </script>
 
