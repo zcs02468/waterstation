@@ -3,7 +3,10 @@
         <div class="angle-box"></div>
         <div class="content">
             <span class="iconfont icondianhua"></span>
-            <span class="text">021-123456</span>
+            <span class="text">
+                <span>22369831</span>
+                <span>22369800</span>
+            </span>
             <div class="icon-box">
                 <span class="icon">
                     <span class="block"></span>
@@ -68,6 +71,9 @@ export default {
     .text{
         font-size: 16px;
         margin-left: 3px;
+        span:nth-child(1) {
+            margin-right: 30px;
+        }
     }
     .iconfont{
         font-size: 18px;

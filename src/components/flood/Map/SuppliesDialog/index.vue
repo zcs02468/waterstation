@@ -4,7 +4,7 @@
         <div class="dialog-box">
             <div class="close" @click="closeDailog">X</div>
             <div class="dialog-content">
-                <div class="title">应急物资</div>
+                <div class="title">应急仓库</div>
                 <div class="content">
                     <ul class="head">
                         <li>
@@ -18,7 +18,7 @@
                         <li v-for="(item, i) in dataList" :key="`supplies${i}`">
                             <div>{{ item.materialsWarehouse }}</div>
                             <div>{{ item.materialsName }}</div>
-                            <div>{{ item.materials }}</div>
+                            <div>{{ item.materials || 0 }}</div>
                             <div>{{ item.phone }}</div>
                         </li>
                     </ul>

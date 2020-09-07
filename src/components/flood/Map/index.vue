@@ -95,6 +95,7 @@ export default {
                 this.eaPoint = new BMap.Point(121.346817, 31.203347);
                 // 创建点坐标
                 this.eaBMap.centerAndZoom(this.eaPoint, 15);
+                this.eaBMap.enableScrollWheelZoom();
                 // 初始化地图，设置中心点坐标和地图级别
                 this.eaBMap.setMapStyleV2({
                     styleId: "b670429936d6b760f493c0af69582f6c",
@@ -111,7 +112,7 @@ export default {
                     let eaList = that.eaList[index];
                     that.info.location = `队伍驻点：${eaList.armyPlace}`   //队伍驻点：
                     that.info.name = `队伍名称：${eaList.armyName}`      //队伍名称：XXXXX
-                    that.info.num = `人数：${eaList.headcount}`        //人数：XXXXX
+                    that.info.num = `人数：${eaList.headcount || 0}`        //人数：XXXXX
                     that.info.phone = `现场负责人联系电话：${eaList.phone}`       //现场负责人联系电话：13555555555
                     that.isShowList = true
                 });
@@ -127,6 +128,7 @@ export default {
                 this.emPoint = new BMap.Point(121.346817, 31.203347);
                 // 创建点坐标
                 this.emBMap.centerAndZoom(this.emPoint, 15);
+                this.emBMap.enableScrollWheelZoom();
                 // 初始化地图，设置中心点坐标和地图级别
                 this.emBMap.setMapStyleV2({
                     styleId: "b670429936d6b760f493c0af69582f6c",
@@ -147,7 +149,7 @@ export default {
                     let emList = that.emList[index];
                     that.info.location = `物资仓库点位：${emList.materialsWarehouse}`   //队伍驻点：
                     that.info.name = `物资名称：${emList.materialsName}`      //队伍名称：XXXXX
-                    that.info.num = `数量：${emList.materials}`        //人数：XXXXX
+                    that.info.num = `数量：${emList.materials || 0}`        //人数：XXXXX
                     that.info.phone = `保管联系人电话：${emList.phone}`          //现场负责人联系电话：13555555555
                     that.isShowList = true
                 });

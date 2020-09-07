@@ -4,6 +4,7 @@ const postcss = px2rem({
     remUnit: 80, //基准大小 baseSize，需要和rem.js中相同
 });
 module.exports = {
+    publicPath:"/water",
     devServer: {
         disableHostCheck: true,
         // baseUrl: "/",

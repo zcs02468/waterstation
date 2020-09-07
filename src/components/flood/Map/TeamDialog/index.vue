@@ -19,7 +19,7 @@
                         <li v-for="(item, i) in dataList" :key="`phone${i}`">
                             <div>{{ item.armyPlace }}</div>
                             <div>{{ item.armyName }}</div>
-                            <div>{{ item.headcount }}</div>
+                            <div>{{ item.headcount || 0 }}</div>
                             <div>{{ item.chargeLeadName }}</div>
                             <div>{{ item.phone }}</div>
                         </li>

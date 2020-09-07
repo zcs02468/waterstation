@@ -2,7 +2,7 @@
     <div class="home-container">
         <div class="wrap" ref="editor">
             <div class="main-head">
-                <Header title="智慧水站防汛检测" />
+                <Header title="智慧水站防汛监测" />
                 <div class="info">
                     <Time />
                     <Phone />
