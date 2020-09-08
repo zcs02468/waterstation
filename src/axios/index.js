@@ -1,6 +1,7 @@
 import { get } from "./tools";
 
 // const baseUrl = 'http://47.110.226.205:8980'
+// const baseUrl = 'http://218.242.28.28:802'
 const baseUrl = ''
 
 //供水检测率接口

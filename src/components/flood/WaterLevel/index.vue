@@ -15,10 +15,16 @@
                     </div>
                 </div>
                 <div class="box-right">
-                    <div class="orange">南水塔:4.32m</div>
-                    <div class="yellow">迎宾三路:3.32m</div>
-                    <div>空港三路污水泵站:1.92m</div>
-                    <div>北水塔:1.92m</div>
+                    <div class="category-box">
+                        <div class="category-item" v-for="item in categoryArr" :key="`aa${item}`">
+                            <span class="round"></span>
+                            <span class="category-name">{{item}}</span>
+                        </div>
+                    </div>
+                    <div class="water-info orange">南水塔:4.32m</div>
+                    <div class="water-info yellow">迎宾三路:3.32m</div>
+                    <div class="water-info">空港三路污水泵站:1.92m</div>
+                    <div class="water-info">北水塔:1.92m</div>
                 </div>
             </div>
             <div class="body-content body-center">
@@ -31,9 +37,15 @@
                     </div>
                 </div>
                 <div class="box-right peripheral">
-                    <div><span class="region">东区</span><span>友乐路泵站:-1.01m</span></div>
-                    <div><span class="region">西区</span><span :class="classType.south_out_level">南泵站:{{list.south_out_level}}m</span></div>
-                    <div><span class="region"></span><span :class="classType.north_out_level">北泵站:{{list.north_out_level}}m</span></div>
+                    <div class="category-box">
+                        <div class="category-item" v-for="item in categoryArr" :key="`bb${item}`">
+                            <span class="round"></span>
+                            <span class="category-name">{{item}}</span>
+                        </div>
+                    </div>
+                    <div class="water-info"><span class="region">东区</span><span>友乐路泵站:-1.01m</span></div>
+                    <div class="water-info divider"><span class="region">西区</span><span :class="classType.south_out_level">南泵站:{{list.south_out_level}}m</span></div>
+                    <div class="water-info"><span class="region"></span><span :class="classType.north_out_level">北泵站:{{list.north_out_level}}m</span></div>
                 </div>
             </div>
             <div class="body-content body-bottom">
@@ -46,10 +58,16 @@
                     </div>
                 </div>
                 <div class="box-right adjust">
-                    <div><span class="region">南</span><span :class="classType.south_east_level">东侧：{{list.south_east_level}}m</span></div>
-                    <div><span class="region"></span><span :class="classType.south_west_level">西侧:{{list.south_west_level}}m</span></div>
-                    <div><span class="region">北</span><span :class="classType.north_east_level">东侧:{{list.north_east_level}}m</span></div>
-                    <div><span class="region"></span><span :class="classType.north_west_level">西侧:{{list.north_west_level}}m</span></div>
+                    <div class="category-box">
+                        <div class="category-item" v-for="item in categoryArr1" :key="`cc${item}`">
+                            <span class="round"></span>
+                            <span class="category-name">{{item}}</span>
+                        </div>
+                    </div>
+                    <div class="water-info"><span class="region">南</span><span :class="classType.south_east_level">东侧：{{list.south_east_level}}m</span></div>
+                    <div class="water-info"><span class="region"></span><span :class="classType.south_west_level">西侧:{{list.south_west_level}}m</span></div>
+                    <div class="water-info divider"><span class="region">北</span><span :class="classType.north_east_level">东侧:{{list.north_east_level}}m</span></div>
+                    <div class="water-info"><span class="region"></span><span :class="classType.north_west_level">西侧:{{list.north_west_level}}m</span></div>
                 </div>
             </div>
         </div>
@@ -65,6 +83,8 @@ export default {
     name: "WaterLevel",
     data() {
         return {
+            categoryArr:['排水通畅','排水放缓','排水困难'],
+            categoryArr1:['安全水位','可控水位','警戒水位'],
             list:{
                 north_out_level:'',
                 south_out_level:'',
@@ -144,6 +164,9 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.divider {
+    border-top:1px solid #D8D8D8;
+}
 .orange {
     color: #FF5E3D;
 }
@@ -161,6 +184,54 @@ export default {
 }
 .body-content {
     display: flex;
+}
+
+.category-box {
+    width: 100%;
+    height: 20px;
+    display: flex;
+    line-height: 20px;
+    span {
+        display: inline-block;
+    }
+    .category-item{
+        margin-right: 12px;
+        &:nth-child(1) {
+            .round {
+                border: 1px solid #7BC7FF;
+            }
+            .category-name {
+                color: #7BC7FF;
+            }
+        }
+        &:nth-child(2) {
+            .round {
+                border: 1px solid #F6BA16;
+            }
+            .category-name {
+                color: #F6BA16;
+            }
+        }
+        &:nth-child(3) {
+            .round {
+                border: 1px solid #FF5E3D;
+            }
+            .category-name {
+                color: #FF5E3D;
+            }
+        }
+    }
+    .round {
+        width: 12px;
+        height: 12px;
+        border-radius: 100%;
+        vertical-align: middle;
+        margin-right: 4px;
+    }
+    .category-name {
+        font-size: 12px;
+        color: #7BC7FF;
+    }
 }
 
 .body-top{
@@ -207,34 +278,34 @@ export default {
 }
 .box-right {
     margin-left: 48px;
-        font-size: 16px;
-    div {
+    font-size: 16px;
+    .water-info {
         width: 244px;
         // font-size: 16px;
-        height: 37px;
-        line-height: 37px;
+        height: 34px;
+        line-height: 34px;
     }
 }
 .peripheral {
-    div{
+    .water-info{
         span:nth-child(1) {
             display: inline-block;
             width: 73px;
         }
-    }
-    div:nth-child(2) {
-        border-top:1px solid #D8D8D8;
+        // &:nth-child(2) {
+        //     border-top:1px solid #D8D8D8;
+        // }
     }
 }
 .adjust {
-    div{
+    .water-info{
         span:nth-child(1) {
             display: inline-block;
             width: 73px;
         }
     }
-    div:nth-child(2) {
-        border-bottom:1px solid #D8D8D8;
-    }
+    // .water-info:nth-child(2) {
+    //     border-bottom:1px solid #D8D8D8;
+    // }
 }
 </style>

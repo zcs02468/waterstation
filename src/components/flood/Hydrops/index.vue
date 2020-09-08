@@ -3,6 +3,7 @@
     <div class="panel left-container-angle">
         <div class="panel-header">
             <Title title="积水" />
+            <div class="unit">(mm)</div>
         </div>
         <div class="warp-container">
             <div class="charts" id="chart_Hydrops"></div>
@@ -31,7 +32,7 @@ export default {
             var charts = {
                 // 按顺序排列从大到小
                 cityList: ["空港六路\n迎宾三路路口", "迎宾二路\n空港一路口", "迎宾六路油库门口", "空港三路北段", "申达五路/申达六路", "申达一路"],
-                cityData: [63200, 72600, 34100, 37800, 32600, 6500],
+                cityData: [200, 400, 100, 110, 450, 300],
             };
             var top10CityList = charts.cityList;
             var top10CityData = charts.cityData;
@@ -165,6 +166,12 @@ export default {
 }
 .panel-header {
     padding: 21px 0 0 22.5px;
+    display: flex;
+    align-items: center;
+    .unit {
+        color: #fff;
+        margin-left: 10px;
+    }
 }
 .charts {
     width: 540px;

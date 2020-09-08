@@ -106,6 +106,13 @@ export default {
             let that = this;
             function addMarker(point,index) {
                 var marker = new BMap.Marker(point);
+                var label = new BMap.Label(index+1, {
+                    offset : new BMap.Size(4, 4)
+                }); 
+                label.setStyle({
+                    background:'none',color:'#fff',border:'none'//只要对label样式进行设置就可达到在标注图标上显示数字的效果
+                });
+                marker.setLabel(label);//显示地理名称 a 
                 that.eaBMap.addOverlay(marker);
                 // addClickHandler(marker,index);
                 marker.addEventListener("click",function() {
