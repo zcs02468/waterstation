@@ -103,7 +103,6 @@ export default {
                     styleId: "b670429936d6b760f493c0af69582f6c",
                 });
             }
-            // map.centerAndZoom(point, 15);
             // 编写自定义函数,创建标注
             let that = this;
             function addMarker(point,index) {
@@ -122,7 +121,6 @@ export default {
                 });
                 marker.setLabel(label);//显示地理名称 a 
                 that.eaBMap.addOverlay(marker);
-                // addClickHandler(marker,index);
                 marker.addEventListener("click",function() {
                     let eaList = that.eaList[index];
                     that.info.location = `队伍驻点：${eaList.armyPlace}`   //队伍驻点：
@@ -149,12 +147,6 @@ export default {
                     styleId: "b670429936d6b760f493c0af69582f6c",
                 });
             }
-            //         121.353293,31.201024
-            // 121.334407,31.199594
-            // 121.353125,31.200235
-            // 121.353134,31.19964
-
-            // map.centerAndZoom(point, 15);
             // 编写自定义函数,创建标注
             let that = this;
             function addMarker(point,index) {
