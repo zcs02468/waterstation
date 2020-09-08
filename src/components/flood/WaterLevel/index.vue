@@ -133,7 +133,6 @@ export default {
             setTimeout(()=> {
                 this.getData()
             },60000)
-            // console.log( '111111111111111111111111', data );
             // 北调节池外河水位 north_out_leve
             // 南调节池外河水位 south_out_level
 

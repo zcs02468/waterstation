@@ -74,7 +74,6 @@ export default {
             // northSewageLevel	北雨污水泵站雨量
             // southSewageLevel	南雨污水泵站雨量
             let [res] = await getRainfall()
-            // console.log( 'res', JSON.parse(res.message));
             let data = JSON.parse(res.message);
             let rainfallList = data.rainfallList;
 //             let res = {

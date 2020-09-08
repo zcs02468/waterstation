@@ -49,7 +49,6 @@ export default {
             try {
                 let [res] = await getWaterConsumption();
                 let data = JSON.parse(res.message);
-                console.log('data', data); 
                 let arr =[];
                 data.levelList.forEach(item => {
                     arr.push({
