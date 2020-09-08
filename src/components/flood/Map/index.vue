@@ -20,9 +20,11 @@
                 </ul>
             </div>
         </div>
-        <div class="map-bodyer">
-            <div id="eaMap" v-show="selectType == 'team'"></div>
-            <div id="emMap" v-show="selectType == 'supplices'"></div>
+        <div class="map-bodyer" :class="[ selectType == 'team' ? 'selectEaMap':'selectEmMap']">
+            <!-- <div id="eaMap" v-show="selectType == 'team'"></div>
+            <div id="emMap" v-show="selectType == 'supplices'"></div> -->
+            <div id="eaMap"></div>
+            <div id="emMap"></div>
             <div class="team-mark" v-show="isShowList" @click="closeList">
                 <div class="team-info">
                     <div class="info-back"></div>
@@ -106,9 +108,15 @@ export default {
             let that = this;
             function addMarker(point,index) {
                 var marker = new BMap.Marker(point);
-                var label = new BMap.Label(index+1, {
-                    offset : new BMap.Size(4, 4)
-                }); 
+                if( index >= 10 ) {
+                    var label = new BMap.Label(index+1, {
+                        offset : new BMap.Size(0, 4)
+                    }); 
+                }else {
+                    var label = new BMap.Label(index+1, {
+                        offset : new BMap.Size(4, 4)
+                    }); 
+                }
                 label.setStyle({
                     background:'none',color:'#fff',border:'none'//只要对label样式进行设置就可达到在标注图标上显示数字的效果
                 });
@@ -151,6 +159,19 @@ export default {
             let that = this;
             function addMarker(point,index) {
                 var marker = new BMap.Marker(point);
+                if( index >= 10 ) {
+                    var label = new BMap.Label(index+1, {
+                        offset : new BMap.Size(0, 4)
+                    }); 
+                }else {
+                    var label = new BMap.Label(index+1, {
+                        offset : new BMap.Size(4, 4)
+                    }); 
+                }
+                label.setStyle({
+                    background:'none',color:'#fff',border:'none'//只要对label样式进行设置就可达到在标注图标上显示数字的效果
+                });
+                marker.setLabel(label);//显示地理名称 a 
                 that.emBMap.addOverlay(marker);
                 marker.addEventListener("click",function() {
                     let emList = that.emList[index];
@@ -270,10 +291,28 @@ export default {
     margin-top: 13.5px;
     position: relative;
 }
+.selectEaMap {
+    #eaMap{
+        z-index: 3;
+    }
+    #emMap{
+        z-index: -1;
+    }
+}
+.selectEmMap {
+    #eaMap{
+        z-index: -1;
+    }
+    #emMap{
+        z-index: 3;
+    }
+}
 #emMap {
     height: 100%;
     width: 100%;
     position: absolute;
+    top: 0;
+    left: 0;
 }
 #eaMap {
     height: 100%;
