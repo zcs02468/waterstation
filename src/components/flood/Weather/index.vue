@@ -36,6 +36,7 @@
 
 <script>
 import Title from "../../common/Title";
+import {getWeather} from "../../../axios"
 export default {
     name: "Weather",
     data() {
@@ -46,7 +47,16 @@ export default {
         Title,
     },
 
-    methods: {},
+    created() {
+        this.getData()
+    },
+
+    methods: {
+        async getData() {
+            let [res] = await getWeather();
+            console.log( 'resres', res );
+        }
+    },
 
     computed: {},
 };
