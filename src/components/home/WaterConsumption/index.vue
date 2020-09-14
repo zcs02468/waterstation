@@ -16,7 +16,7 @@
             </div>
         </div>
         <div class="tip">
-            其他用户用水量计量：{{expLevel}}m&sup3;
+            其他用户用水量计量：{{consumptionArr[getConsumptionType].sum}}m&sup3;
         </div>
     </div>
 </template>
@@ -24,6 +24,7 @@
 <script>
 import Title from "../../common/Title";
 import {getWaterConsumption} from "../../../axios";
+import {mapState} from "vuex"
 export default {
     name: "WaterConsumption",
     data() {
@@ -32,6 +33,21 @@ export default {
             levelList:[],
             option: null,
             color: ["#64AB28", "#336FCF", "#4FA0F7", "#7053D9", "#05B1AB", "#0052D2", "#7C3735", "#0E9355", "#B3B810", "#349DC8"],
+            contrast:['','',''],
+            consumptionArr:[
+                {
+                    sum:0,
+                    list:[]
+                },
+                {
+                    sum:0,
+                    list:[]
+                },
+                {
+                    sum:0,
+                    list:[]
+                },
+            ],
         };
     },
 
@@ -40,32 +56,49 @@ export default {
     },
 
     mounted() {
-        this.getData()
         this.drawLine();
+        this.getData()
     },
 
     methods: {
         async getData() {
             try {
                 let [res] = await getWaterConsumption();
+                // let res = {"result":"true","message":"{\"weekList\":[{\"devicename\":\"能源中心水表2\",\"sumtotal\":487000},{\"devicename\":\"东航城北区西侧生活S-1\",\"sumtotal\":164200},{\"devicename\":\"T2航站楼（合用）S-12\",\"sumtotal\":68900},{\"devicename\":\"西区东航保障部S-2\",\"sumtotal\":61500},{\"devicename\":\"T2航站楼（合用）S-8\",\"sumtotal\":61500},{\"devicename\":\"国航泊悦酒店(合用)S-1\",\"sumtotal\":49100},{\"devicename\":\"东航城南区西侧生活S-1\",\"sumtotal\":45900},{\"devicename\":\"西区吉祥航空S-1\",\"sumtotal\":40900},{\"devicename\":\"西区东航机库S-1\",\"sumtotal\":34700},{\"devicename\":\"T2航站楼（合用）S-7\",\"sumtotal\":32100}],\"expMonthLevel\":118200,\"levelList\":[{\"pageNo\":null,\"orderBy\":null,\"isNewRecord\":false,\"pageSize\":null,\"id\":\"能源中心水表2#20200910\",\"status\":null,\"remarks\":null,\"createByName\":null,\"createDate\":null,\"updateDate\":null,\"lastUpdateDateTime\":null,\"updateBy\":null,\"createBy\":null,\"updateByName\":null,\"devicename\":\"能源中心水表2\",\"total\":284900,\"regionname\":\"西区\",\"lastUpdateTime\":null,\"lastUpdateAcc\":null,\"startdata\":120891300,\"enddata\":121176200,\"day\":\"20200910\",\"deviceno\":\"1138\",\"typename\":\"累计流量\",\"channelno\":\"331\",\"metername\":\"水表\",\"remark\":null,\"createDate_gte\":null,\"createDate_between\":null,\"updateDate_between\":null,\"updateDate_gte\":null,\"updateDate_lte\":null,\"createDate_lte\":null,\"status_in\":null,\"id_in\":null},{\"pageNo\":null,\"orderBy\":null,\"isNewRecord\":false,\"pageSize\":null,\"id\":\"东航城北区西侧生活S-1#20200910\",\"status\":null,\"remarks\":null,\"createByName\":null,\"createDate\":null,\"updateDate\":null,\"lastUpdateDateTime\":null,\"updateBy\":null,\"createBy\":null,\"updateByName\":null,\"devicename\":\"东航城北区西侧生活S-1\",\"total\":60700,\"regionname\":\"西区\",\"lastUpdateTime\":null,\"lastUpdateAcc\":null,\"startdata\":61063000,\"enddata\":61123700,\"day\":\"20200910\",\"deviceno\":\"1097\",\"typename\":\"累计流量\",\"channelno\":\"331\",\"metername\":\"水表\",\"remark\":null,\"createDate_gte\":null,\"createDate_between\":null,\"updateDate_between\":null,\"updateDate_gte\":null,\"updateDate_lte\":null,\"createDate_lte\":null,\"status_in\":null,\"id_in\":null},{\"pageNo\":null,\"orderBy\":null,\"isNewRecord\":false,\"pageSize\":null,\"id\":\"T2航站楼（合用）S-12#20200910\",\"status\":null,\"remarks\":null,\"createByName\":null,\"createDate\":null,\"updateDate\":null,\"lastUpdateDateTime\":null,\"updateBy\":null,\"createBy\":null,\"updateByName\":null,\"devicename\":\"T2航站楼（合用）S-12\",\"total\":28800,\"regionname\":\"西区\",\"lastUpdateTime\":null,\"lastUpdateAcc\":null,\"startdata\":14927300,\"enddata\":14956100,\"day\":\"20200910\",\"deviceno\":\"1087\",\"typename\":\"累计流量\",\"channelno\":\"331\",\"metername\":\"WPD200\",\"remark\":null,\"createDate_gte\":null,\"createDate_between\":null,\"updateDate_between\":null,\"updateDate_gte\":null,\"updateDate_lte\":null,\"createDate_lte\":null,\"status_in\":null,\"id_in\":null},{\"pageNo\":null,\"orderBy\":null,\"isNewRecord\":false,\"pageSize\":null,\"id\":\"T2航站楼（合用）S-9#20200910\",\"status\":null,\"remarks\":null,\"createByName\":null,\"createDate\":null,\"updateDate\":null,\"lastUpdateDateTime\":null,\"updateBy\":null,\"createBy\":null,\"updateByName\":null,\"devicename\":\"T2航站楼（合用）S-9\",\"total\":25300,\"regionname\":\"西区\",\"lastUpdateTime\":null,\"lastUpdateAcc\":null,\"startdata\":12136000,\"enddata\":12161300,\"day\":\"20200910\",\"deviceno\":\"1093\",\"typename\":\"累计流量\",\"channelno\":\"331\",\"metername\":\"WPD200\",\"remark\":null,\"createDate_gte\":null,\"createDate_between\":null,\"updateDate_between\":null,\"updateDate_gte\":null,\"updateDate_lte\":null,\"createDate_lte\":null,\"status_in\":null,\"id_in\":null},{\"pageNo\":null,\"orderBy\":null,\"isNewRecord\":false,\"pageSize\":null,\"id\":\"T2航站楼（合用）S-8#20200910\",\"status\":null,\"remarks\":null,\"createByName\":null,\"createDate\":null,\"updateDate\":null,\"lastUpdateDateTime\":null,\"updateBy\":null,\"createBy\":null,\"updateByName\":null,\"devicename\":\"T2航站楼（合用）S-8\",\"total\":24700,\"regionname\":\"西区\",\"lastUpdateTime\":null,\"lastUpdateAcc\":null,\"startdata\":15506400,\"enddata\":15531100,\"day\":\"20200910\",\"deviceno\":\"1091\",\"typename\":\"累计流量\",\"channelno\":\"331\",\"metername\":\"WPD200\",\"remark\":null,\"createDate_gte\":null,\"createDate_between\":null,\"updateDate_between\":null,\"updateDate_gte\":null,\"updateDate_lte\":null,\"createDate_lte\":null,\"status_in\":null,\"id_in\":null},{\"pageNo\":null,\"orderBy\":null,\"isNewRecord\":false,\"pageSize\":null,\"id\":\"东航城南区西侧生活S-1#20200910\",\"status\":null,\"remarks\":null,\"createByName\":null,\"createDate\":null,\"updateDate\":null,\"lastUpdateDateTime\":null,\"updateBy\":null,\"createBy\":null,\"updateByName\":null,\"devicename\":\"东航城南区西侧生活S-1\",\"total\":23900,\"regionname\":\"西区\",\"lastUpdateTime\":null,\"lastUpdateAcc\":null,\"startdata\":16712300,\"enddata\":16736200,\"day\":\"20200910\",\"deviceno\":\"1098\",\"typename\":\"累计流量\",\"channelno\":\"331\",\"metername\":\"水表\",\"remark\":null,\"createDate_gte\":null,\"createDate_between\":null,\"updateDate_between\":null,\"updateDate_gte\":null,\"updateDate_lte\":null,\"createDate_lte\":null,\"status_in\":null,\"id_in\":null},{\"pageNo\":null,\"orderBy\":null,\"isNewRecord\":false,\"pageSize\":null,\"id\":\"国航泊悦酒店(合用)S-1#20200910\",\"status\":null,\"remarks\":null,\"createByName\":null,\"createDate\":null,\"updateDate\":null,\"lastUpdateDateTime\":null,\"updateBy\":null,\"createBy\":null,\"updateByName\":null,\"devicename\":\"国航泊悦酒店(合用)S-1\",\"total\":23700,\"regionname\":\"西区\",\"lastUpdateTime\":null,\"lastUpdateAcc\":null,\"startdata\":22700800,\"enddata\":22724500,\"day\":\"20200910\",\"deviceno\":\"1044\",\"typename\":\"累计流量\",\"channelno\":\"331\",\"metername\":\"WPD200\",\"remark\":null,\"createDate_gte\":null,\"createDate_between\":null,\"updateDate_between\":null,\"updateDate_gte\":null,\"updateDate_lte\":null,\"createDate_lte\":null,\"status_in\":null,\"id_in\":null},{\"pageNo\":null,\"orderBy\":null,\"isNewRecord\":false,\"pageSize\":null,\"id\":\"西区吉祥航空S-1#20200910\",\"status\":null,\"remarks\":null,\"createByName\":null,\"createDate\":null,\"updateDate\":null,\"lastUpdateDateTime\":null,\"updateBy\":null,\"createBy\":null,\"updateByName\":null,\"devicename\":\"西区吉祥航空S-1\",\"total\":19200,\"regionname\":\"西区\",\"lastUpdateTime\":null,\"lastUpdateAcc\":null,\"startdata\":17964900,\"enddata\":17984080,\"day\":\"20200910\",\"deviceno\":\"1028\",\"typename\":\"累计流量\",\"channelno\":\"331\",\"metername\":\"WPD100\",\"remark\":null,\"createDate_gte\":null,\"createDate_between\":null,\"updateDate_between\":null,\"updateDate_gte\":null,\"updateDate_lte\":null,\"createDate_lte\":null,\"status_in\":null,\"id_in\":null},{\"pageNo\":null,\"orderBy\":null,\"isNewRecord\":false,\"pageSize\":null,\"id\":\"西区东航机库S-1#20200910\",\"status\":null,\"remarks\":null,\"createByName\":null,\"createDate\":null,\"updateDate\":null,\"lastUpdateDateTime\":null,\"updateBy\":null,\"createBy\":null,\"updateByName\":null,\"devicename\":\"西区东航机库S-1\",\"total\":17000,\"regionname\":\"西区\",\"lastUpdateTime\":null,\"lastUpdateAcc\":null,\"startdata\":10516130,\"enddata\":10533080,\"day\":\"20200910\",\"deviceno\":\"1020\",\"typename\":\"累计流量\",\"channelno\":\"331\",\"metername\":\"WSD80\",\"remark\":null,\"createDate_gte\":null,\"createDate_between\":null,\"updateDate_between\":null,\"updateDate_gte\":null,\"updateDate_lte\":null,\"createDate_lte\":null,\"status_in\":null,\"id_in\":null},{\"pageNo\":null,\"orderBy\":null,\"isNewRecord\":false,\"pageSize\":null,\"id\":\"T2航站楼（合用）S-7#20200910\",\"status\":null,\"remarks\":null,\"createByName\":null,\"createDate\":null,\"updateDate\":null,\"lastUpdateDateTime\":null,\"updateBy\":null,\"createBy\":null,\"updateByName\":null,\"devicename\":\"T2航站楼（合用）S-7\",\"total\":16300,\"regionname\":\"西区\",\"lastUpdateTime\":null,\"lastUpdateAcc\":null,\"startdata\":6381900,\"enddata\":6398200,\"day\":\"20200910\",\"deviceno\":\"1092\",\"typename\":\"累计流量\",\"channelno\":\"331\",\"metername\":\"WPD200\",\"remark\":null,\"createDate_gte\":null,\"createDate_between\":null,\"updateDate_between\":null,\"updateDate_gte\":null,\"updateDate_lte\":null,\"createDate_lte\":null,\"status_in\":null,\"id_in\":null}],\"expLevel\":46000,\"expWeekLevel\":118200,\"monthList\":[{\"devicename\":\"能源中心水表2\",\"sumtotal\":487000},{\"devicename\":\"东航城北区西侧生活S-1\",\"sumtotal\":164200},{\"devicename\":\"T2航站楼（合用）S-12\",\"sumtotal\":68900},{\"devicename\":\"西区东航保障部S-2\",\"sumtotal\":61500},{\"devicename\":\"T2航站楼（合用）S-8\",\"sumtotal\":61500},{\"devicename\":\"国航泊悦酒店(合用)S-1\",\"sumtotal\":49100},{\"devicename\":\"东航城南区西侧生活S-1\",\"sumtotal\":45900},{\"devicename\":\"西区吉祥航空S-1\",\"sumtotal\":40900},{\"devicename\":\"西区东航机库S-1\",\"sumtotal\":34700},{\"devicename\":\"T2航站楼（合用）S-7\",\"sumtotal\":32100}]}"}
                 let data = JSON.parse(res.message);
-                let arr =[];
-                data.levelList.forEach(item => {
-                    arr.push({
-                        value: item.total,
-                        name: item.devicename
-                    })
-                });
-                this.expLevel = data.expLevel;
-                this.levelList = arr;
-                this.option.series[0].data = this.levelList;
-                this.myChart.setOption(this.option);
+                Object.assign(this.consumptionArr, data);
+                this.consumptionArr[0].sum = data.expLevel;
+                this.consumptionArr[0].list = this.parsingDayData(data.levelList, 'day');
+                this.consumptionArr[1].sum = data.expWeekLevel;
+                this.consumptionArr[1].list = this.parsingDayData(data.weekList, 'week');
+                this.consumptionArr[2].sum = data.expMonthLevel;
+                this.consumptionArr[2].list = this.parsingDayData(data.monthList, 'month');
+                this.setData();
             } catch (error) {
                 console.log('error', error);
             }
             setTimeout(()=> {
                 this.getData()
             },60000)
+        },
+        setData() {
+            this.option.series[0].data = this.consumptionArr[this.getConsumptionType].list
+            this.myChart.setOption(this.option);
+        },
+        parsingDayData(data,type) {
+            let arr =[];
+            let obj = {
+                day: "total",
+                week: "sumtotal",
+                month: "sumtotal",
+            }
+            data.forEach(item => {
+                arr.push({
+                    value: item[obj[type]],
+                    name: item.devicename
+                })
+            });
+            return arr;
         },
         drawLine() {
             this.option = {
@@ -132,7 +165,17 @@ export default {
         }
     },
 
-    computed: {},
+    computed: {
+        ...mapState({
+            getConsumptionType: state => state.home.consumptionType
+        })
+    },
+
+    watch:{
+        getConsumptionType(value) {
+            this.setData();
+        }
+    }
 };
 </script>
 <style lang="scss" scoped>

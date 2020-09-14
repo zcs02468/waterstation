@@ -7,12 +7,36 @@
         </div>
         <div class="panel-bodyer">
             <div class="block">
-                <span class="iconfont iconwendu2x"></span>
-                <span class="text">20&#8451;-26&#8451;</span>
+                <span class="iconfont iconshidu"></span>
+                <span class="text">{{weatherData.temperature}}{{weatherData.humidity_unit}}</span>
             </div>
             <div class="block center">
+                <span class="iconfont iconfengxiang"></span>
+                <span class="text">{{weatherData.winddirection}}{{weatherData.winddirection_unit}}</span>
+            </div>
+            <div class="block">
+                <span class="iconfont iconfengsu"></span>
+                <span class="text">{{weatherData.windspeed}}{{weatherData.windspeed_unit}}</span>
+            </div>
+            <div class="block">
+                <span class="iconfont iconkongqizhiliangjianceshujufenxi"></span>
+                <span class="text">{{weatherData.aqi}}</span>
+            </div>
+            <div class="block center">
+                <span class="iconfont iconkongqizhiliang1"></span>
+                <span class="text">{{weatherData.aqi_level_name}}</span>
+            </div>
+            <!-- <div class="block">
+                <span class="iconfont iconkongqizhiliang1"></span>
+                <span class="text">{{weatherData.aqi_level_name}}</span>
+            </div> -->
+            <!-- <div class="block">
                 <span class="iconfont iconshidu"></span>
                 <span class="text">40%</span>
+            </div>
+            <div class="block center">
+                <span class="iconfont iconwendu2x"></span>
+                <span class="text">20&#8451;-26&#8451;</span>
             </div>
             <div class="block">
                 <span class="iconfont iconkongqizhiliang1"></span>
@@ -29,7 +53,7 @@
             <div class="block">
                 <span class="iconfont iconqitalei_ziranzaihai"></span>
                 <span class="text">低</span>
-            </div>
+            </div> -->
         </div>
     </div>
 </template>
@@ -40,7 +64,24 @@ import {getWeather} from "../../../axios"
 export default {
     name: "Weather",
     data() {
-        return {};
+        return {
+            weatherData:{
+                temperature:25,//温度 -
+                humidity:40,	//湿度-
+                windspeed:2,	//风速-
+                winddirection:"东北风",	//风向-
+                temperature_unit:"",	//温度单位-
+                humidity_unit:'',	//湿度单位-
+                windspeed_unit:'',	//风速单位-
+                winddirection_unit:'',	//风向单位-
+                aqi:'',	//空气质量指数-
+                aqi_level:'',	//空气质量等级
+                aqi_level_name:'',	//空气质量等级名称
+                aqi_color:'',	//空气质量等级颜色
+
+                // 湿度     风向   风速    空气质量指数  空气质量+颜色
+            }
+        };
     },
 
     components: {
@@ -54,7 +95,22 @@ export default {
     methods: {
         async getData() {
             let [res] = await getWeather();
-            console.log( 'resres', res );
+            let data = JSON.parse(res.message);
+            Object.assign(this.weatherData, data)
+            // temperature	温度
+            // humidity	湿度
+            // windspeed	风速
+            // winddirection	风向
+            // temperature_unit	温度单位
+            // humidity_unit	湿度单位
+            // windspeed_unit	风速单位
+            // winddirection_unit	风向单位
+            // aqi	空气质量指数
+            // aqi_level	空气质量等级
+            // aqi_level_name	空气质量等级名称
+            // aqi_color	空气质量等级颜色
+
+            console.log( 'datadata', data );
         }
     },
 
@@ -120,7 +176,7 @@ export default {
     }
     .block {
         height: 36px;
-        width: 159px;
+        width: 175px;
         margin-bottom: 18.5px;
         padding-left: 32px;
     }

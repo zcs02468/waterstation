@@ -5,8 +5,11 @@
             <Title title="应急看板" />
         </div>
         <div class="panel-bodyer">
-            <ul>
+            <ul v-if="!status">
                 <li v-for="(item, i) in bbList" :key="`EmergencyInfo${i}`"><span>{{ item.napeName }}:</span>&nbsp;&nbsp;{{item.napeValue}}</li>
+            </ul>
+            <ul v-else>
+                <li v-for="(item, i) in adList" :key="`EmergencyInfo${i}`"><span>{{ item.warningLevel }}:</span>&nbsp;&nbsp;{{item.remark1 || ''}}</li>
             </ul>
         </div>
     </div>
@@ -20,12 +23,20 @@ export default {
     name: "EmergencyInfo",
     data() {
         return {
-            bbList:[]
+            bbList:[],
+            adList:[],
+            status: 0,
         };
     },
 
     components: {
         Title,
+    },
+
+    created() {
+        if (window.location.hash == "#status") {
+            this.status = 1
+        }
     },
 
     mounted() {
@@ -35,9 +46,17 @@ export default {
     methods: {
         
         async getData() {
-            let [res] = await getBulletinBoard();
-            let data = JSON.parse(res.message)
-            this.bbList = data.bbList;
+            try {
+                let [res] = await getBulletinBoard();
+                let data = JSON.parse(res.message)
+                this.bbList = data.bbList;
+                this.adadList = data.adList;
+                // adList		Object	
+                // warningLevel	预警等级	String	
+                // remark1	应对措施	String	如果为空，则不显示
+            } catch (error) {
+                console.error('error', error)
+            }
             setTimeout(()=> {
                 this.getData();
             },60000)
@@ -66,7 +85,7 @@ ul {
 }
 li {
     font-size: 18px;
-    width: 180.5px;
+    min-width: 180.5px;
     margin-top: 30px;
     &:nth-child(2),
     &:nth-child(5) {

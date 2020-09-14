@@ -6,6 +6,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     state: {
         home: {
+            consumptionType: 0, // 0--日 1--周  2--月
             waterLevel: {
                 oneH: 0,
                 twoH: 0,
@@ -26,6 +27,9 @@ export default new Vuex.Store({
         },
         SET_TIME(state) {
             state.time = Math.random();
+        },
+        SET_CONSUMPTION_TYPE(state,value) {
+            state.home.consumptionType = value
         }
     },
     actions: {},

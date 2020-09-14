@@ -21,6 +21,7 @@
 <script>
 import Title from "../../common/Title";
 import {getWaterVolume} from "../../../axios/index"
+import {mapMutations} from "vuex"
 export default {
     name: "WaterSupply",
     data() {
@@ -70,6 +71,7 @@ export default {
     },
 
     methods: {
+        ...mapMutations(["SET_CONSUMPTION_TYPE"]),
         async getData() {
             let [res] = await getWaterVolume();
             let data = JSON.parse(res.message);
@@ -124,6 +126,7 @@ export default {
             this.option.xAxis.data = this.xAxisData[index];
             this.option.series[0].data = this.waterData[index];
             this.myChart.setOption(this.option);
+            this.SET_CONSUMPTION_TYPE(index);
         },
         getdefaultData() {
             let fontSize = document.querySelector("html").style.fontSize;

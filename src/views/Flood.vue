@@ -89,7 +89,7 @@ export default {
         },
     },
     created() {
-        if (window.location.hash == "#111") {
+        if (window.location.hash == "#status") {
             this.show = true;
         }
     },
