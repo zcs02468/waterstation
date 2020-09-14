@@ -20,9 +20,11 @@
                 </ul>
             </div>
         </div>
-        <div class="map-bodyer">
-            <div id="eaMap" v-show="selectType == 'team'"></div>
-            <div id="emMap" v-show="selectType == 'supplices'"></div>
+        <div class="map-bodyer" :class="[ selectType == 'team' ? 'selectEaMap':'selectEmMap']">
+            <!-- <div id="eaMap" v-show="selectType == 'team'"></div>
+            <div id="emMap" v-show="selectType == 'supplices'"></div> -->
+            <div id="eaMap"></div>
+            <div id="emMap"></div>
             <div class="team-mark" v-show="isShowList" @click="closeList">
                 <div class="team-info">
                     <div class="info-back"></div>
@@ -101,13 +103,24 @@ export default {
                     styleId: "b670429936d6b760f493c0af69582f6c",
                 });
             }
-            // map.centerAndZoom(point, 15);
             // 编写自定义函数,创建标注
             let that = this;
             function addMarker(point,index) {
                 var marker = new BMap.Marker(point);
+                if( index >= 10 ) {
+                    var label = new BMap.Label(index+1, {
+                        offset : new BMap.Size(0, 4)
+                    }); 
+                }else {
+                    var label = new BMap.Label(index+1, {
+                        offset : new BMap.Size(4, 4)
+                    }); 
+                }
+                label.setStyle({
+                    background:'none',color:'#fff',border:'none'//只要对label样式进行设置就可达到在标注图标上显示数字的效果
+                });
+                marker.setLabel(label);//显示地理名称 a 
                 that.eaBMap.addOverlay(marker);
-                // addClickHandler(marker,index);
                 marker.addEventListener("click",function() {
                     let eaList = that.eaList[index];
                     that.info.location = `队伍驻点：${eaList.armyPlace}`   //队伍驻点：
@@ -134,16 +147,23 @@ export default {
                     styleId: "b670429936d6b760f493c0af69582f6c",
                 });
             }
-            //         121.353293,31.201024
-            // 121.334407,31.199594
-            // 121.353125,31.200235
-            // 121.353134,31.19964
-
-            // map.centerAndZoom(point, 15);
             // 编写自定义函数,创建标注
             let that = this;
             function addMarker(point,index) {
                 var marker = new BMap.Marker(point);
+                if( index >= 10 ) {
+                    var label = new BMap.Label(index+1, {
+                        offset : new BMap.Size(0, 4)
+                    }); 
+                }else {
+                    var label = new BMap.Label(index+1, {
+                        offset : new BMap.Size(4, 4)
+                    }); 
+                }
+                label.setStyle({
+                    background:'none',color:'#fff',border:'none'//只要对label样式进行设置就可达到在标注图标上显示数字的效果
+                });
+                marker.setLabel(label);//显示地理名称 a 
                 that.emBMap.addOverlay(marker);
                 marker.addEventListener("click",function() {
                     let emList = that.emList[index];
@@ -263,10 +283,28 @@ export default {
     margin-top: 13.5px;
     position: relative;
 }
+.selectEaMap {
+    #eaMap{
+        z-index: 3;
+    }
+    #emMap{
+        z-index: -1;
+    }
+}
+.selectEmMap {
+    #eaMap{
+        z-index: -1;
+    }
+    #emMap{
+        z-index: 3;
+    }
+}
 #emMap {
     height: 100%;
     width: 100%;
     position: absolute;
+    top: 0;
+    left: 0;
 }
 #eaMap {
     height: 100%;

@@ -119,12 +119,12 @@ export default {
                 ],
             };
             // 基于准备好的dom，初始化this.$echarts实例
-            let myChart = this.$echarts.init(document.getElementById("chart_home_cake"));
+            this.myChart = this.$echarts.init(document.getElementById("chart_home_cake"));
             // 绘制图表
-            myChart.setOption(this.option);
+            this.myChart.setOption(this.option);
 
             window.addEventListener("resize", () => {
-                myChart.resize();
+                this.myChart.resize();
             });
         },
         getAjaxData() {

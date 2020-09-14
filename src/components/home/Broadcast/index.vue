@@ -84,7 +84,6 @@ export default {
                     this.getData();
                 }, 60000);
             });
-            // console.log("111111111", this.broadcastContent);
             // this.dataList.push({
             //     id: Math.random() * 100,
             //     text: data.broadcastContent,
@@ -98,7 +97,6 @@ export default {
             ];
             let [textWidth, boxWidth] = [text.offsetWidth, box.offsetWidth];
             // 判断文字长度是否大于盒子长度
-            // console.log("textWidth, boxWidth", textWidth, boxWidth);
             if (boxWidth > textWidth) {
                 this.isShow = false;
                 return false;

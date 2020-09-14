@@ -36,7 +36,6 @@ export default {
     methods:{
         async getData() {
             const [res] = await getDetectionRate();
-            console.log( 're111111111s', res );
             let message = JSON.parse(res.message);
             this.water_detectionRate_west = message.water_detectionRate_west;
             this.water_detectionRate_east = message.water_detectionRate_east;

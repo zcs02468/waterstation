@@ -52,7 +52,6 @@ export default {
                 arr[2].push(item.ssll3);
                 arr[3].push(item.ssll2);
             });
-            // console.log( 'xAxisData', xAxisData );
             this.$set(this.effluentFlow,0,arr[0]);
             this.$set(this.effluentFlow,1,arr[1]);
             this.$set(this.effluentFlow,2,arr[2]);

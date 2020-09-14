@@ -26,7 +26,6 @@ export default new Vuex.Store({
         },
         SET_TIME(state) {
             state.time = Math.random();
-            console.log('state.time', state.time);
         }
     },
     actions: {},
