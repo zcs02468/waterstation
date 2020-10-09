@@ -1,7 +1,7 @@
 import { get } from "./tools";
 
-const baseUrl = 'http://218.242.28.28:800'
-// const baseUrl = ''
+// const baseUrl = 'http://218.242.28.28:800'
+const baseUrl = ''
 
 //供水检测率接口
 export const getDetectionRate = async () => await get({ url: baseUrl + "/smartEnergy/detectionrate" });

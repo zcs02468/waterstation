@@ -5,6 +5,11 @@
         <div class="panel-top">
             <div class="title-main">
                 <Title title="用户累计用水量" />
+                <div class="select-box">
+                    <span :class="selectIndex == 0 ? 'select' : ''" @click="selectClick(0)">日</span>
+                    <span :class="selectIndex == 1 ? 'select' : ''" @click="selectClick(1)">周</span>
+                    <span :class="selectIndex == 2 ? 'select' : ''" @click="selectClick(2)">月</span>
+                </div>
             </div>
         </div>
         <div class="warp-container">
@@ -16,7 +21,7 @@
             </div>
         </div>
         <div class="tip">
-            其他用户用水量计量：{{consumptionArr[getConsumptionType].sum}}m&sup3;
+            其他用户用水量计量：{{consumptionArr[selectIndex].sum}}m&sup3;
         </div>
     </div>
 </template>
@@ -24,11 +29,11 @@
 <script>
 import Title from "../../common/Title";
 import {getWaterConsumption} from "../../../axios";
-import {mapState} from "vuex"
 export default {
     name: "WaterConsumption",
     data() {
         return {
+            selectIndex: 0,
             expLevel:0,
             levelList:[],
             option: null,
@@ -82,7 +87,7 @@ export default {
             },60000)
         },
         setData() {
-            this.option.series[0].data = this.consumptionArr[this.getConsumptionType].list
+            this.option.series[0].data = this.consumptionArr[this.selectIndex].list
             this.myChart.setOption(this.option);
         },
         parsingDayData(data,type) {
@@ -160,22 +165,19 @@ export default {
                 this.myChart.resize();
             });
         },
+        selectClick(index) {
+            this.selectIndex = index;
+            this.setData()
+            // this.option.xAxis.data = this.xAxisData[index];
+            // this.option.series[0].data = this.waterData[index];
+            // this.myChart.setOption(this.option);
+            // this.SET_CONSUMPTION_TYPE(index);
+        },
         getAjaxData() {
             return {"result":"true","message":"{\"levelList\":[{\"pageNo\":null,\"pageSize\":null,\"id\":\"能源中心水表2#20200804\",\"isNewRecord\":false,\"orderBy\":null,\"createByName\":null,\"updateByName\":null,\"updateBy\":null,\"lastUpdateDateTime\":null,\"status\":null,\"createDate\":null,\"updateDate\":null,\"remarks\":null,\"createBy\":null,\"devicename\":\"能源中心水表2\",\"total\":284900,\"regionname\":\"西区\",\"lastUpdateTime\":null,\"lastUpdateAcc\":null,\"startdata\":120891300,\"enddata\":121176200,\"day\":\"20200804\",\"deviceno\":\"1138\",\"typename\":\"累计流量\",\"channelno\":\"331\",\"metername\":\"水表\",\"remark\":null,\"createDate_lte\":null,\"status_in\":null,\"updateDate_lte\":null,\"createDate_between\":null,\"createDate_gte\":null,\"updateDate_gte\":null,\"updateDate_between\":null,\"id_in\":null},{\"pageNo\":null,\"pageSize\":null,\"id\":\"东航城北区西侧生活S-1#20200804\",\"isNewRecord\":false,\"orderBy\":null,\"createByName\":null,\"updateByName\":null,\"updateBy\":null,\"lastUpdateDateTime\":null,\"status\":null,\"createDate\":null,\"updateDate\":null,\"remarks\":null,\"createBy\":null,\"devicename\":\"东航城北区西侧生活S-1\",\"total\":60700,\"regionname\":\"西区\",\"lastUpdateTime\":null,\"lastUpdateAcc\":null,\"startdata\":61063000,\"enddata\":61123700,\"day\":\"20200804\",\"deviceno\":\"1097\",\"typename\":\"累计流量\",\"channelno\":\"331\",\"metername\":\"水表\",\"remark\":null,\"createDate_lte\":null,\"status_in\":null,\"updateDate_lte\":null,\"createDate_between\":null,\"createDate_gte\":null,\"updateDate_gte\":null,\"updateDate_between\":null,\"id_in\":null},{\"pageNo\":null,\"pageSize\":null,\"id\":\"T2航站楼（合用）S-12#20200804\",\"isNewRecord\":false,\"orderBy\":null,\"createByName\":null,\"updateByName\":null,\"updateBy\":null,\"lastUpdateDateTime\":null,\"status\":null,\"createDate\":null,\"updateDate\":null,\"remarks\":null,\"createBy\":null,\"devicename\":\"T2航站楼（合用）S-12\",\"total\":28800,\"regionname\":\"西区\",\"lastUpdateTime\":null,\"lastUpdateAcc\":null,\"startdata\":14927300,\"enddata\":14956100,\"day\":\"20200804\",\"deviceno\":\"1087\",\"typename\":\"累计流量\",\"channelno\":\"331\",\"metername\":\"WPD200\",\"remark\":null,\"createDate_lte\":null,\"status_in\":null,\"updateDate_lte\":null,\"createDate_between\":null,\"createDate_gte\":null,\"updateDate_gte\":null,\"updateDate_between\":null,\"id_in\":null},{\"pageNo\":null,\"pageSize\":null,\"id\":\"T2航站楼（合用）S-9#20200804\",\"isNewRecord\":false,\"orderBy\":null,\"createByName\":null,\"updateByName\":null,\"updateBy\":null,\"lastUpdateDateTime\":null,\"status\":null,\"createDate\":null,\"updateDate\":null,\"remarks\":null,\"createBy\":null,\"devicename\":\"T2航站楼（合用）S-9\",\"total\":25300,\"regionname\":\"西区\",\"lastUpdateTime\":null,\"lastUpdateAcc\":null,\"startdata\":12136000,\"enddata\":12161300,\"day\":\"20200804\",\"deviceno\":\"1093\",\"typename\":\"累计流量\",\"channelno\":\"331\",\"metername\":\"WPD200\",\"remark\":null,\"createDate_lte\":null,\"status_in\":null,\"updateDate_lte\":null,\"createDate_between\":null,\"createDate_gte\":null,\"updateDate_gte\":null,\"updateDate_between\":null,\"id_in\":null},{\"pageNo\":null,\"pageSize\":null,\"id\":\"T2航站楼（合用）S-8#20200804\",\"isNewRecord\":false,\"orderBy\":null,\"createByName\":null,\"updateByName\":null,\"updateBy\":null,\"lastUpdateDateTime\":null,\"status\":null,\"createDate\":null,\"updateDate\":null,\"remarks\":null,\"createBy\":null,\"devicename\":\"T2航站楼（合用）S-8\",\"total\":24700,\"regionname\":\"西区\",\"lastUpdateTime\":null,\"lastUpdateAcc\":null,\"startdata\":15506400,\"enddata\":15531100,\"day\":\"20200804\",\"deviceno\":\"1091\",\"typename\":\"累计流量\",\"channelno\":\"331\",\"metername\":\"WPD200\",\"remark\":null,\"createDate_lte\":null,\"status_in\":null,\"updateDate_lte\":null,\"createDate_between\":null,\"createDate_gte\":null,\"updateDate_gte\":null,\"updateDate_between\":null,\"id_in\":null},{\"pageNo\":null,\"pageSize\":null,\"id\":\"东航城南区西侧生活S-1#20200804\",\"isNewRecord\":false,\"orderBy\":null,\"createByName\":null,\"updateByName\":null,\"updateBy\":null,\"lastUpdateDateTime\":null,\"status\":null,\"createDate\":null,\"updateDate\":null,\"remarks\":null,\"createBy\":null,\"devicename\":\"东航城南区西侧生活S-1\",\"total\":23900,\"regionname\":\"西区\",\"lastUpdateTime\":null,\"lastUpdateAcc\":null,\"startdata\":16712300,\"enddata\":16736200,\"day\":\"20200804\",\"deviceno\":\"1098\",\"typename\":\"累计流量\",\"channelno\":\"331\",\"metername\":\"水表\",\"remark\":null,\"createDate_lte\":null,\"status_in\":null,\"updateDate_lte\":null,\"createDate_between\":null,\"createDate_gte\":null,\"updateDate_gte\":null,\"updateDate_between\":null,\"id_in\":null},{\"pageNo\":null,\"pageSize\":null,\"id\":\"国航泊悦酒店(合用)S-1#20200804\",\"isNewRecord\":false,\"orderBy\":null,\"createByName\":null,\"updateByName\":null,\"updateBy\":null,\"lastUpdateDateTime\":null,\"status\":null,\"createDate\":null,\"updateDate\":null,\"remarks\":null,\"createBy\":null,\"devicename\":\"国航泊悦酒店(合用)S-1\",\"total\":23700,\"regionname\":\"西区\",\"lastUpdateTime\":null,\"lastUpdateAcc\":null,\"startdata\":22700800,\"enddata\":22724500,\"day\":\"20200804\",\"deviceno\":\"1044\",\"typename\":\"累计流量\",\"channelno\":\"331\",\"metername\":\"WPD200\",\"remark\":null,\"createDate_lte\":null,\"status_in\":null,\"updateDate_lte\":null,\"createDate_between\":null,\"createDate_gte\":null,\"updateDate_gte\":null,\"updateDate_between\":null,\"id_in\":null},{\"pageNo\":null,\"pageSize\":null,\"id\":\"西区吉祥航空S-1#20200804\",\"isNewRecord\":false,\"orderBy\":null,\"createByName\":null,\"updateByName\":null,\"updateBy\":null,\"lastUpdateDateTime\":null,\"status\":null,\"createDate\":null,\"updateDate\":null,\"remarks\":null,\"createBy\":null,\"devicename\":\"西区吉祥航空S-1\",\"total\":19200,\"regionname\":\"西区\",\"lastUpdateTime\":null,\"lastUpdateAcc\":null,\"startdata\":17964900,\"enddata\":17984080,\"day\":\"20200804\",\"deviceno\":\"1028\",\"typename\":\"累计流量\",\"channelno\":\"331\",\"metername\":\"WPD100\",\"remark\":null,\"createDate_lte\":null,\"status_in\":null,\"updateDate_lte\":null,\"createDate_between\":null,\"createDate_gte\":null,\"updateDate_gte\":null,\"updateDate_between\":null,\"id_in\":null},{\"pageNo\":null,\"pageSize\":null,\"id\":\"西区东航机库S-1#20200804\",\"isNewRecord\":false,\"orderBy\":null,\"createByName\":null,\"updateByName\":null,\"updateBy\":null,\"lastUpdateDateTime\":null,\"status\":null,\"createDate\":null,\"updateDate\":null,\"remarks\":null,\"createBy\":null,\"devicename\":\"西区东航机库S-1\",\"total\":17000,\"regionname\":\"西区\",\"lastUpdateTime\":null,\"lastUpdateAcc\":null,\"startdata\":10516130,\"enddata\":10533080,\"day\":\"20200804\",\"deviceno\":\"1020\",\"typename\":\"累计流量\",\"channelno\":\"331\",\"metername\":\"WSD80\",\"remark\":null,\"createDate_lte\":null,\"status_in\":null,\"updateDate_lte\":null,\"createDate_between\":null,\"createDate_gte\":null,\"updateDate_gte\":null,\"updateDate_between\":null,\"id_in\":null},{\"pageNo\":null,\"pageSize\":null,\"id\":\"T2航站楼（合用）S-7#20200804\",\"isNewRecord\":false,\"orderBy\":null,\"createByName\":null,\"updateByName\":null,\"updateBy\":null,\"lastUpdateDateTime\":null,\"status\":null,\"createDate\":null,\"updateDate\":null,\"remarks\":null,\"createBy\":null,\"devicename\":\"T2航站楼（合用）S-7\",\"total\":16300,\"regionname\":\"西区\",\"lastUpdateTime\":null,\"lastUpdateAcc\":null,\"startdata\":6381900,\"enddata\":6398200,\"day\":\"20200804\",\"deviceno\":\"1092\",\"typename\":\"累计流量\",\"channelno\":\"331\",\"metername\":\"WPD200\",\"remark\":null,\"createDate_lte\":null,\"status_in\":null,\"updateDate_lte\":null,\"createDate_between\":null,\"createDate_gte\":null,\"updateDate_gte\":null,\"updateDate_between\":null,\"id_in\":null}],\"expLevel\":46000}"}
-        }
-    },
+        },
 
-    computed: {
-        ...mapState({
-            getConsumptionType: state => state.home.consumptionType
-        })
     },
-
-    watch:{
-        getConsumptionType(value) {
-            this.setData();
-        }
-    }
 };
 </script>
 <style lang="scss" scoped>
@@ -253,4 +255,44 @@ export default {
     border-bottom: 2px solid #224c72;
     transform: rotate(-54deg);
 }
+
+
+.select-box {
+    display: inline-block;
+    color: #fff;
+    vertical-align: top;
+    right: 54px;
+    span:before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #fff;
+        transform: skewX(-22deg);
+        border: 1px solid #434cd3;
+        z-index: -1;
+        background: transparent;
+    }
+    .select {
+        &:before {
+            border: 1px solid #52d2dc;
+            background: #21607c;
+        }
+    }
+    span {
+        position: relative;
+        display: inline-block;
+        width: 35px;
+        height: 14px;
+        z-index: 0;
+        margin: 0 1px;
+        text-align: center;
+        font-size: 10px;
+        line-height: 14px;
+        cursor: pointer;
+    }
+}
+
 </style>
