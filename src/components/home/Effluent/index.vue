@@ -5,7 +5,7 @@
             <div class="title-main">
                 <Title title="出水瞬时流量" />
             </div>
-            <div class="unit">单位：m<sup>3</sup></div>
+            <!-- <div class="unit">单位：m<sup>3</sup></div> -->
         </div>
         <div class="warp-container">
             <div class="charts" id="chart_effluent"></div>
@@ -30,12 +30,12 @@ export default {
     },
 
     mounted() {
+        this.drawLine();
         this.getData();
         // 基于准备好的dom，初始化this.$echarts实例
-        this.myChart = this.$echarts.init(
-            document.getElementById("chart_effluent")
-        );
-        this.drawLine();
+        // this.myChart = this.$echarts.init(
+        //     document.getElementById("chart_effluent")
+        // );
     },
 
     methods: {
@@ -52,32 +52,65 @@ export default {
                 arr[2].push(item.ssll3);
                 arr[3].push(item.ssll2);
             });
+            console.log( 'arr', arr, xAxisData);
             this.$set(this.effluentFlow,0,arr[0]);
             this.$set(this.effluentFlow,1,arr[1]);
             this.$set(this.effluentFlow,2,arr[2]);
             this.$set(this.effluentFlow,3,arr[3]);
             this.$set(this.xAxisData,xAxisData);
             
-            this.option.series[0].data = this.effluentFlow[0];
-            this.option.series[1].data = this.effluentFlow[1];
-            this.option.series[2].data = this.effluentFlow[2];
-            this.option.series[3].data = this.effluentFlow[3];
-            this.option.xAxis[0].data = this.xAxisData;
+            // this.option.series[0].data = this.effluentFlow[0];
+            // this.option.series[1].data = this.effluentFlow[1];
+            // this.option.series[2].data = this.effluentFlow[2];
+            // this.option.series[3].data = this.effluentFlow[3];
+            this.option.xAxis[0].data = xAxisData;
+            let arr1 = ['出水1#瞬时流量--机坪','出水1#瞬时流量--生活','出水2#瞬时流量--生活','出水2#瞬时流量--机坪'];
+            let seriesArr = [];
+            arr1.forEach((item,index) => {
+                seriesArr.push( this.getSerierData(item, this.effluentFlow[index]) )
+            });
+            this.option.series = seriesArr;
             this.myChart.setOption(this.option);
             setTimeout(()=> {
                 this.getData()
             },60000)
+        },
+        getSerierData(item, value) {
+            return {
+                smooth: true,
+                name: item,
+                type: "line",
+                symbolSize: 6,
+                areaStyle: {
+                    opacity: 0.2
+                },
+                lineStyle: {},
+                data:value,
+            }
         },
         drawLine() {
             this.option = {
                 tooltip: {
                     trigger: "axis",
                 },
+                legend: {
+                    show: true,
+                    icon: "rect",
+                    top: "0%",
+                    left: 0,
+                    itemWidth: 10,
+                    itemHeight: 8,
+                    itemGap: 14,
+                    textStyle: {
+                        color: "#fff",
+                    },
+                    // data: ['进水线', '出水线']
+                },
                 grid: {
                     left: "0%",
                     right: "2%",
                     bottom: "0%",
-                    top: "9%",
+                    top: "22%",
                     containLabel: true,
                 },
                 xAxis: [
@@ -124,271 +157,34 @@ export default {
                             },
                         },
                     },
-                ],
-                series: [
                     {
-                        name: "出水1#瞬时流量--机坪",
-                        smooth: true,
-                        // showSymbol: false,
-                        type: "line",
-                        symbol: "circle",
-                        symbolSize: 1,
-                        itemStyle: {
-                            color: "transparent",
-                            borderWidth: 0,
+                        type: "value",
+                        name: "单位：m³",
+                        nameTextStyle: {
+                            padding: [0, 50, 0, 0],
+                            color: "#fff",
                         },
-                        label: {
-                            show: true,
-                            position: "top",
-                            textStyle: {
-                                color: "#6DFFEB",
-                            },
+                        axisLine: {
+                            //y轴
+                            show: false,
                         },
-                        tooltip: {
-                            show: false
-                        },
-                        areaStyle: {
-                            normal: {
-                                color: new this.$echarts.graphic.LinearGradient(
-                                    0,
-                                    0,
-                                    0,
-                                    1,
-                                    [
-                                        {
-                                            offset: 0,
-                                            color: "rgba(24, 73, 94, .9)",
-                                        },
-                                        {
-                                            offset: 1,
-                                            color: "rgba(2, 43, 74, .7)",
-                                        },
-                                    ],
-                                    false
-                                ),
-                            },
-                        },
-                        lineStyle: {
-                            normal: {
-                                width: 2,
-                                color: {
-                                    type: "linear",
-
-                                    colorStops: [
-                                        {
-                                            offset: 0,
-                                            color: "#0681F7", // 0% 处的颜色
-                                        },
-                                        {
-                                            offset: 1,
-                                            color: "#E3EA32", // 100% 处的颜色
-                                        },
-                                    ],
-                                    globalCoord: false, // 缺省为 false
-                                },
-                            },
-                        },
-                        data: this.effluentFlow[0],
-                    },
-                    {
-                        name: "出水1#瞬时流量--生活",
-                        smooth: true,
-                        // showSymbol: false,
-                        type: "line",
-                        symbol: "circle",
-                        symbolSize: 1,
-                        itemStyle: {
-                            color: "transparent",
-                            borderWidth: 0,
-                        },
-                        label: {
-                            show: true,
-                            position: "top",
-                            textStyle: {
-                                color: "#6DFFEB",
-                            },
-                        },
-                        tooltip: {
-                            show: false
-                        },
-                        areaStyle: {
-                            normal: {
-                                color: new this.$echarts.graphic.LinearGradient(
-                                    0,
-                                    0,
-                                    0,
-                                    1,
-                                    [
-                                        {
-                                            offset: 0,
-                                            color: "rgba(24, 73, 94, .9)",
-                                        },
-                                        {
-                                            offset: 1,
-                                            color: "rgba(2, 43, 74, .7)",
-                                        },
-                                    ],
-                                    false
-                                ),
-                            },
-                        },
-                        lineStyle: {
-                            normal: {
-                                width: 2,
-                                color: {
-                                    type: "linear",
-
-                                    colorStops: [
-                                        {
-                                            offset: 0,
-                                            color: "#0681F7", // 0% 处的颜色
-                                        },
-                                        {
-                                            offset: 1,
-                                            color: "#E3EA32", // 100% 处的颜色
-                                        },
-                                    ],
-                                    globalCoord: false, // 缺省为 false
-                                },
-                            },
-                        },
-                        data: this.effluentFlow[1],
-                    },
-                    {
-                        name: "出水2#瞬时流量--生活",
-                        smooth: true,
-                        // showSymbol: false,
-                        type: "line",
-                        symbol: "circle",
-                        symbolSize: 1,
-                        itemStyle: {
-                            color: "transparent",
-                            borderWidth: 0,
-                        },
-                        label: {
-                            show: true,
-                            position: "top",
-                            textStyle: {
-                                color: "#6DFFEB",
-                            },
-                        },
-                        tooltip: {
-                            show: false
-                        },
-                        areaStyle: {
-                            normal: {
-                                color: new this.$echarts.graphic.LinearGradient(
-                                    0,
-                                    0,
-                                    0,
-                                    1,
-                                    [
-                                        {
-                                            offset: 0,
-                                            color: "rgba(24, 73, 94, .9)",
-                                        },
-                                        {
-                                            offset: 1,
-                                            color: "rgba(2, 43, 74, .7)",
-                                        },
-                                    ],
-                                    false
-                                ),
-                            },
-                        },
-                        lineStyle: {
-                            normal: {
-                                width: 2,
-                                color: {
-                                    type: "linear",
-
-                                    colorStops: [
-                                        {
-                                            offset: 0,
-                                            color: "#0681F7", // 0% 处的颜色
-                                        },
-                                        {
-                                            offset: 1,
-                                            color: "#E3EA32", // 100% 处的颜色
-                                        },
-                                    ],
-                                    globalCoord: false, // 缺省为 false
-                                },
-                            },
-                        },
-                        data: this.effluentFlow[2],
-                    },
-                    {
-                        name: "出水2#瞬时流量--机坪",
-                        smooth: true,
-                        // showSymbol: false,
-                        type: "line",
-                        symbol: "circle",
-                        symbolSize: 1,
-                        itemStyle: {
-                            color: "transparent",
-                            borderWidth: 0,
-                        },
-                        label: {
-                            show: true,
-                            position: "top",
-                            textStyle: {
-                                color: "#6DFFEB",
-                            },
-                        },
-                        tooltip: {
-                            show: false
-                        },
-                        areaStyle: {
-                            normal: {
-                                color: new this.$echarts.graphic.LinearGradient(
-                                    0,
-                                    0,
-                                    0,
-                                    1,
-                                    [
-                                        {
-                                            offset: 0,
-                                            color: "rgba(24, 73, 94, .9)",
-                                        },
-                                        {
-                                            offset: 1,
-                                            color: "rgba(2, 43, 74, .7)",
-                                        },
-                                    ],
-                                    false
-                                ),
-                            },
-                        },
-                        lineStyle: {
-                            normal: {
-                                width: 2,
-                                color: {
-                                    type: "linear",
-
-                                    colorStops: [
-                                        {
-                                            offset: 0,
-                                            color: "#0681F7", // 0% 处的颜色
-                                        },
-                                        {
-                                            offset: 1,
-                                            color: "#E3EA32", // 100% 处的颜色
-                                        },
-                                    ],
-                                    globalCoord: false, // 缺省为 false
-                                },
-                            },
-                        },
-                        data: this.effluentFlow[3],
                     },
                 ],
+                series: [],
             };
+            // 基于准备好的dom，初始化this.$echarts实例
+            this.myChart = this.$echarts.init(document.getElementById("chart_effluent"));
             // 绘制图表
             this.myChart.setOption(this.option);
             window.addEventListener("resize", () => {
                 this.myChart.resize();
             });
+
+            // // 绘制图表
+            // this.myChart.setOption(this.option);
+            // window.addEventListener("resize", () => {
+            //     this.myChart.resize();
+            // });
         },
     },
 
@@ -403,7 +199,8 @@ export default {
     margin-top: 20px;
 }
 .panel-top {
-    height: 70px;
+    // height: 70px;
+    height: 40px;
     padding-top: 25px;
     padding-right: 44px;
 
@@ -428,7 +225,9 @@ export default {
     margin-top: 10px;
     .charts {
         left: 48px;
-        height: 210px;
+        // height: 210px;
+        height: 250px;
+        // height: 290px;
         width: 520px;
         // background: pink;
     }
