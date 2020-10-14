@@ -1,24 +1,26 @@
 <template>
   <div id="app">
-    <router-view/>
+    <router-view />
   </div>
 </template>
 
 <script>
-// import {mapMutations} from "vuex"
+import { mapMutations } from "vuex";
 export default {
   name: "App",
-  created() {
-    // this.setTime();
+  methods: {
+    ...mapMutations(["SET_RANDOM_NUM"]),
+    setAllTime() {
+      clearTimeout( window.allTime );
+      window.allTime = setTimeout(() => {
+        this.SET_RANDOM_NUM();
+        this.setAllTime();
+      }, 60000);
+    }
   },
-  methods:{
-    // ...mapMutations([
-    //   "SET_TIME"
-    // ]),
-    // setTime() {
-    //   this.SET_TIME();
-    // }
-  }
+  mounted() {
+    this.setAllTime();
+  },
 };
 </script>
 

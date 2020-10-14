@@ -15,7 +15,7 @@ export default new Vuex.Store({
         flood:{
             autoUrlNum: ''
         },
-        time: 0
+        randomNum: 0
     },
     mutations: {
         setWaterLevel(state, obj) {
@@ -25,8 +25,10 @@ export default new Vuex.Store({
         setAutoUrlNum(state) {
             state.flood.autoUrlNum = Math.random();
         },
-        SET_TIME(state) {
-            state.time = Math.random();
+        SET_RANDOM_NUM(state) {
+            console.log( '设置时间' );
+            let date = new Date();
+            state.randomNum = date.getTime();
         },
         SET_CONSUMPTION_TYPE(state,value) {
             state.home.consumptionType = value

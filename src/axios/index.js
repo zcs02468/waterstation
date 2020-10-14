@@ -40,6 +40,8 @@ export const getBulletinBoard = async () => await get({ url: baseUrl + "/smartEn
 
 //积水接口
 export const getPondingStandard = async () => await get({ url: baseUrl + "/smartEnergy/pondingStandard" });
+//积水接口
+export const getPonding = async ()=> await get({url: baseUrl + '/smartEnergy/ponding'})
 
 //排水泵站运行情况接口
 export const getDrainagePumpingPlant = async () => await get({ url: baseUrl + "/smartEnergy/drainagePumpingPlant" });
