@@ -60,9 +60,11 @@
 
 <script>
 import Title from "../../common/Title";
+import comMinxins from "../../common/comMinxins"
 import {getWeather} from "../../../axios"
 export default {
     name: "Weather",
+    mixins:[comMinxins],
     data() {
         return {
             weatherData:{
@@ -93,6 +95,9 @@ export default {
     },
 
     methods: {
+        updateData() {
+            this.getData();
+        },
         async getData() {
             let [res] = await getWeather();
             let data = JSON.parse(res.message);

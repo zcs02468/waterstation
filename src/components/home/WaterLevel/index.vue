@@ -40,9 +40,11 @@
 <script>
 import Title from "../../common/Title";
 import Rule from "../Rule/index";
+import comMinxins from "../../common/comMinxins"
 import { getReservoirLevel } from "../../../axios";
 export default {
     name: "WaterLevel",
+    mixins:[comMinxins],
     data() {
         return {
             oneH: 0,
@@ -60,6 +62,9 @@ export default {
     },
 
     methods: {
+        updateData() {
+            this.getData();
+        },
         async getData() {
             const [res] = await getReservoirLevel();
             let data = JSON.parse(res.message);
@@ -71,9 +76,9 @@ export default {
                     twoH: data.sc2,
                 });
             }, 2000);
-            setTimeout(()=> {
-                this.getData()
-            },60000)
+            // setTimeout(()=> {
+            //     this.getData()
+            // },60000)
         },
     },
 

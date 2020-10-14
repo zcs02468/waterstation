@@ -24,7 +24,7 @@
             <!-- </div> -->
             <div class="content-box">
                 <el-carousel class="carousel-box" trigger="click" :nterval="3000" indicator-position="none" arrow="never">
-                    <el-carousel-item v-for="item in workData[selectIndex]" :key="item">
+                    <el-carousel-item v-for="item in workData[selectIndex]" :key="item.id">
                         <div class="tab-user">
                             <div class="user-box" v-for="ele in item.userData" :key="ele.id">
                                 <div class="img-box">
@@ -51,9 +51,11 @@
 
 <script>
 import Title from "../../common/Title";
+import comMinxins from "../../common/comMinxins"
 import { getConstructionInfo } from "../../../axios/index";
 export default {
     name: "roadworkInfo",
+    mixins:[comMinxins],
     data() {
         return {
             selectIndex: "fixData",
@@ -86,13 +88,16 @@ export default {
     },
 
     methods: {
+        updateData() {
+            this.getData();
+        },
         async getData() {
             const [res] = await getConstructionInfo();
             let data = JSON.parse(res.message);
             this.filterAjaxData(data.orderList);
-            setTimeout(()=> {
-                this.getData();
-            },60000)
+            // setTimeout(()=> {
+            //     this.getData();
+            // },60000)
         },
         selectClick(value) {
             this.selectIndex = value;
@@ -119,6 +124,7 @@ export default {
                     specialWork: item.specialWork,
                     deptHeadName: item.deptHeadName,
                     supervisorNames: item.supervisorNames,
+                    id: item.id
                 };
                 switch (item.buildType) {
                     case "1":

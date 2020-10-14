@@ -17,10 +17,12 @@
 
 <script>
 import Title from "../../common/Title";
+import comMinxins from "../../common/comMinxins"
 import {getBulletinBoard} from "../../../axios";
 
 export default {
     name: "EmergencyInfo",
+    mixins:[comMinxins],
     data() {
         return {
             bbList:[],
@@ -44,7 +46,9 @@ export default {
     },
 
     methods: {
-        
+        updateData() {
+            this.getData();
+        },
         async getData() {
             try {
                 let [res] = await getBulletinBoard();
@@ -57,9 +61,9 @@ export default {
             } catch (error) {
                 console.error('error', error)
             }
-            setTimeout(()=> {
-                this.getData();
-            },60000)
+            // setTimeout(()=> {
+            //     this.getData();
+            // },60000)
         }
     
     },

@@ -68,8 +68,10 @@
 
 <script>
 import Title from "../../common/Title";
+import comMinxins from "../../common/comMinxins"
 export default {
     name: "WaterQuality",
+    mixins:[comMinxins],
     data() {
         return {};
     },

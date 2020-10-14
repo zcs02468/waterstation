@@ -15,9 +15,11 @@
 
 <script>
 import Title from "../../common/Title";
+import comMinxins from "../../common/comMinxins"
 import { getEffluentFlow } from "../../../axios";
 export default {
     name: "Effluent",
+    mixins:[comMinxins],
     data() {
         return {
             effluentFlow:[[],[],[],[]],
@@ -32,13 +34,12 @@ export default {
     mounted() {
         this.drawLine();
         this.getData();
-        // 基于准备好的dom，初始化this.$echarts实例
-        // this.myChart = this.$echarts.init(
-        //     document.getElementById("chart_effluent")
-        // );
     },
 
     methods: {
+        updateData() {
+            this.getData();
+        },
         async getData() {
             const [res] = await getEffluentFlow();
             let data = JSON.parse(res.message).effluentFlow;
@@ -52,7 +53,6 @@ export default {
                 arr[2].push(item.ssll3);
                 arr[3].push(item.ssll2);
             });
-            console.log( 'arr', arr, xAxisData);
             this.$set(this.effluentFlow,0,arr[0]);
             this.$set(this.effluentFlow,1,arr[1]);
             this.$set(this.effluentFlow,2,arr[2]);
@@ -71,9 +71,9 @@ export default {
             });
             this.option.series = seriesArr;
             this.myChart.setOption(this.option);
-            setTimeout(()=> {
-                this.getData()
-            },60000)
+            // setTimeout(()=> {
+            //     this.getData()
+            // },60000)
         },
         getSerierData(item, value) {
             return {
@@ -104,11 +104,10 @@ export default {
                     textStyle: {
                         color: "#fff",
                     },
-                    // data: ['进水线', '出水线']
                 },
                 grid: {
                     left: "0%",
-                    right: "2%",
+                    right: "3%",
                     bottom: "0%",
                     top: "22%",
                     containLabel: true,
@@ -179,12 +178,6 @@ export default {
             window.addEventListener("resize", () => {
                 this.myChart.resize();
             });
-
-            // // 绘制图表
-            // this.myChart.setOption(this.option);
-            // window.addEventListener("resize", () => {
-            //     this.myChart.resize();
-            // });
         },
     },
 

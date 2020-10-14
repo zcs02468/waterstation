@@ -11,9 +11,11 @@
 </template>
 
 <script>
+import comMinxins from "../../common/comMinxins"
 import {getTodayDuty} from "../../../axios"
 export default {
     name: "OnDuty",
+    mixins:[comMinxins],
     data() {
         return {
             platformClass:'', //平台值班
@@ -28,14 +30,17 @@ export default {
     },
 
     methods: {
+        updateData() {
+            this.getData();
+        },
         async getData() {
             let [res] = await getTodayDuty();
             let data = JSON.parse(res.message);
             this.platformClass = data.platformClass;
             this.charageClass = data.charageClass;
-            setTimeout(()=> {
-                this.getData()
-            },60000)
+            // setTimeout(()=> {
+            //     this.getData()
+            // },60000)
         }
     },
 

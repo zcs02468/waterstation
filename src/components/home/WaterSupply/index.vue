@@ -20,10 +20,12 @@
 
 <script>
 import Title from "../../common/Title";
+import comMinxins from "../../common/comMinxins"
 import {getWaterVolume} from "../../../axios/index"
 import {mapMutations} from "vuex"
 export default {
     name: "WaterSupply",
+    mixins:[comMinxins],
     data() {
         return {
             option: null,
@@ -72,6 +74,9 @@ export default {
 
     methods: {
         ...mapMutations(["SET_CONSUMPTION_TYPE"]),
+        updateData() {
+            this.getData();
+        },
         async getData() {
             let [res] = await getWaterVolume();
             let data = JSON.parse(res.message);
@@ -117,9 +122,9 @@ export default {
             this.waterVolumeData[1] = daySum;
             this.waterVolumeData[2] = monthSum;
             this.selectClick(this.selectIndex);
-            setTimeout(()=> {
-                this.getData()
-            },60000)
+            // setTimeout(()=> {
+            //     this.getData()
+            // },60000)
         },
         selectClick(index) {
             this.selectIndex = index;

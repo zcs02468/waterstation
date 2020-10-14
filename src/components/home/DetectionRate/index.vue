@@ -14,9 +14,11 @@
 <script>
 import Title from "../../common/Title";
 import Container from "./Container";
+import comMinxins from "../../common/comMinxins"
 import { getDetectionRate } from "../../../axios/index";
 export default {
     name: "DetectionRate",
+    mixins:[comMinxins],
     data() {
         return {
             water_detectionRate_east: "90%",
@@ -34,14 +36,17 @@ export default {
     },
 
     methods:{
+        updateData() {
+            this.getData();
+        },
         async getData() {
             const [res] = await getDetectionRate();
             let message = JSON.parse(res.message);
             this.water_detectionRate_west = message.water_detectionRate_west;
             this.water_detectionRate_east = message.water_detectionRate_east;
-            setTimeout(()=> {
-                this.getData();
-            },60000)
+            // setTimeout(()=> {
+            //     this.getData();
+            // },60000)
         }
     },
 

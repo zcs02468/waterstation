@@ -54,9 +54,11 @@
 import Title from "../../common/Title";
 import TeamDialog from "./TeamDialog";
 import SuppliesDialog from "./SuppliesDialog";
+import comMinxins from "../../common/comMinxins"
 import {getEmergencyInfo} from "../../../axios"
 export default {
     name: "Map",
+    mixins:[comMinxins],
     data() {
         return {
             selectType: "team",
@@ -90,6 +92,9 @@ export default {
     },
 
     methods: {
+        updateData() {
+            this.getData();
+        },
         createEaMap() {
             if( !this.emBMap ) {
                 this.eaBMap = new BMap.Map("eaMap");
@@ -205,9 +210,9 @@ export default {
             this.emList = emList;
             this.createEaMap();
             this.createEmMap();
-            setTimeout(()=> {
-                this.getData()
-            },60000)
+            // setTimeout(()=> {
+            //     this.getData()
+            // },60000)
         },
         closeList() {
             this.isShowList = false

@@ -28,9 +28,11 @@
 
 <script>
 import Title from "../../common/Title";
+import comMinxins from "../../common/comMinxins"
 import {getWaterConsumption} from "../../../axios";
 export default {
     name: "WaterConsumption",
+    mixins:[comMinxins],
     data() {
         return {
             selectIndex: 0,
@@ -66,6 +68,9 @@ export default {
     },
 
     methods: {
+        updateData() {
+            this.getData();
+        },
         async getData() {
             try {
                 let [res] = await getWaterConsumption();
@@ -82,9 +87,9 @@ export default {
             } catch (error) {
                 console.log('error', error);
             }
-            setTimeout(()=> {
-                this.getData()
-            },60000)
+            // setTimeout(()=> {
+            //     this.getData()
+            // },60000)
         },
         setData() {
             this.option.series[0].data = this.consumptionArr[this.selectIndex].list

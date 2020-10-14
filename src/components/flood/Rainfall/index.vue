@@ -45,9 +45,11 @@
 
 <script>
 import Title from "../../common/Title";
+import comMinxins from "../../common/comMinxins"
 import {getRainfall} from "../../../axios"
 export default {
     name: "Rainfall",
+    mixins:[comMinxins],
     data() {
         return {
             color: ["#5C87ED", "#6FCCE6", "#F6BA16", "#E8764A", "#9270CA", "#DA4545", "#B2E76A"],
@@ -68,6 +70,9 @@ export default {
     },
 
     methods: {
+        updateData() {
+            this.getData();
+        },
         async getData() {
             // northLevel	北调节泵站雨量
             // southLevel	南调节泵站雨量
@@ -115,9 +120,9 @@ export default {
             this.option.series[3].data = this.yAxisData[3];
             this.option.xAxis.data =this.xAxisData;
             this.myChart.setOption(this.option);
-            setTimeout(()=> {
-                this.getData()
-            },60000)
+            // setTimeout(()=> {
+            //     this.getData()
+            // },60000)
         },
         getMarkLine(data,index) {
             let colorArr = ['rgba(0,244,255,1)','#F6BA16','red','red','red']

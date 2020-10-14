@@ -38,9 +38,11 @@
 
 <script>
 import Title from "../../common/Title";
+import comMinxins from "../../common/comMinxins"
 import { getDrainagePumpingPlant } from "../../../axios";
 export default {
     name: "Drainage",
+    mixins:[comMinxins],
     data() {
         return {
             list: {
@@ -65,13 +67,16 @@ export default {
     },
 
     methods: {
+        updateData() {
+            this.getData();
+        },
         async getData() {
             let [res] = await getDrainagePumpingPlant();
             let data = JSON.parse(res.message);
             Object.assign(this.list, data)
-            setTimeout(()=> {
-                this.getData();
-            },60000)
+            // setTimeout(()=> {
+            //     this.getData();
+            // },60000)
         },
     },
 

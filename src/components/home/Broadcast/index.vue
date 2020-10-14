@@ -42,8 +42,10 @@
 
 <script>
 import { getBroadcastContent } from "../../../axios";
+import comMinxins from "../../common/comMinxins"
 export default {
     name: "Broadcast",
+    mixins:[comMinxins],
     data() {
         return {
             broadcastContent: "",
@@ -66,6 +68,9 @@ export default {
     },
 
     methods: {
+        updateData() {
+            this.getData();
+        },
         async getData() {
             const [res] = await getBroadcastContent();
             let data = JSON.parse(res.message);
@@ -80,9 +85,9 @@ export default {
                 // if( this.aa ) {
                     this.textScroll();
                 // }
-                setTimeout(() => {
-                    this.getData();
-                }, 60000);
+                // setTimeout(() => {
+                //     this.getData();
+                // }, 60000);
             });
             // this.dataList.push({
             //     id: Math.random() * 100,

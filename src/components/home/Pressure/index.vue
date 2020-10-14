@@ -15,9 +15,11 @@
 
 <script>
 import Title from "../../common/Title";
+import comMinxins from "../../common/comMinxins"
 import { getWaterPressure } from "../../../axios";
 export default {
     name: "Pressure",
+    mixins:[comMinxins],
     data() {
         return {
             option: null,
@@ -37,6 +39,9 @@ export default {
     },
 
     methods: {
+        updateData() {
+            this.getData();
+        },
         async getData() {
             const [res] = await getWaterPressure();
             let data = JSON.parse(res.message).waterPressure;
@@ -57,9 +62,9 @@ export default {
             this.option.series[0].data = this.enterWaterData;
             this.option.series[1].data = this.outWaterData;
             this.myChart.setOption(this.option);
-            setTimeout(()=> {
-                this.getData()
-            },60000)
+            // setTimeout(()=> {
+            //     this.getData()
+            // },60000)
         },
         drawLine() {
             this.option = {
