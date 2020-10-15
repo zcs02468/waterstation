@@ -51,4 +51,5 @@ module.exports = {
     //         .options({ bypassOnDebug: true })
     //         .end();
     // },
+  outputDir: 'waterstation',
 };

@@ -133,6 +133,7 @@ export default {
               north_west_level:'default',
             },
             standardList:[],
+            alarmList:[0,0,0]
         };
     },
 
@@ -153,7 +154,6 @@ export default {
         async getData() {
             let [res] = await getRiverCourseLevel();
             let data = JSON.parse(res.message);
-            console.log( 'dafasdf', data );
             let standardList = data.standardList;
             Object.assign(this.list, data);
             let arr = []
@@ -162,16 +162,23 @@ export default {
             })
             this.standardList = arr;
             this.standardList.splice();
-            this.classType.north_out_level = this.getClass(arr,'north_out_level');
-            this.classType.south_out_level = this.getClass(arr,'south_out_level');
-            this.classType.south_east_level = this.getClass(arr,'south_east_level');
-            this.classType.south_west_level = this.getClass(arr,'south_west_level');
-            this.classType.north_east_level = this.getClass(arr,'north_east_level');
-            this.classType.north_west_level = this.getClass(arr,'north_west_level');
+            this.alarmList = [0,0,0];
+            this.classType.north_out_level = this.getClass(arr,'north_out_level',2);
+            this.classType.south_out_level = this.getClass(arr,'south_out_level',2);
+            this.classType.south_east_level = this.getClass(arr,'south_east_level',1);
+            this.classType.south_west_level = this.getClass(arr,'south_west_level',1);
+            this.classType.north_east_level = this.getClass(arr,'north_east_level',1);
+            this.classType.north_west_level = this.getClass(arr,'north_west_level,2',1);
+
+            this.alarmList.forEach(item => {
+              if( item ) {
+                this.$store.commit('setAutoUrlNum');
+              }
+            })
             // setTimeout(()=> {
             //     this.getData()
             // },60000)
-            // 北调节池外河水位 north_out_leve
+            // 北调节池外河水位 north_out_level
             // 南调节池外河水位 south_out_level
 
             // 对应  外围河道，
@@ -183,13 +190,15 @@ export default {
             
             // 对应   调节水池
         },
-        getClass(arr,value) {
+        getClass(arr,value,index) {
             if( this.list[value] > arr[2] ) {
-                this.$store.commit('setAutoUrlNum');
+                // this.$store.commit('setAutoUrlNum');
+                this.alarmList[index] = 1;
                 return 'orange';
             }
             if( this.list[value] > arr[1] ) {
-                this.$store.commit('setAutoUrlNum');
+                // this.$store.commit('setAutoUrlNum');
+                this.alarmList[index] = 1;
                 return 'yellow';
             }
             return 'default';

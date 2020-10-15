@@ -26,7 +26,6 @@ export default new Vuex.Store({
             state.flood.autoUrlNum = Math.random();
         },
         SET_RANDOM_NUM(state) {
-            console.log( '设置时间' );
             let date = new Date();
             state.randomNum = date.getTime();
         },

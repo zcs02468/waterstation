@@ -27,10 +27,7 @@
                 </div>
             </div>
             <!-- 警报声音  http://data.huiyi8.com/2017/gha/03/17/1702.mp3 -->
-            <audio
-                id="eventAudio"
-                src=""
-            ></audio>
+            <audio id="eventAudio" src=""></audio>
         </div>
     </div>
 </template>
@@ -55,7 +52,7 @@ import WaterLevel from "../components/flood/WaterLevel";
 import Drainage from "../components/flood/Drainage";
 
 //音频文件
-import audioFile from "../assets/audio/jinbao.mp3"
+import audioFile from "../assets/audio/jinbao.mp3";
 
 export default {
     name: "Home",
@@ -89,16 +86,16 @@ export default {
         },
     },
     created() {
-        if (window.location.hash == "#status") {
+        if (this.$route.name == "Rain") {
             this.show = true;
         }
     },
     methods: {},
     watch: {
         autoUrlNum() {
-            let buttonAudio = document.getElementById('eventAudio');
-            buttonAudio.setAttribute('src',audioFile)
-            buttonAudio.play()
+            let buttonAudio = document.getElementById("eventAudio");
+            buttonAudio.setAttribute("src", audioFile);
+            buttonAudio.play();
         },
     },
 };

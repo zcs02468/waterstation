@@ -54,3 +54,6 @@ export const getRainfall = async () => await get({ url: baseUrl + "/smartEnergy/
 
 //防汛监测气象信息接口 http://47.110.226.205:8980/smartEnergy/metar
 export const getWeather = async ()=> await get({url: baseUrl + '/smartEnergy/metar'});
+
+//二十四、	河道水质（五类水）接口
+export const getRiverWaterQuality = async ()=> await get({url: baseUrl + '/smartEnergy/riverWaterQuality'});

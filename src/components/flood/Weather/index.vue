@@ -114,8 +114,6 @@ export default {
             // aqi_level	空气质量等级
             // aqi_level_name	空气质量等级名称
             // aqi_color	空气质量等级颜色
-
-            console.log( 'datadata', data );
         }
     },
 
