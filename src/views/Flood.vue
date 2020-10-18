@@ -54,6 +54,9 @@ import Drainage from "../components/flood/Drainage";
 //音频文件
 import audioFile from "../assets/audio/jinbao.mp3";
 
+import {getAlarm} from "../axios"
+import {mapMutations} from "vuex"
+
 export default {
     name: "Home",
     components: {
@@ -86,11 +89,25 @@ export default {
         },
     },
     created() {
-        if (this.$route.name == "Rain") {
+        if (this.$route.name == "Normal") {
             this.show = true;
         }
+        this.getAlarm()
     },
-    methods: {},
+    methods: {
+        ...mapMutations(["SET_ALARM"]),
+        async getAlarm() {
+            let [res] = await getAlarm();
+            // let res = {"result":"true","message":"{\"waterIsAlarm\":\"0\",\"rainfallIsAlarm\":\"0\",\"waiweiIsAlarm\":\"0\",\"weichangIsAlarm\":\"0\",\"balancingIsAlarm\":\"0\"}"}
+            let data = JSON.parse(res.message);
+            // waterIsAlarm	积水声音报警	String	1：报警；0：不报警
+            // rainfallIsAlarm	雨量声音报警 	String	1：报警；0：不报警
+            // waiweiIsAlarm	外围河道水位声音报警	String	1：报警；0：不报警
+            // weichangIsAlarm	围场河水位声音报警	String	1：报警；0：不报警
+            // balancingIsAlarm	调节水池水位声音报警	String	1：报警；0：不报警
+            this.SET_ALARM(data);
+        }
+    },
     watch: {
         autoUrlNum() {
             let buttonAudio = document.getElementById("eventAudio");

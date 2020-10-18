@@ -15,6 +15,7 @@
 import Title from "../../common/Title";
 import comMinxins from "../../common/comMinxins"
 import {getPonding} from "../../../axios/index"
+import {mapState} from "vuex"
 export default {
     name: "Hydrops",
     mixins:[comMinxins],
@@ -45,7 +46,7 @@ export default {
             this.option.yAxis.data = cityList;
             this.option.series[0].data = lineY;
             this.myChart.setOption(this.option);
-            if( isAutoAudio ) {
+            if( isAutoAudio && this.waterIsAlarm ) {
                 this.$store.commit('setAutoUrlNum');
             }
         },
@@ -225,6 +226,11 @@ export default {
             return {lineY,cityList,isAutoAudio}
         }
     },
+    computed:{
+        ...mapState({
+            waterIsAlarm: state => state.flood.alarm.waterIsAlarm
+        })
+    }
 };
 </script>
 <style lang="scss" scoped>

@@ -12,10 +12,17 @@ export default new Vuex.Store({
                 twoH: 0,
             },
         },
-        flood:{
-            autoUrlNum: ''
+        flood: {
+            autoUrlNum: "",
+            alarm: {
+                waterIsAlarm: 1, // 积水声音报警
+                rainfallIsAlarm: 1, //雨量声音报警 	String	1：报警；0：不报警
+                waiweiIsAlarm: 1, //外围河道水位声音报警	String	1：报警；0：不报警
+                weichangIsAlarm: 1, //围场河水位声音报警	String	1：报警；0：不报警
+                balancingIsAlarm: 1, //调节水池水位声音报警	String	1：报警；0：不报警
+            },
         },
-        randomNum: 0
+        randomNum: 0,
     },
     mutations: {
         setWaterLevel(state, obj) {
@@ -29,9 +36,12 @@ export default new Vuex.Store({
             let date = new Date();
             state.randomNum = date.getTime();
         },
-        SET_CONSUMPTION_TYPE(state,value) {
-            state.home.consumptionType = value
-        }
+        SET_CONSUMPTION_TYPE(state, value) {
+            state.home.consumptionType = value;
+        },
+        SET_ALARM(state, obj) {
+            Object.assign(state.flood.alarm, obj);
+        },
     },
     actions: {},
     modules: {},

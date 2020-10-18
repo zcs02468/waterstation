@@ -105,6 +105,7 @@ import rule from "./rule"
 import Box from "./Box"
 import comMinxins from "../../common/comMinxins"
 import {getRiverCourseLevel} from "../../../axios/index"
+import {mapState} from "vuex"
 
 export default {
     name: "WaterLevel",
@@ -163,16 +164,29 @@ export default {
             this.standardList = arr;
             this.standardList.splice();
             this.alarmList = [0,0,0];
-            this.classType.north_out_level = this.getClass(arr,'north_out_level',2);
-            this.classType.south_out_level = this.getClass(arr,'south_out_level',2);
-            this.classType.south_east_level = this.getClass(arr,'south_east_level',1);
-            this.classType.south_west_level = this.getClass(arr,'south_west_level',1);
-            this.classType.north_east_level = this.getClass(arr,'north_east_level',1);
-            this.classType.north_west_level = this.getClass(arr,'north_west_level,2',1);
-
-            this.alarmList.forEach(item => {
-              if( item ) {
-                this.$store.commit('setAutoUrlNum');
+            //0 围场河  1 外围河道   2 - 调节水池 
+            this.classType.north_out_level = this.getClass(arr,'north_out_level',1);
+            this.classType.south_out_level = this.getClass(arr,'south_out_level',1);
+            this.classType.south_east_level = this.getClass(arr,'south_east_level',2);
+            this.classType.south_west_level = this.getClass(arr,'south_west_level',2);
+            this.classType.north_east_level = this.getClass(arr,'north_east_level',2);
+            this.classType.north_west_level = this.getClass(arr,'north_west_level',2);
+            
+            this.alarmList.forEach((item,index) => {
+              if( index == 0 ) {
+                if(item && this.weichangIsAlarm) {
+                  this.$store.commit('setAutoUrlNum');
+                }
+              }
+              if( index == 1 ) {
+                if(item && this.waiweiIsAlarm) {
+                  this.$store.commit('setAutoUrlNum');
+                }
+              }
+              if( index == 2 ) {
+                if(item && this.balancingIsAlarm) {
+                  this.$store.commit('setAutoUrlNum');
+                }
               }
             })
             // setTimeout(()=> {
@@ -206,6 +220,11 @@ export default {
     },
 
     computed: {
+        ...mapState({
+            weichangIsAlarm: state => state.flood.alarm.weichangIsAlarm,	//围场河水位声音报警	String	1：报警；0：不报警
+            waiweiIsAlarm: state => state.flood.alarm.waiweiIsAlarm,	//外围河道水位声音报警	String	1：报警；0：不报警
+            balancingIsAlarm: state => state.flood.alarm.balancingIsAlarm,	//调节水池水位声音报警	String	1：报警；0：不报警
+        })
     },
 };
 </script>

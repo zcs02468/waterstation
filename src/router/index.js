@@ -17,8 +17,8 @@ const routes = [
     component: () => import('../views/Flood.vue')
   },
   {
-    path: "/rain",
-    name: "Rain",
+    path: "/normal",
+    name: "Normal",
     component: () => import('../views/Flood.vue')
   }
 ];

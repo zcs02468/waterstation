@@ -47,6 +47,7 @@
 import Title from "../../common/Title";
 import comMinxins from "../../common/comMinxins"
 import {getRainfall} from "../../../axios"
+import {mapState} from "vuex"
 export default {
     name: "Rainfall",
     mixins:[comMinxins],
@@ -110,7 +111,9 @@ export default {
             //警戒值判断
             let maxNum = Math.max(...standardArr)
             if( standardArr.length > 0  &&  (maxNum > standardList[0].dictValue) )  {
-                this.$store.commit('setAutoUrlNum')
+                if( this.rainfallIsAlarm ) {
+                    this.$store.commit('setAutoUrlNum')
+                }
             }
             this.xAxisData = xAxisData;
             this.yAxisData = yAxisData;
@@ -356,7 +359,11 @@ export default {
         },
     },
 
-    computed: {},
+    computed: {
+        ...mapState({
+            rainfallIsAlarm: state => state.flood.alarm.rainfallIsAlarm
+        })
+    },
 };
 </script>
 <style lang="scss" scoped>
