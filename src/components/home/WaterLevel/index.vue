@@ -84,8 +84,6 @@ export default {
       var result = parseFloat(num);
 
       if (isNaN(result)) {
-        alert("传递参数错误，请检查！");
-
         return 0;
       }
 

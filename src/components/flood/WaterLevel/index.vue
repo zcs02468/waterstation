@@ -47,7 +47,7 @@
               <rule :standardList="standardList"/>
               <div class="water-box-content">
                 <div class="water-box">
-                  <Box :textType="defaultColor" :num="1.01"/>
+                  <Box :textType="classType.youle_level" :num="list.youle_level"/>
                   <div class="title">东区 <span>友乐路泵站</span></div>
                 </div>
                 <div class="water-box">
@@ -58,7 +58,7 @@
                   <Box :textType="classType.north_out_level" :num="list.north_out_level"/>
                   <div class="title">西区 <span>北泵站</span></div>
                 </div>
-                <div class="water-box">
+                <div class="water-box" style="visibility:hidden;">
                   <Box textType="default" :num="1.92"/>
                   <div class="title"></div>
                 </div>
@@ -117,6 +117,7 @@ export default {
             categoryArr1:['安全水位','可控水位','警戒水位'],
             colorArr:['default','yellow','orange'],
             list:{
+              youle_level: '',
               north_out_level:'',
               south_out_level:'',
               south_east_level:'',
@@ -126,6 +127,7 @@ export default {
               standardList:[]
             },
             classType: {
+              youle_level: 'default',
               north_out_level:'default',
               south_out_level:'default',
               south_east_level:'default',
@@ -154,9 +156,17 @@ export default {
         },
         async getData() {
             let [res] = await getRiverCourseLevel();
+            // let res = {"result":"true","message":"{\"north_out_level\":5.38623,\"north_east_level\":2.78837,\"standardList\":[{\"pageNo\":null,\"orderBy\":null,\"isNewRecord\":false,\"pageSize\":null,\"id\":\"1291186840852832256\",\"status\":\"0\",\"remarks\":\"\",\"createByName\":null,\"createDate\":\"2020-08-06 09:38\",\"updateDate\":\"2020-08-06 09:38\",\"lastUpdateDateTime\":null,\"updateBy\":\"system\",\"createBy\":\"system\",\"updateByName\":null,\"childList\":null,\"treeSort\":30,\"treeSorts\":\"0000000030,\",\"treeNames\":\"2.2米一下，安全水位\",\"treeLeaf\":\"1\",\"parentCodes\":\"0,\",\"treeLevel\":0,\"isQueryChildren\":null,\"cssStyle\":\"\",\"dictCode\":\"1291186840852832256\",\"extend\":{\"extendI4\":null,\"extendS1\":\"\",\"extendF2\":null,\"extendD2\":null,\"extendD4\":null,\"extendS2\":\"\",\"extendF1\":null,\"extendS7\":\"\",\"extendS8\":\"\",\"extendI2\":null,\"extendF4\":null,\"extendS3\":\"\",\"extendD1\":null,\"extendF3\":null,\"extendS4\":\"\",\"extendI1\":null,\"extendD3\":null,\"extendS5\":\"\",\"extendS6\":\"\",\"extendI3\":null},\"dictType\":\"balancing_tank_standard\",\"description\":\"\",\"isSys\":\"1\",\"cssClass\":\"\",\"dictValue\":\"1\",\"dictLabelOrig\":\"2.2米以下，安全水位\",\"dictLabel\":\"2.2米以下，安全水位\",\"isTreeLeaf\":true,\"parentCode\":\"0\",\"isRoot\":true,\"status_in\":null,\"createDate_gte\":null,\"updateDate_gte\":null,\"updateDate_between\":null,\"updateDate_lte\":null,\"createDate_between\":null,\"createDate_lte\":null,\"id_in\":null},{\"pageNo\":null,\"orderBy\":null,\"isNewRecord\":false,\"pageSize\":null,\"id\":\"1291187012018184192\",\"status\":\"0\",\"remarks\":\"\",\"createByName\":null,\"createDate\":\"2020-08-06 09:39\",\"updateDate\":\"2020-08-06 09:39\",\"lastUpdateDateTime\":null,\"updateBy\":\"system\",\"createBy\":\"system\",\"updateByName\":null,\"childList\":null,\"treeSort\":60,\"treeSorts\":\"0000000060,\",\"treeNames\":\"2.2-2.7米，可控水位\",\"treeLeaf\":\"1\",\"parentCodes\":\"0,\",\"treeLevel\":0,\"isQueryChildren\":null,\"cssStyle\":\"\",\"dictCode\":\"1291187012018184192\",\"extend\":{\"extendI4\":null,\"extendS1\":\"\",\"extendF2\":null,\"extendD2\":null,\"extendD4\":null,\"extendS2\":\"\",\"extendF1\":null,\"extendS7\":\"\",\"extendS8\":\"\",\"extendI2\":null,\"extendF4\":null,\"extendS3\":\"\",\"extendD1\":null,\"extendF3\":null,\"extendS4\":\"\",\"extendI1\":null,\"extendD3\":null,\"extendS5\":\"\",\"extendS6\":\"\",\"extendI3\":null},\"dictType\":\"balancing_tank_standard\",\"description\":\"\",\"isSys\":\"1\",\"cssClass\":\"\",\"dictValue\":\"2\",\"dictLabelOrig\":\"2.2-2.7米，可控水位\",\"dictLabel\":\"2.2-2.7米，可控水位\",\"isTreeLeaf\":true,\"parentCode\":\"0\",\"isRoot\":true,\"status_in\":null,\"createDate_gte\":null,\"updateDate_gte\":null,\"updateDate_between\":null,\"updateDate_lte\":null,\"createDate_between\":null,\"createDate_lte\":null,\"id_in\":null},{\"pageNo\":null,\"orderBy\":null,\"isNewRecord\":false,\"pageSize\":null,\"id\":\"1291187104334815232\",\"status\":\"0\",\"remarks\":\"\",\"createByName\":null,\"createDate\":\"2020-08-06 09:39\",\"updateDate\":\"2020-08-06 09:39\",\"lastUpdateDateTime\":null,\"updateBy\":\"system\",\"createBy\":\"system\",\"updateByName\":null,\"childList\":null,\"treeSort\":90,\"treeSorts\":\"0000000090,\",\"treeNames\":\"2.7米以上，警戒水位\",\"treeLeaf\":\"1\",\"parentCodes\":\"0,\",\"treeLevel\":0,\"isQueryChildren\":null,\"cssStyle\":\"\",\"dictCode\":\"1291187104334815232\",\"extend\":{\"extendI4\":null,\"extendS1\":\"\",\"extendF2\":null,\"extendD2\":null,\"extendD4\":null,\"extendS2\":\"\",\"extendF1\":null,\"extendS7\":\"\",\"extendS8\":\"\",\"extendI2\":null,\"extendF4\":null,\"extendS3\":\"\",\"extendD1\":null,\"extendF3\":null,\"extendS4\":\"\",\"extendI1\":null,\"extendD3\":null,\"extendS5\":\"\",\"extendS6\":\"\",\"extendI3\":null},\"dictType\":\"balancing_tank_standard\",\"description\":\"\",\"isSys\":\"1\",\"cssClass\":\"\",\"dictValue\":\"3\",\"dictLabelOrig\":\"2.7米以上，警戒水位\",\"dictLabel\":\"2.7米以上，警戒水位\",\"isTreeLeaf\":true,\"parentCode\":\"0\",\"isRoot\":true,\"status_in\":null,\"createDate_gte\":null,\"updateDate_gte\":null,\"updateDate_between\":null,\"updateDate_lte\":null,\"createDate_between\":null,\"createDate_lte\":null,\"id_in\":null}],\"youle_level\":7.21,\"north_west_level\":1.78089,\"south_east_level\":2.63103,\"south_west_level\":2.05137,\"south_out_level\":5.49479}"}
             let data = JSON.parse(res.message);
             let standardList = data.standardList;
-            Object.assign(this.list, data);
+            // Object.assign(this.list, data);
+            this.list.youle_level = this.keepTwoDecimal(data.youle_level);
+            this.list.north_out_level = this.keepTwoDecimal(data.north_out_level);
+            this.list.south_out_level = this.keepTwoDecimal(data.south_out_level);
+            this.list.south_east_level = this.keepTwoDecimal(data.south_east_level);
+            this.list.south_west_level = this.keepTwoDecimal(data.south_west_level);
+            this.list.north_east_level = this.keepTwoDecimal(data.north_east_level);
+            this.list.north_west_level = this.keepTwoDecimal(data.north_west_level);
             let arr = []
             standardList.forEach(item => {
                 arr.push( item.dictValue )
@@ -165,6 +175,7 @@ export default {
             this.standardList.splice();
             this.alarmList = [0,0,0];
             //0 围场河  1 外围河道   2 - 调节水池 
+            this.classType.youle_level = this.getClass(arr,'youle_level',1);
             this.classType.north_out_level = this.getClass(arr,'north_out_level',1);
             this.classType.south_out_level = this.getClass(arr,'south_out_level',1);
             this.classType.south_east_level = this.getClass(arr,'south_east_level',2);
@@ -216,7 +227,19 @@ export default {
                 return 'yellow';
             }
             return 'default';
-        }
+        },
+        keepTwoDecimal(num) {
+          var result = parseFloat(num);
+
+          if (isNaN(result)) {
+
+            return 0;
+          }
+
+          result = Math.round(num * 100) / 100;
+
+          return result;
+        },
     },
 
     computed: {
