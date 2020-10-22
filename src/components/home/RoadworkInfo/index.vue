@@ -74,17 +74,6 @@ export default {
 
     async created() {
         this.getData();
-        // this.$axios.get("http://47.110.226.205:8980/smartEnergy/build").then((res) => {
-        //     let data = JSON.parse(res.data.message);
-        //     this.filterAjaxData(data.orderList);
-        // });
-        // let axiosData = {
-        //     result: "true",
-        //     message:
-        //         '{"orderList":[{"id":"1282543937222967296","pageNo":null,"orderBy":null,"pageSize":null,"isNewRecord":false,"lastUpdateDateTime":null,"createDate":null,"createBy":null,"createByName":null,"updateDate":null,"status":null,"updateByName":null,"remarks":null,"updateBy":null,"bpm":{"taskId":null,"procInsId":null,"activityId":null,"comment":null,"dueDate":null,"priority":null,"nextUserCodes":null,"view":false},"workNo":"1282543937222967296","procins":"1282543938242183168","deviceCode":null,"workType":"1","subType":"1001","workTitle":"水管损坏","buildType":"1","specialWork":"1","planBeginTime":1594915200000,"planEndTime":1594915200000,"deptHead":"user14_d2qj","deptHeadName":"用户14","supervisors":"user15_1g7d,user16_u1gg","supervisorNames":"用户15,用户16","supervisorAvatars":"http://47.110.155.149:8980/smartEnergy/userfiles/avatar/0/employee/user15_1g7d.jpg,null","workContent":"萨达","acceptOffice":null,"acceptUser":null,"submitTime":"2020-07-13 13:14:37","submitUser":"system","workSubmitUser":"张三","parentWork":"","workStatus":"1","faultPlace":"T2航站楼","faultCode":null,"dispatchTime":null,"dispatchUser":null,"arrivalTime":null,"finishTime":null,"cancelTime":null,"fittingCode":null,"extendS1":null,"extendS2":null,"extendS3":null,"extendS4":null,"extendS5":null,"extendS6":null,"extendS7":null,"extendS8":null,"extendS9":null,"extendS10":null,"phoneNumber":"13212345612","remark":null,"resources":null,"operList":null,"workStatusName":null,"workTypeName":null,"subTypeName":null,"acceptOfficeName":null,"submitUserName":null,"acceptUserName":null,"empName":null,"reportPictureList":null,"prePictureList":null,"postPictureList":null,"buildTypeName":null,"specialWorkName":null,"planTimeInterval":"00:00-00:00","orWorkStatusName":null,"createDate_lte":null,"createDate_gte":null,"status_in":null,"updateDate_gte":null,"updateDate_between":null,"createDate_between":null,"updateDate_lte":null,"id_in":null},{"id":"1282544722090491904","pageNo":null,"orderBy":null,"pageSize":null,"isNewRecord":false,"lastUpdateDateTime":null,"createDate":null,"createBy":null,"createByName":null,"updateDate":null,"status":null,"updateByName":null,"remarks":null,"updateBy":null,"bpm":{"taskId":null,"procInsId":null,"activityId":null,"comment":null,"dueDate":null,"priority":null,"nextUserCodes":null,"view":false},"workNo":"1282544722090491904","procins":"1282544722254069760","deviceCode":null,"workType":"1","subType":"1001","workTitle":"水管损坏","buildType":"1","specialWork":"1","planBeginTime":1594915200000,"planEndTime":1594915200000,"deptHead":"user15_1g7d","deptHeadName":"用户15","supervisors":"user17_wkai,user18_r5wh","supervisorNames":"用户17,用户18","supervisorAvatars":"null,null","workContent":"啊啊","acceptOffice":null,"acceptUser":null,"submitTime":"2020-07-13 13:17:44","submitUser":"system","workSubmitUser":"张三","parentWork":"1282543937222967296","workStatus":"1","faultPlace":"T2航站楼","faultCode":null,"dispatchTime":null,"dispatchUser":null,"arrivalTime":null,"finishTime":null,"cancelTime":null,"fittingCode":null,"extendS1":null,"extendS2":null,"extendS3":null,"extendS4":null,"extendS5":null,"extendS6":null,"extendS7":null,"extendS8":null,"extendS9":null,"extendS10":null,"phoneNumber":"13511111111","remark":null,"resources":null,"operList":null,"workStatusName":null,"workTypeName":null,"subTypeName":null,"acceptOfficeName":null,"submitUserName":null,"acceptUserName":null,"empName":null,"reportPictureList":null,"prePictureList":null,"postPictureList":null,"buildTypeName":null,"specialWorkName":null,"planTimeInterval":"00:00-00:00","orWorkStatusName":null,"createDate_lte":null,"createDate_gte":null,"status_in":null,"updateDate_gte":null,"updateDate_between":null,"createDate_between":null,"updateDate_lte":null,"id_in":null}]}',
-        // };
-        // let data = JSON.parse(axiosData.message);
-        // this.filterAjaxData(data.orderList);
     },
 
     methods: {
@@ -95,9 +84,6 @@ export default {
             const [res] = await getConstructionInfo();
             let data = JSON.parse(res.message);
             this.filterAjaxData(data.orderList);
-            // setTimeout(()=> {
-            //     this.getData();
-            // },60000)
         },
         selectClick(value) {
             this.selectIndex = value;
@@ -126,26 +112,25 @@ export default {
                     supervisorNames: item.supervisorNames,
                     id: item.id
                 };
-                switch (item.buildType) {
-                    case "1":
-                        //抢修
-                        fixData.push(obj);
-                        break;
-                    case "2" || "3":
-                        //施工
-                        roadworkData.push(obj);
-                        break;
-                    case "4":
-                        //维护
-                        maintainData.push(obj);
-                        break;
-                    default:
-                        break;
+                if( item.buildType == 1 ) {
+                    //抢修
+                    fixData.push(obj);
+                } 
+                if( item.buildType == 2 || item.buildType == 3 ) {
+                    //施工
+                    roadworkData.push(obj);
+                } 
+                if( item.buildType == 4 ) {
+                    //维护
+                    maintainData.push(obj);
                 }
             });
             this.workData.fixData = fixData;
             this.workData.maintainData = maintainData;
             this.workData.roadworkData = roadworkData;
+            this.workData.fixData.splice();
+            this.workData.maintainData.splice();
+            this.workData.roadworkData.splice();
         },
     },
 
