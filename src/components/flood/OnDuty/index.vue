@@ -6,7 +6,7 @@
             <div class="block"></div>
             <div class="block"></div>
         </div>
-        <div class="text"><span class="tag">当日部总值班：</span> {{this.platformClass}}； <span class="tag">当日平台值班：</span>{{this.charageClass}}</div>
+        <div class="text"><span class="tag">当日部总值班：</span> {{this.charageClass}}； <span class="tag">当日平台值班：</span>{{this.platformClass}}</div>
     </div>
 </template>
 

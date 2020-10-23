@@ -6,7 +6,6 @@
             <Title title="施工信息情况" />
         </div>
         <div class="panel-bodyer">
-            <!-- <div class="tab-select-box"> -->
             <ul>
                 <li :class="selectIndex == 'fixData' ? 'select' : ''" @click="selectClick('fixData')">
                     <span>抢修<b></b></span>
@@ -21,7 +20,6 @@
                     <i v-show="selectIndex == 'roadworkData'"></i>
                 </li>
             </ul>
-            <!-- </div> -->
             <div class="content-box">
                 <el-carousel class="carousel-box" trigger="click" :nterval="3000" indicator-position="none" arrow="never">
                     <el-carousel-item v-for="item in workData[selectIndex]" :key="item.id">
