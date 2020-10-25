@@ -1,7 +1,14 @@
 <template>
     <div class="home-container">
         <div class="wrap" ref="editor">
-            <Header title="供水监测"/>
+            <div class="main-head">
+                <Header title="供水监测" />
+                <div class="info">
+                    <Time />
+                    <Phone :phoneArr="['22369831', '22369800']" />
+                </div>
+            </div>
+            <!-- <Header title="供水监测"/> -->
             <div class="main-box">
                 <div class="colum">
                     <Broadcast />
@@ -25,6 +32,9 @@
 <script>
 import Header from "../components/common/Header";
 
+import Time from "../components/flood/Time";
+import Phone from "../components/flood/Phone";
+
 import Broadcast from "../components/home/Broadcast";
 import WaterSupply from "../components/home/WaterSupply";
 import DetectionRate from "../components/home/DetectionRate";
@@ -40,6 +50,9 @@ export default {
     name: "Home",
     components: {
         Header,
+
+        Time,
+        Phone,
 
         Broadcast,
         DetectionRate,
@@ -59,6 +72,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.info {
+    display: flex;
+    justify-content: space-between;
+}
 .main-box {
     min-width: 1920px;
     padding: 0 20px;
@@ -67,7 +84,7 @@ export default {
         flex: 3;
     }
     .center {
-        margin: 60px 20px 0 20px;
+        margin: 30px 20px 0 20px;
     }
 }
 </style>

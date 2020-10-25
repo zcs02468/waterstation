@@ -5,7 +5,7 @@
                 <Header title="防汛监测" />
                 <div class="info">
                     <Time />
-                    <Phone />
+                    <Phone :phoneArr="['22341515', '22344388']" />
                 </div>
             </div>
 
@@ -54,8 +54,8 @@ import Drainage from "../components/flood/Drainage";
 //音频文件
 import audioFile from "../assets/audio/jinbao.mp3";
 
-import {getAlarm} from "../axios"
-import {mapMutations} from "vuex"
+import { getAlarm } from "../axios";
+import { mapMutations } from "vuex";
 
 export default {
     name: "Home",
@@ -92,7 +92,7 @@ export default {
         if (this.$route.name == "Normal") {
             this.show = true;
         }
-        this.getAlarm()
+        this.getAlarm();
     },
     methods: {
         ...mapMutations(["SET_ALARM"]),
@@ -106,7 +106,7 @@ export default {
             // weichangIsAlarm	围场河水位声音报警	String	1：报警；0：不报警
             // balancingIsAlarm	调节水池水位声音报警	String	1：报警；0：不报警
             this.SET_ALARM(data);
-        }
+        },
     },
     watch: {
         autoUrlNum() {

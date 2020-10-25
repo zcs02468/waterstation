@@ -4,8 +4,9 @@
         <div class="content">
             <span class="iconfont icondianhua"></span>
             <span class="text">
-                <span>22369831</span>
-                <span>22369800</span>
+                <!-- <span>22369831</span>
+                <span>22369800</span> -->
+                <span v-for="item in phoneArr" :key="item">{{ item }}</span>
             </span>
             <div class="icon-box">
                 <span class="icon">
@@ -23,23 +24,13 @@
 </template>
 
 <script>
-import {getBulletinBoard} from "../../../axios"
 export default {
     name: "Time",
-    data() {
-        return {
-            time: "",
-            bbList:[]
-        };
+    props: {
+        phoneArr: {
+            type: Array,
+        },
     },
-
-    components: {},
-
-    mounted() {},
-
-    methods: {},
-
-    computed: {},
 };
 </script>
 <style lang="scss" scoped>
@@ -68,14 +59,14 @@ export default {
     align-items: center;
     height: 100%;
     padding-right: 21.5px;
-    .text{
+    .text {
         font-size: 16px;
         margin-left: 3px;
         span:nth-child(1) {
             margin-right: 30px;
         }
     }
-    .iconfont{
+    .iconfont {
         font-size: 18px;
     }
 }

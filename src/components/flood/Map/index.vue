@@ -27,13 +27,26 @@
             <div id="emMap"></div>
             <div class="team-mark" v-show="isShowList" @click="closeList">
                 <div class="team-info">
+                    <div class="info-background">
+                        <div class="back"></div>
+                    </div>
                     <div class="info-back"></div>
                     <ul>
                         <li><span></span>{{info.location}}</li>
                         <li><span></span>{{info.name}}</li>
                         <li><span></span>{{info.num}}</li>
+                        <li><span></span>{{info.userName}}</li>
                         <li><span></span>{{info.phone}}</li>
                     </ul>
+                    <!-- <div class="tab-content-box">
+                        <div class="content">
+                            <p><span></span>{{ info.location }}</p>
+                            <p><span></span>{{ info.name }}</p>
+                            <p><span></span>{{ info.num }}</p>
+                            <p><span></span>{{ info.userName}}</p>
+                            <p><span></span>{{ info.phone }}</p>
+                        </div>
+                    </div> -->
                 </div>
             </div>
             <TeamDialog
@@ -131,7 +144,8 @@ export default {
                     that.info.location = `队伍驻点：${eaList.armyPlace}`   //队伍驻点：
                     that.info.name = `队伍名称：${eaList.armyName}`      //队伍名称：XXXXX
                     that.info.num = `人数：${eaList.headcount || 0}`        //人数：XXXXX
-                    that.info.phone = `现场负责人联系电话：${eaList.phone}`       //现场负责人联系电话：13555555555
+                    that.info.userName = `现场负责人：${eaList.chargeLeadName}`       //现场负责人：13555555555
+                    that.info.phone = `联系电话：${eaList.phone}`       //联系电话：13555555555
                     that.isShowList = true
                 });
             }
@@ -175,7 +189,8 @@ export default {
                     that.info.location = `物资仓库点位：${emList.materialsWarehouse}`   //队伍驻点：
                     that.info.name = `物资名称：${emList.materialsName}`      //队伍名称：XXXXX
                     that.info.num = `数量：${emList.materials || 0}`        //人数：XXXXX
-                    that.info.phone = `保管联系人电话：${emList.phone}`          //现场负责人联系电话：13555555555
+                    that.info.userName = `保管人：${emList.keeperName}`          //现场负责人联系电话：13555555555
+                    that.info.phone = `联系电话：${emList.phone}`          //现场负责人联系电话：13555555555
                     that.isShowList = true
                 });
             }
@@ -208,6 +223,7 @@ export default {
             let emList = data.emList;
             this.eaList = eaList;
             this.emList = emList;
+            console.log( 'eaList:', eaList, "emList:", emList );
             this.createEaMap();
             this.createEmMap();
             // setTimeout(()=> {
@@ -337,8 +353,24 @@ export default {
 .team-info {
     position: absolute;
     width: 397.5px;
-    height: 187px;
+    // height: 187px;
+    // width: 507px;
+    height: 216px;
     z-index: 12;
+    .info-background {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        padding: 20px;
+        z-index: -1;
+        .back {
+            // background: rgba(9,32,80,.7);
+            background: rgba(101, 149, 242, 0.4);
+            // background: red;
+            width: 100%;
+            height: 100%;
+        }
+    }
     ul {
         padding: 29px 25px 0 25px;
     }
@@ -359,4 +391,29 @@ export default {
         }
     }
 }
+
+// .tab-content-box {
+//     background: #092050;
+//     width: 507px;
+//     height: 216px;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     margin-left: 42px;
+//     background: url("../../../assets/image/maintain.jpg");
+//     background-size: 100% 100%;
+//     .content {
+//         width: 432px;
+//         height: 150px;
+//         position: relative;
+//         z-index: 1;
+//         p {
+//             width: 100%;
+//             height: 30px;
+//             font-size: 14px;
+//             line-height: 38px;
+//             border-bottom: 1px solid #2866e4;
+//         }
+//     }
+// }
 </style>

@@ -60,12 +60,14 @@ export default {
 .detection-rate {
     position: relative;
     width: 600px;
-    height: 221px;
-    margin-top: 20px;
+    // height: 221px;
+    height: 215px;
+    margin-top: 15px;
 }
 
 .panel-header {
-    padding: 22px 0 0 23px;
+    // padding: 22px 0 0 23px;
+    padding: 16px 0 0 23px;
 }
 .content-box {
     display: flex;

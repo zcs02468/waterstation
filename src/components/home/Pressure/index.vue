@@ -264,8 +264,10 @@ export default {
 .panel {
     position: relative;
     width: 600px;
-    height: 500px;
-    margin-top: 20px;
+    // height: 500px;
+    // height: 475px;
+    height: 464px;
+    margin-top: 15px;
 }
 .panel-top {
     height: 70px;
@@ -293,7 +295,9 @@ export default {
     margin-top: 10px;
     .charts {
         left: 30px;
-        height: 407px;
+        // height: 407px;
+        // height: 382px;
+        height: 371px;
         width: 540px;
     }
 }

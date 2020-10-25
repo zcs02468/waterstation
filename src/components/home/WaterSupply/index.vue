@@ -364,8 +364,10 @@ export default {
 .panel {
     position: relative;
     width: 600px;
-    height: 312px;
-    margin-top: 20px;
+    // height: 312px;
+    // margin-top: 20px;
+    height: 307px;
+    margin-top: 15px;
 }
 .panel-top {
     height: 70px;

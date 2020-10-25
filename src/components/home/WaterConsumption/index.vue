@@ -190,7 +190,7 @@ export default {
     position: relative;
     width: 600px;
     height: 480px;
-    margin-top: 4px;
+    margin-top: 15px;
 }
 .panel-top {
     // height: 70px;
@@ -250,16 +250,16 @@ export default {
     border: 1px solid #327BB9;
     background: #142E60;
 }
-.angle-box {
-    position: absolute;
-    width: 41px;
-    height: 22px;
-    background: rgb(1,20,60);
-    left: -18px;
-    top: -2px;
-    border-bottom: 2px solid #224c72;
-    transform: rotate(-54deg);
-}
+// .angle-box {
+//     position: absolute;
+//     width: 41px;
+//     height: 22px;
+//     background: rgb(1,20,60);
+//     left: -18px;
+//     top: -2px;
+//     border-bottom: 2px solid #224c72;
+//     transform: rotate(-54deg);
+// }
 
 
 .select-box {

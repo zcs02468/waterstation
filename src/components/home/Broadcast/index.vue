@@ -136,8 +136,10 @@ export default {
 <style lang="scss" scoped>
 .panel {
     width: 600px;
-    height: 100px;
+    // height: 100px;
+    height: 75px;
     position: relative;
+    margin-top: 15px;
 }
 .icon-box {
     margin: 14px 0 0 25px;
@@ -196,14 +198,14 @@ export default {
     // top: -11px;
     // border-bottom: 2px solid #224c72;
     // transform: rotate(54deg);
-    width: 50px;
-    height: 29px;
-    background: rgb(1, 20, 60);
-    position: absolute;
-    right: -23px;
-    top: -4px;
-    border-bottom: 2px solid #224c72;
-    transform: rotate(54deg);
+    // width: 50px;
+    // height: 29px;
+    // background: rgb(1, 20, 60);
+    // position: absolute;
+    // right: -23px;
+    // top: -4px;
+    // border-bottom: 2px solid #224c72;
+    // transform: rotate(54deg);
 }
 
 .TextScroll {
