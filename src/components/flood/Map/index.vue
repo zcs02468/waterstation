@@ -13,8 +13,7 @@
                     </li>
                     <li @click="selectClick('supplices')">
                         <span>应急仓库</span>
-                        <b
-                            :class="selectType == 'supplices' ? 'select' : ''"
+                        <b :class="selectType == 'supplices' ? 'select' : ''"
                         ></b>
                     </li>
                 </ul>
@@ -31,12 +30,13 @@
                         <div class="back"></div>
                     </div>
                     <div class="info-back"></div>
+                    <button class="look-detail" @click="opSuppliesModal(info.materialsWarehouse)" v-show="isShowBtn">详细物资</button>
                     <ul>
-                        <li><span></span>{{info.location}}</li>
-                        <li><span></span>{{info.name}}</li>
-                        <li><span></span>{{info.num}}</li>
-                        <li><span></span>{{info.userName}}</li>
-                        <li><span></span>{{info.phone}}</li>
+                        <li v-show="info.location"><span></span>{{info.location}}</li>
+                        <li v-show="info.name"><span></span>{{info.name}}</li>
+                        <li v-show="info.num"><span></span>{{info.num}}</li>
+                        <li v-show="info.userName"><span></span>{{info.userName}}</li>
+                        <li v-show="info.phone"><span></span>{{info.phone}}</li>
                     </ul>
                     <!-- <div class="tab-content-box">
                         <div class="content">
@@ -59,6 +59,11 @@
                 :propList="emList"
                 @closeDailog="closeDailog"
             />
+            <SuppliesModal 
+                v-if="isShowSuppliesModal" 
+                :type="suppliesModalType" 
+                @closeDailog="closeDailog"
+            />
         </div>
     </div>
 </template>
@@ -67,6 +72,7 @@
 import Title from "../../common/Title";
 import TeamDialog from "./TeamDialog";
 import SuppliesDialog from "./SuppliesDialog";
+import SuppliesModal from "./suppliesModal"
 import comMinxins from "../../common/comMinxins"
 import {getEmergencyInfo} from "../../../axios"
 export default {
@@ -77,9 +83,13 @@ export default {
             selectType: "team",
             showDialog: false,
             isShowList: false,
+            isShowBtn: false,
+            isShowSuppliesModal: false,
+            suppliesModalType: '',
             teamIndex: '',
             eaList: [],
             emList: [],
+            suppliesList:[],
             eaBMap: null,
             emBMap: null,
             info:{
@@ -95,6 +105,7 @@ export default {
         Title,
         TeamDialog,
         SuppliesDialog,
+        SuppliesModal,
     },
 
     mounted() {
@@ -146,7 +157,8 @@ export default {
                     that.info.num = `人数：${eaList.headcount || 0}`        //人数：XXXXX
                     that.info.userName = `现场负责人：${eaList.chargeLeadName}`       //现场负责人：13555555555
                     that.info.phone = `联系电话：${eaList.phone}`       //联系电话：13555555555
-                    that.isShowList = true
+                    that.isShowList = true;
+                    that.isShowBtn = false;
                 });
             }
             this.eaList.forEach( (item,index)=> {
@@ -187,26 +199,51 @@ export default {
                 marker.addEventListener("click",function() {
                     let emList = that.emList[index];
                     that.info.location = `物资仓库点位：${emList.materialsWarehouse}`   //队伍驻点：
-                    that.info.name = `物资名称：${emList.materialsName}`      //队伍名称：XXXXX
-                    that.info.num = `数量：${emList.materials || 0}`        //人数：XXXXX
+                    // that.info.name = `物资名称：${emList.materialsName}`      //队伍名称：XXXXX
+                    // that.info.num = `数量：${emList.materials || 0}`        //人数：XXXXX
+                    that.info.name = ``      //队伍名称：XXXXX
+                    that.info.num = ''        //人数：XXXXX
                     that.info.userName = `保管人：${emList.keeperName}`          //现场负责人联系电话：13555555555
                     that.info.phone = `联系电话：${emList.phone}`          //现场负责人联系电话：13555555555
-                    that.isShowList = true
+                    that.info.materialsWarehouse = emList.materialsWarehouse
+                    that.isShowList = true;
+                    that.isShowBtn = true;
                 });
             }
             this.emList.forEach( (item,index)=> {
                 addMarker(new BMap.Point(item.longitude, item.latitude),index)
             })
         },
+        // async getEmergencyMaterials(location) {
+        //     console.log( 'locationlocation', location );
+        //     let [res] = await getEmergencyMaterials(location);
+        //     // let res = {"result":"true","message":"{\"emList\":[{\"orderBy\":null,\"isNewRecord\":false,\"id\":\"1303243481153122304\",\"pageSize\":null,\"pageNo\":null,\"createByName\":null,\"createDate\":null,\"status\":null,\"updateBy\":null,\"updateDate\":null,\"lastUpdateDateTime\":null,\"updateByName\":null,\"remarks\":null,\"createBy\":null,\"materialsId\":\"1303243481153122304\",\"materialsWarehouse\":\"水环境科\",\"materialsName\":\"清水泵-6寸\",\"materials\":10,\"keeper\":\"hebin_wz3q\",\"keeperName\":\"何  彬\",\"phone\":\"13564767793\",\"longitude\":121.35575,\"latitude\":31.19405,\"updateDate_lte\":null,\"createDate_gte\":null,\"updateDate_gte\":null,\"createDate_lte\":null,\"updateDate_between\":null,\"createDate_between\":null,\"status_in\":null,\"id_in\":null},{\"orderBy\":null,\"isNewRecord\":false,\"id\":\"1303243264387297280\",\"pageSize\":null,\"pageNo\":null,\"createByName\":null,\"createDate\":null,\"status\":null,\"updateBy\":null,\"updateDate\":null,\"lastUpdateDateTime\":null,\"updateByName\":null,\"remarks\":null,\"createBy\":null,\"materialsId\":\"1303243264387297280\",\"materialsWarehouse\":\"水环境科\",\"materialsName\":\"汽油泵\",\"materials\":1,\"keeper\":\"hebin_wz3q\",\"keeperName\":\"何  彬\",\"phone\":\"13564767793\",\"longitude\":121.35575,\"latitude\":31.19405,\"updateDate_lte\":null,\"createDate_gte\":null,\"updateDate_gte\":null,\"createDate_lte\":null,\"updateDate_between\":null,\"createDate_between\":null,\"status_in\":null,\"id_in\":null}]}"}
+        //     let data = JSON.parse(res.message);
+        //     this.suppliesList = [];
+        //     this.suppliesList = data.emList;
+        //     this.suppliesList.splice();
+        //     this.isShowSuppliesModal = true;
+        // },
+        opSuppliesModal(location) {
+            this.closeDailog();
+            this.suppliesModalType = location;
+            // this.getEmergencyMaterials(location);
+            this.isShowSuppliesModal = true;
+        },
         openDialog() {
             this.showDialog = true;
             this.isShowList = false;
         },
         closeDailog() {
+            this.isShowList = false;
             this.showDialog = false;
+            this.isShowSuppliesModal = false;
         },
         selectClick(type) {
             this.selectType = type;
+            this.showDialog = false;
+            this.isShowSuppliesModal = false;
+            this.isShowList = false;
         },
         async getData() {
             if( this.eaBMap ) {
@@ -223,7 +260,7 @@ export default {
             let emList = data.emList;
             this.eaList = eaList;
             this.emList = emList;
-            console.log( 'eaList:', eaList, "emList:", emList );
+            // console.log( 'eaList:', eaList, "emList:", emList );
             this.createEaMap();
             this.createEmMap();
             // setTimeout(()=> {
@@ -365,11 +402,25 @@ export default {
         z-index: -1;
         .back {
             // background: rgba(9,32,80,.7);
-            background: rgba(101, 149, 242, 0.4);
+            // background: rgba(101, 149, 242, 0.4);
+        background: RGBA(17, 53, 73, 1);
             // background: red;
             width: 100%;
             height: 100%;
         }
+    }
+    .look-detail {
+        width: 96px;
+        height: 23px;
+        background: rgba(24, 71, 186, 0.5);
+        outline: none;
+        border: 1px solid #68C8FF;
+        border-radius: 5px;
+        position: absolute;
+        right: 25px;
+        bottom: 8px;
+        color: #fff;
+        cursor: pointer;
     }
     ul {
         padding: 29px 25px 0 25px;

@@ -61,3 +61,8 @@ export const getRiverWaterQuality = async ()=> await get({url: baseUrl + '/smart
 //二十五、	获取声音报警配置接口
 export const getAlarm = async ()=> await get({url: baseUrl + '/smartEnergy/getAlarm'});
 
+// 二十六、	根据物资仓库点位获取应急物资信息接口
+// 1.	接口访问地址：http://47.110.226.205:8980/smartEnergy/getEmergencyMaterials?materialsWarehouse=
+export const getEmergencyMaterials = async (location)=> await get({url: baseUrl + `/smartEnergy/getEmergencyMaterials?materialsWarehouse=${location}`});
+
+

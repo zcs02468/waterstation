@@ -5,13 +5,12 @@
             <div class="close" @click="closeDailog">X</div>
             <div class="dialog-content">
                 <div class="title">应急仓库</div>
-                <div class="content">
+                <div class="content" v-if="isShow">
                     <ul class="head">
                         <li>
                             <div>物资仓库点位</div>
                             <div>物资名称</div>
                             <div>数量</div>
-                            <div>电话</div>
                         </li>
                     </ul>
                     <ul class="body">
@@ -19,11 +18,10 @@
                             <div>{{ item.materialsWarehouse }}</div>
                             <div>{{ item.materialsName }}</div>
                             <div>{{ item.materials || 0 }}</div>
-                            <div>{{ item.phone }}</div>
                         </li>
                     </ul>
                 </div>
-                <div class="pagination">
+                <div class="pagination" v-if="isShow">
                     <el-pagination
                         background
                         layout="total, prev, pager, next"
@@ -35,22 +33,28 @@
                     >
                     </el-pagination>
                 </div>
+                <div class="loading" v-if="!isShow">
+                    <span class="iconfont iconjiazai"></span>
+                </div>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import {getEmergencyMaterials} from "../../../../axios"
 export default {
     props: {
-        propList: {
-            default: Array,
+        type: {
+            default: String,
         },
     },
 
     name: "Dialog",
     data() {
         return {
+            isShow: false,
+            propList:[],
             dataList: [],
             pageSize: 5,
         };
@@ -59,9 +63,7 @@ export default {
     components: {},
 
     created() {
-        let lastVal = 0;
-        let nextVal = this.pageSize;
-        this.dataList = this.propList.slice(lastVal, nextVal);
+        this.getEmergencyMaterials(this.type)
     },
 
     methods: {
@@ -71,6 +73,18 @@ export default {
         currentChange(val) {
             let lastVal = val * this.pageSize - this.pageSize;
             let nextVal = val * this.pageSize;
+            this.dataList = this.propList.slice(lastVal, nextVal);
+        },
+        async getEmergencyMaterials(location) {
+            let [res] = await getEmergencyMaterials(location);
+            // let res = {"result":"true","message":"{\"emList\":[{\"orderBy\":null,\"isNewRecord\":false,\"id\":\"1303243481153122304\",\"pageSize\":null,\"pageNo\":null,\"createByName\":null,\"createDate\":null,\"status\":null,\"updateBy\":null,\"updateDate\":null,\"lastUpdateDateTime\":null,\"updateByName\":null,\"remarks\":null,\"createBy\":null,\"materialsId\":\"1303243481153122304\",\"materialsWarehouse\":\"水环境科\",\"materialsName\":\"清水泵-6寸\",\"materials\":10,\"keeper\":\"hebin_wz3q\",\"keeperName\":\"何  彬\",\"phone\":\"13564767793\",\"longitude\":121.35575,\"latitude\":31.19405,\"updateDate_lte\":null,\"createDate_gte\":null,\"updateDate_gte\":null,\"createDate_lte\":null,\"updateDate_between\":null,\"createDate_between\":null,\"status_in\":null,\"id_in\":null},{\"orderBy\":null,\"isNewRecord\":false,\"id\":\"1303243264387297280\",\"pageSize\":null,\"pageNo\":null,\"createByName\":null,\"createDate\":null,\"status\":null,\"updateBy\":null,\"updateDate\":null,\"lastUpdateDateTime\":null,\"updateByName\":null,\"remarks\":null,\"createBy\":null,\"materialsId\":\"1303243264387297280\",\"materialsWarehouse\":\"水环境科\",\"materialsName\":\"汽油泵\",\"materials\":1,\"keeper\":\"hebin_wz3q\",\"keeperName\":\"何  彬\",\"phone\":\"13564767793\",\"longitude\":121.35575,\"latitude\":31.19405,\"updateDate_lte\":null,\"createDate_gte\":null,\"updateDate_gte\":null,\"createDate_lte\":null,\"updateDate_between\":null,\"createDate_between\":null,\"status_in\":null,\"id_in\":null}]}"}
+            let data = JSON.parse(res.message);
+            this.propList = [];
+            this.propList = data.emList;
+            this.propList.splice();
+            this.isShow = true;
+            let lastVal = 0;
+            let nextVal = this.pageSize;
             this.dataList = this.propList.slice(lastVal, nextVal);
         },
     },
@@ -140,18 +154,28 @@ export default {
                 padding: 0 10px;
                 display: table-cell;
                 vertical-align: middle;
-                &:nth-child(1) {
-                    width: 180px;
-                }
-                &:nth-child(2) {
-                    width: 120px;
-                }
-                &:nth-child(3) {
-                    width: 80px;
-                }
-                &:nth-child(4) {
-                    width: 120px;
-                }
+                width: 166px;
+                // &:nth-child(1) {
+                //     width: 180px;
+                // }
+                // &:nth-child(2) {
+                //     width: 120px;
+                // }
+                // &:nth-child(3) {
+                //     width: 80px;
+                // }
+                // &:nth-child(1) {
+                //     width: 180px;
+                // }
+                // &:nth-child(2) {
+                //     width: 120px;
+                // }
+                // &:nth-child(3) {
+                //     width: 80px;
+                // }
+                // &:nth-child(4) {
+                //     width: 120px;
+                // }
             }
         }
         .head {
@@ -216,5 +240,19 @@ export default {
             font-weight: 400 !important;
         }
     }
+}
+.loading {
+    width: 100%;
+    min-height: 210px;
+    text-align: center;
+    line-height: 210px;
+    .iconfont {
+        display: inline-block;
+        font-size: 30px;
+        animation: rotate 2s linear infinite;
+    }
+}
+@keyframes rotate{from{transform: rotate(0deg)}
+    to{transform: rotate(359deg)}
 }
 </style>

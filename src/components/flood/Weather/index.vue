@@ -101,6 +101,7 @@ export default {
         async getData() {
             let [res] = await getWeather();
             let data = JSON.parse(res.message);
+            console.log( 'data111111111111111111', data );
             Object.assign(this.weatherData, data)
             // temperature	温度
             // humidity	湿度
