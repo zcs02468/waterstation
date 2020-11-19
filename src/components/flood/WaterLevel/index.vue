@@ -185,17 +185,17 @@ export default {
             
             this.alarmList.forEach((item,index) => {
               if( index == 0 ) {
-                if(item && this.weichangIsAlarm) {
+                if(item && Number(this.alarm.weichangIsAlarm)) {
                   this.$store.commit('setAutoUrlNum');
                 }
               }
               if( index == 1 ) {
-                if(item && this.waiweiIsAlarm) {
+                if(item && Number(this.alarm.waiweiIsAlarm)) {
                   this.$store.commit('setAutoUrlNum');
                 }
               }
               if( index == 2 ) {
-                if(item && this.balancingIsAlarm) {
+                if(item && Number(this.alarm.balancingIsAlarm)) {
                   this.$store.commit('setAutoUrlNum');
                 }
               }
@@ -244,9 +244,10 @@ export default {
 
     computed: {
         ...mapState({
-            weichangIsAlarm: state => state.flood.alarm.weichangIsAlarm,	//围场河水位声音报警	String	1：报警；0：不报警
-            waiweiIsAlarm: state => state.flood.alarm.waiweiIsAlarm,	//外围河道水位声音报警	String	1：报警；0：不报警
-            balancingIsAlarm: state => state.flood.alarm.balancingIsAlarm,	//调节水池水位声音报警	String	1：报警；0：不报警
+            // weichangIsAlarm: state => state.flood.alarm.weichangIsAlarm,	//围场河水位声音报警	String	1：报警；0：不报警
+            // waiweiIsAlarm: state => state.flood.alarm.waiweiIsAlarm,	//外围河道水位声音报警	String	1：报警；0：不报警
+            // balancingIsAlarm: state => state.flood.alarm.balancingIsAlarm,	//调节水池水位声音报警	String	1：报警；0：不报警
+            alarm: state => state.alarm
         })
     },
 };

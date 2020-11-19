@@ -46,7 +46,7 @@ export default {
             this.option.yAxis.data = cityList;
             this.option.series[0].data = lineY;
             this.myChart.setOption(this.option);
-            if( isAutoAudio && this.waterIsAlarm ) {
+            if( isAutoAudio && Number(this.alarm.waterIsAlarm) ) {
                 this.$store.commit('setAutoUrlNum');
             }
         },
@@ -228,7 +228,8 @@ export default {
     },
     computed:{
         ...mapState({
-            waterIsAlarm: state => state.flood.alarm.waterIsAlarm
+            // waterIsAlarm: state => state.flood.alarm.waterIsAlarm
+            alarm: state => state.flood.alarm
         })
     }
 };

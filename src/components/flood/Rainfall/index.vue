@@ -111,7 +111,7 @@ export default {
             //警戒值判断
             let maxNum = Math.max(...standardArr)
             if( standardArr.length > 0  &&  (maxNum > standardList[0].dictValue) )  {
-                if( this.rainfallIsAlarm ) {
+                if( Number(this.alarm.rainfallIsAlarm) ) {
                     this.$store.commit('setAutoUrlNum')
                 }
             }
@@ -361,7 +361,8 @@ export default {
 
     computed: {
         ...mapState({
-            rainfallIsAlarm: state => state.flood.alarm.rainfallIsAlarm
+            // rainfallIsAlarm: state => state.flood.alarm.rainfallIsAlarm
+            alarm: state => state.flood.alarm
         })
     },
 };
