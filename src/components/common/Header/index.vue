@@ -1,7 +1,6 @@
 <!--  -->
 <template>
-    <div class="header-box">
-        <!-- <div class="header-back">智慧水站防汛检测</div> -->
+    <div class="header-box" @click="goToPage" :class="{ cursorPoninter: isHref() }">
         <div class="header-back">{{title}}</div>
     </div>
 </template>
@@ -21,14 +20,25 @@ export default {
         return {};
     },
 
-    components: {},
-
-    methods: {},
-
-    computed: {},
+    methods: {
+        goToPage() {
+            if (!this.isHref()) return;
+            this.$router.push({path: 'normal'});
+        },
+        isHref() {
+            if (this.$route.name != "Flood") {
+                return false;
+            }else {
+                return true;
+            }
+        }
+    },
 };
 </script>
 <style lang="scss" scoped>
+.cursorPoninter {
+    cursor: pointer;
+}
 .header-box {
     height: 60px;
     margin: 0 20px;

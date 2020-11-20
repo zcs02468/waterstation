@@ -2,7 +2,7 @@
     <div class="home-container">
         <div class="wrap" ref="editor">
             <div class="main-head">
-                <Header title="防汛监测" />
+                <Header :title="title"/>
                 <div class="info">
                     <Time />
                     <Phone :phoneArr="['22341515', '22344388']" />
@@ -81,6 +81,7 @@ export default {
         return {
             show: false,
             autoUrl: null,
+            title: '防汛监测'
         };
     },
     computed: {
@@ -91,6 +92,10 @@ export default {
     created() {
         if (this.$route.name == "Normal") {
             this.show = true;
+            this.title = '环境生态监测';
+        }else {
+            this.show = false;
+            this.title = '防汛监测';
         }
         this.getAlarm();
     },
@@ -113,7 +118,7 @@ export default {
             let buttonAudio = document.getElementById("eventAudio");
             buttonAudio.setAttribute("src", audioFile);
             buttonAudio.play();
-        },
+        }
     },
 };
 </script>
