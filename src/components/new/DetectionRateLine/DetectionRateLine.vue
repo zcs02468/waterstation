@@ -58,9 +58,10 @@ export default {
             let arr = [1,2,3,4,5,6,7,8,9,10]
             arr.forEach(item => {
                 xAxis.push(`10.0${item*2}`)
-                y1.push(item*100)
-                y2.push(item*200)
-                y3.push(item*300)
+                let a = Math.floor(Math.random()*10)
+                y1.push(a*100)
+                y2.push(a*200)
+                y3.push(a*300)
             });
             let series = [
                 this.getSeriesData({data:y1, name:"东区南", colorIndex:'one'}),
