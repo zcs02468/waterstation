@@ -188,9 +188,9 @@ export default {
 <style lang="scss" scoped>
 .panel {
     position: relative;
-    width: 600px;
+    width: 646px;
     height: 480px;
-    margin-top: 15px;
+    margin-top: 18px;
 }
 .panel-top {
     // height: 70px;
