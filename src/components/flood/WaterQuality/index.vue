@@ -139,7 +139,8 @@ export default {
 <style lang="scss" scoped>
 .panel {
     width: 540px;
-    height: 667.5px;
+    // height: 667.5px;
+    height: 505px;
     margin-top: 20px;
     position: relative;
 }
@@ -147,7 +148,7 @@ export default {
     margin: 21.5px 0 0 22.5px;
 }
 .panel-bodyer {
-    margin-top: 17px;
+    margin-top: 20px;
     display: flex;
     justify-content: center;
 }
@@ -156,13 +157,15 @@ export default {
 }
 .content {
     width: 491px;
-    height: 580px;
+    // height: 580px;
+    height: 410px;
     display: flex;
     flex-wrap: wrap;
     .block {
         display: flex;
         border-bottom: 1px solid rgba(87, 189, 255, 0.56);
-        height: 145px;
+        // height: 145px;
+        height: 102.5px;
         font-size: 16px;
         text-align: center;
         .left {
@@ -182,12 +185,16 @@ export default {
             background: rgba(101, 149, 242, 0.24);
             .target {
                 border-bottom: 1px solid rgba(87, 189, 255, 0.56);
-                height: 72.5px;
-                line-height: 72.5px;
+                // height: 72.5px;
+                // line-height: 72.5px;
+                height: 51.25px;
+                line-height: 51.25px;
             }
             .now {
-                height: 72.5px;
-                line-height: 72.5px;
+                // height: 72.5px;
+                // line-height: 72.5px;
+                height: 51.25px;
+                line-height: 51.25px;
             }
         }
         &:nth-child(1),

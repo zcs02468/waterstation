@@ -3,61 +3,73 @@
     <div class="panel left-container-angle">
         <div class="panel-header">
             <Title title="气象信息" />
+            <!-- <div class="unit"><span>当前平均温度：</span>{{weatherData.temperature}}&#8451;</div> -->
             <div class="unit"><span>当前平均温度：</span>{{parsingNumber(weatherData.temperature)}}&#8451;</div>
         </div>
         <div class="panel-bodyer">
             <div class="block">
-                <span class="iconfont iconwendu2x"></span>
+                <div class="icon-box">
+                    <span class="iconfont iconwendu2x"></span>
+                    <span class="title">温度</span>
+                </div>
                 <span class="text">{{parsingNumber(weatherData.temperature)}}{{weatherData.temperature_unit}}</span>
             </div>
-            <div class="block center">
-                <span class="iconfont iconshidu"></span>
+            <div class="block">
+                <div class="icon-box">
+                    <span class="iconfont iconshidu"></span>
+                    <span class="title">湿度</span>
+                </div>
                 <span class="text">{{parsingNumber(weatherData.humidity)}}{{weatherData.humidity_unit}}</span>
             </div>
             <div class="block">
-                <span class="iconfont iconapp_icons--1"></span>
+                <div class="icon-box">
+                    <span class="iconfont iconapp_icons--1"></span>
+                    <span class="title">PM10</span>
+                </div>
                 <span class="text"></span>
             </div>
             <div class="block">
-                <span class="iconfont iconapp_icons--"></span>
+                <div class="icon-box">
+                    <span class="iconfont iconapp_icons--"></span>
+                    <span class="title">PM2.5</span>
+                </div>
                 <span class="text">{{parsingNumber(weatherData.aqi)}}</span>
             </div>
-            <div class="block center">
-                <span class="iconfont iconfengsu1"></span>
+            <div class="block">
+                <div class="icon-box">
+                    <span class="iconfont iconfengsu1"></span>
+                    <span class="title">风速</span>
+                </div>
                 <span class="text">{{parsingNumber(weatherData.windspeed)}}{{weatherData.windspeed_unit}}</span>
             </div>
-            <div class="block center">
+            <div class="block">
+                <div class="icon-box">
+                    <span class="iconfont iconfengxiang"></span>
+                    <span class="title">风向</span>
+                </div>
+                <span class="text">{{weatherData.winddirection}}{{weatherData.winddirection_unit}}</span>
+            </div>
+            <!-- <div class="block center">
                 <span class="iconfont iconfengxiang"></span>
                 <span class="text">{{weatherData.winddirection}}{{weatherData.winddirection_unit}}</span>
             </div>
-            <!-- <div class="block">
+            <div class="block">
+                <span class="iconfont iconfengsu"></span>
+                <span class="text">{{weatherData.windspeed}}{{weatherData.windspeed_unit}}</span>
+            </div>
+            <div class="block">
+                <span class="iconfont iconkongqizhiliangjianceshujufenxi"></span>
+                <span class="text">{{weatherData.aqi}}</span>
+            </div>
+            <div class="block center">
                 <span class="iconfont iconkongqizhiliang1"></span>
                 <span class="text">{{weatherData.aqi_level_name}}</span>
             </div> -->
             <!-- <div class="block">
-                <span class="iconfont iconshidu"></span>
-                <span class="text">40%</span>
-            </div>
-            <div class="block center">
-                <span class="iconfont iconwendu2x"></span>
-                <span class="text">20&#8451;-26&#8451;</span>
-            </div>
-            <div class="block">
                 <span class="iconfont iconkongqizhiliang1"></span>
-                <span class="text">良好</span>
-            </div>
-            <div class="block">
-                <span class="iconfont iconfengsufengxiang"></span>
-                <span class="text">东北风二级</span>
-            </div>
-            <div class="block center">
-                <span class="iconfont iconyanjing"></span>
-                <span class="text">1000m</span>
-            </div>
-            <div class="block">
-                <span class="iconfont iconqitalei_ziranzaihai"></span>
-                <span class="text">低</span>
+                <span class="text">{{weatherData.aqi_level_name}}</span>
             </div> -->
+            
         </div>
     </div>
 </template>
@@ -67,7 +79,7 @@ import Title from "../../common/Title";
 import comMinxins from "../../common/comMinxins"
 import {getWeather} from "../../../axios"
 export default {
-    name: "Weather",
+    name: "WeatherPlus",
     mixins:[comMinxins],
     data() {
         return {
@@ -131,7 +143,8 @@ export default {
 .panel {
     position: relative;
     width: 540px;
-    height: 184px;
+    // height: 184px;
+    height: 347px;
     margin-top: 20px;
 }
 .panel-header {
@@ -150,14 +163,13 @@ export default {
 .iconfont {
     font-size: 35px;
     vertical-align: middle;
-    margin-right: 10px;
+    text-align: center;
 }
 .text {
     font-size: 14px;
     vertical-align: middle;
 }
 .panel-bodyer {
-    margin-top: 25px;
     display: flex;
     flex-wrap: wrap;
     .center {
@@ -185,10 +197,24 @@ export default {
         }
     }
     .block {
-        height: 36px;
+        height: 102px;
         width: 175px;
-        margin-bottom: 18.5px;
-        padding-left: 32px;
+        // padding-left: 32px;
+        flex: 0 0 50%;
+        display: flex;
+        align-items: center;
+        padding-left: 60px;
+    }
+    .icon-box {
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        flex-direction: column;
+        margin-right: 53px;
+        .title {
+            margin-top: 15px;
+            text-align: center;
+        }
     }
 }
 // .left-line {
