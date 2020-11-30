@@ -20,7 +20,7 @@
 import Title from "@/components/common/Title";
 // import Container from "./Container";
 import comMinxins from "@/components/common/comMinxins"
-import { getDetectionRate } from "@/axios/index";
+import { getTodayWaterDuy } from "@/axios/index";
 export default {
     name: "WaterUse",
     mixins:[comMinxins],
@@ -40,7 +40,39 @@ export default {
             this.getData();
         },
         async getData() {
-            const [res] = await getDetectionRate();
+            // const [res] = await getTodayWaterDuy();
+            let res = {
+                    "result":"true",
+                    "data":[
+                        {
+                            "dutyDate":"2020-11-29",
+                            "dutyName":"老李",
+                            "dutyPhone":"13554280987",
+                            "pumpStation":"1"
+                        },
+                        {
+                            "dutyDate":"2020-11-29",
+                            "dutyName":"老李",
+                            "dutyPhone":"13554280987",
+                            "pumpStation":"1"
+                        },
+                        {
+                            "dutyDate":"2020-11-29",
+                            "dutyName":"老刘",
+                            "dutyPhone":"13554289876",
+                            "pumpStation":"2"
+                        },
+                        {
+                            "dutyDate":"2020-11-29",
+                            "dutyName":"老王",
+                            "dutyPhone":"13554290987",
+                            "pumpStation":"3"
+                        }
+                    ],
+                    "message":"获取值班人员列表成功"
+                }
+
+
             let message = JSON.parse(res.message);
             this.water_detectionRate_west = message.water_detectionRate_west;
             this.water_detectionRate_east = message.water_detectionRate_east;

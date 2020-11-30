@@ -4,7 +4,7 @@
         <div class="panel-header">
             <Title title="气象信息" />
             <!-- <div class="unit"><span>当前平均温度：</span>{{weatherData.temperature}}&#8451;</div> -->
-            <div class="unit"><span>当前平均温度：</span>{{parsingNumber(weatherData.temperature)}}&#8451;</div>
+            <div class="unit"><span>当前平均温度：</span>{{parsingNumber(weatherData.temperature.value)}}&#8451;</div>
         </div>
         <div class="panel-bodyer">
             <div class="block">
@@ -12,64 +12,43 @@
                     <span class="iconfont iconwendu2x"></span>
                     <span class="title">温度</span>
                 </div>
-                <span class="text">{{parsingNumber(weatherData.temperature)}}{{weatherData.temperature_unit}}</span>
+                <span class="text">{{parsingNumber(weatherData.temperature.value)}}{{weatherData.temperature.unit}}</span>
             </div>
             <div class="block">
                 <div class="icon-box">
                     <span class="iconfont iconshidu"></span>
                     <span class="title">湿度</span>
                 </div>
-                <span class="text">{{parsingNumber(weatherData.humidity)}}{{weatherData.humidity_unit}}</span>
+                <span class="text">{{parsingNumber(weatherData.humidity.value)}}{{weatherData.humidity.unit}}</span>
             </div>
             <div class="block">
                 <div class="icon-box">
                     <span class="iconfont iconapp_icons--1"></span>
                     <span class="title">PM10</span>
                 </div>
-                <span class="text"></span>
+                <span class="text">{{parsingNumber(weatherData.pm10.value)}}{{weatherData.pm10.unit}}</span>
             </div>
             <div class="block">
                 <div class="icon-box">
                     <span class="iconfont iconapp_icons--"></span>
                     <span class="title">PM2.5</span>
                 </div>
-                <span class="text">{{parsingNumber(weatherData.aqi)}}</span>
+                <span class="text">{{parsingNumber(weatherData.pm25.value)}}{{weatherData.pm25.unit}}</span>
             </div>
             <div class="block">
                 <div class="icon-box">
                     <span class="iconfont iconfengsu1"></span>
                     <span class="title">风速</span>
                 </div>
-                <span class="text">{{parsingNumber(weatherData.windspeed)}}{{weatherData.windspeed_unit}}</span>
+                <span class="text">{{parsingNumber(weatherData.windspeed.value)}}{{weatherData.windspeed.unit}}</span>
             </div>
             <div class="block">
                 <div class="icon-box">
                     <span class="iconfont iconfengxiang"></span>
                     <span class="title">风向</span>
                 </div>
-                <span class="text">{{weatherData.winddirection}}{{weatherData.winddirection_unit}}</span>
+                <span class="text">{{weatherData.winddirection.value}}{{weatherData.winddirection.unit}}</span>
             </div>
-            <!-- <div class="block center">
-                <span class="iconfont iconfengxiang"></span>
-                <span class="text">{{weatherData.winddirection}}{{weatherData.winddirection_unit}}</span>
-            </div>
-            <div class="block">
-                <span class="iconfont iconfengsu"></span>
-                <span class="text">{{weatherData.windspeed}}{{weatherData.windspeed_unit}}</span>
-            </div>
-            <div class="block">
-                <span class="iconfont iconkongqizhiliangjianceshujufenxi"></span>
-                <span class="text">{{weatherData.aqi}}</span>
-            </div>
-            <div class="block center">
-                <span class="iconfont iconkongqizhiliang1"></span>
-                <span class="text">{{weatherData.aqi_level_name}}</span>
-            </div> -->
-            <!-- <div class="block">
-                <span class="iconfont iconkongqizhiliang1"></span>
-                <span class="text">{{weatherData.aqi_level_name}}</span>
-            </div> -->
-            
         </div>
     </div>
 </template>
@@ -83,21 +62,44 @@ export default {
     mixins:[comMinxins],
     data() {
         return {
-            weatherData:{
-                temperature:25,//温度 -
-                humidity:40,	//湿度-
-                windspeed:2,	//风速-
-                winddirection:"东北风",	//风向-
-                temperature_unit:"",	//温度单位-
-                humidity_unit:'',	//湿度单位-
-                windspeed_unit:'',	//风速单位-
-                winddirection_unit:'',	//风向单位-
-                aqi:'',	//空气质量指数-
-                aqi_level:'',	//空气质量等级
-                aqi_level_name:'',	//空气质量等级名称
-                aqi_color:'',	//空气质量等级颜色
-
-                // 湿度     风向   风速    空气质量指数  空气质量+颜色
+            weatherData: {
+                temperature: {
+                    name: "温度",
+                    value: 23.10029,
+                    unit: "℃",
+                },
+                humidity: {
+                    name: "湿度",
+                    value: 95.15361,
+                    unit: "mg/l",
+                },
+                pm10: {
+                    name: "PM10",
+                    value: 95.15361,
+                    unit: "mg/m³",
+                },
+                pm25: {
+                    name: "PM2.5",
+                    value: 95.15361,
+                    unit: "mg/m³",
+                },
+                windspeed: {
+                    name: "风速",
+                    value: 95.15361,
+                    unit: "m/s",
+                },
+                winddirection: {
+                    name: "风向",
+                    value: '',
+                    unit: "",
+                },
+            },
+            codingList:{
+                "a01001":"temperature",
+                "a01002":"humidity",
+                "a34002":"pm10",
+                "a34004":"pm25",
+                "a01007":"windspeed",
             }
         };
     },
@@ -118,21 +120,53 @@ export default {
             this.getData();
         },
         async getData() {
-            let [res] = await getWeather();
-            let data = JSON.parse(res.message);
-            Object.assign(this.weatherData, data)
-            // temperature	温度
-            // humidity	湿度
-            // windspeed	风速
-            // winddirection	风向
-            // temperature_unit	温度单位
-            // humidity_unit	湿度单位
-            // windspeed_unit	风速单位
-            // winddirection_unit	风向单位
-            // aqi	空气质量指数
-            // aqi_level	空气质量等级
-            // aqi_level_name	空气质量等级名称
-            // aqi_color	空气质量等级颜色
+            // let [res] = await getWeather();
+            let res = {
+                result: "true",
+                data: [
+                    {
+                        monitoringFactor: "湿度",
+                        factorCoding: "a01002",
+                        factorValue: 95.15361,
+                        factorUnit: "mg/l",
+                    },
+                    {
+                        monitoringFactor: "风速",
+                        factorCoding: "a01007",
+                        factorValue: 1.03294,
+                        factorUnit: "m/s",
+                    },
+                    {
+                        monitoringFactor: "PM10",
+                        factorCoding: "a34002",
+                        factorValue: 0.0262,
+                        factorUnit: "mg/m³",
+                    },
+                    {
+                        monitoringFactor: "温度",
+                        factorCoding: "a01001",
+                        factorValue: 23.10029,
+                        factorUnit: "℃",
+                    },
+                    {
+                        monitoringFactor: "PM2.5",
+                        factorCoding: "a34004",
+                        factorValue: 0.0199,
+                        factorUnit: "mg/m³",
+                    },
+                ],
+                message: "请求成功",
+            };
+            
+            console.log("11111111111111", res);
+            // let data = JSON.parse(res.message);
+            let data = res.data;
+            data.forEach(item => {
+                let key = this.codingList[item.factorCoding]
+                this.weatherData[key].name = item.monitoringFactor;
+                this.weatherData[key].value = item.factorValue;
+                this.weatherData[key].unit = item.factorUnit;
+            })
         }
     },
 

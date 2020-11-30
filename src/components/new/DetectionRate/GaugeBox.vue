@@ -35,7 +35,7 @@ export default {
         updateData(value) {
           let color = "#03F47B"
           value <= 85 && (color = "#007DFE");
-          value <= 80 && (color = "red");
+          value < 80 && (color = "red");
           this.lineColor = color;
           this.option.series[0].data[0].value = value;
           this.option.series[0].detail.textStyle.color = color;

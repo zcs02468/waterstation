@@ -5,7 +5,13 @@
             <Title title="供水检测率" />
         </div>
         <div class="box">
-            <GaugeBox v-for="(item,index) in list" :title="item.title" :num="index+1" :value="item.value" :key="`DetectionRate${item}`"/>
+            <GaugeBox
+                v-for="(item, index) in list"
+                :title="item.title"
+                :num="index + 1"
+                :value="item.value"
+                :key="`DetectionRate${item}`"
+            />
         </div>
     </div>
 </template>
@@ -13,37 +19,36 @@
 <script>
 import Title from "@/components/common/Title";
 import comMinxins from "@/components/common/comMinxins";
-import GaugeBox from "./GaugeBox"
+import GaugeBox from "./GaugeBox";
 import { getDetectionRate } from "@/axios/index";
 export default {
     name: "DetectionRate",
     mixins: [comMinxins],
     components: {
         Title,
-        GaugeBox
+        GaugeBox,
     },
     data() {
         return {
-            list:[
+            list: [
                 {
-                    title:'西南合建泵站',
+                    title: "西南合建泵站",
                     value: 40,
                 },
                 {
-                    title:'东区南水塔',
+                    title: "东区南水塔",
                     value: 83,
                 },
                 {
-                    title:'东区新北泵站',
+                    title: "东区新北泵站",
                     value: 90,
                 },
-            ]
+            ],
         };
     },
 
     async created() {
         this.getData();
-        
     },
     mounted() {
         // this.drawLine()
@@ -54,7 +59,43 @@ export default {
             this.getData();
         },
         async getData() {
-
+            //parseFloat("0.3335%")
+            // let [res] = await getDetectionRate();
+            let res = {
+                result: "true",
+                data: [
+                    {
+                        dailyDose: 0,
+                        regionname: "西区",
+                        waterSupply: 0,
+                        percentage: "00.00%",
+                    },
+                    {
+                        dailyDose: 0,
+                        regionname: "东区南",
+                        waterSupply: 0,
+                        percentage: "80.00%",
+                    },
+                    {
+                        dailyDose: 0,
+                        regionname: "东区北",
+                        waterSupply: 0,
+                        percentage: "50.00%",
+                    },
+                ],
+                message: "请求成功",
+            };
+            res.data.forEach(item => {
+                if( item.regionname == '西区' ){
+                    this.list[0].value = parseFloat(item.percentage);
+                }
+                if( item.regionname == '东区南' ){
+                    this.list[1].value = parseFloat(item.percentage);
+                }
+                if( item.regionname == '东区北' ){
+                    this.list[2].value = parseFloat(item.percentage);
+                }
+            })
         },
     },
 };

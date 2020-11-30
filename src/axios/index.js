@@ -3,8 +3,15 @@ import { get } from "./tools";
 // const baseUrl = 'http://218.242.28.28:800'
 const baseUrl = ''
 
+//今日值班http://10.23.1.168:8980/smartEnergy/todayWaterDuty
+export const getTodayWaterDuy = async () => await get({ url: baseUrl + "/smartEnergy/todayWaterDutye" });
+
 //供水检测率接口
-export const getDetectionRate = async () => await get({ url: baseUrl + "/smartEnergy/detectionrate" });
+// export const getDetectionRate = async () => await get({ url: baseUrl + "/smartEnergy/detectionrate" });
+export const getDetectionRate = async () => await get({ url: baseUrl + "/smartEnergy/waterDetectionrate" });
+
+//用水情况
+export const getWaterUsage = async () => await get({ url: baseUrl + "/smartEnergy/waterUsage" });
 
 //施工信息情况接口
 export const getConstructionInfo = async () => await get({ url: baseUrl + "/smartEnergy/build" });
@@ -53,7 +60,8 @@ export const getRiverCourseLevel = async () => await get({ url: baseUrl + "/smar
 export const getRainfall = async () => await get({ url: baseUrl + "/smartEnergy/rainfall" });
 
 //防汛监测气象信息接口 http://47.110.226.205:8980/smartEnergy/metar
-export const getWeather = async ()=> await get({url: baseUrl + '/smartEnergy/metar'});
+// export const getWeather = async ()=> await get({url: baseUrl + '/smartEnergy/metar'});
+export const getWeather = async () => await get({url:baseUrl + '/smartEnergy/weatherInformation'});
 
 //二十四、	河道水质（五类水）接口
 export const getRiverWaterQuality = async ()=> await get({url: baseUrl + '/smartEnergy/riverWaterQuality'});

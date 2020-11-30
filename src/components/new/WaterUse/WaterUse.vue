@@ -26,7 +26,7 @@
 <script>
 import Title from "@/components/common/Title";
 import comMinxins from "@/components/common/comMinxins";
-// import { getDetectionRate } from "@/axios/index";
+import { getWaterUsage } from "@/axios/index";
 export default {
     name: "WaterUse",
     mixins: [comMinxins],
@@ -71,13 +71,38 @@ export default {
 
     mounted() {
         this.drawLine();
+        this.getData();
     },
 
     methods: {
         updateData() {
             this.getData();
         },
-        async getData() {},
+        async getData() {
+            // ljll1	累计用水 
+            // ssll1	瞬时流量
+            // p5	出水压力
+            // zd	浊度
+            // yl	余氯
+
+            // let [res] = await getWaterUsage();
+            let res = {
+                "result":"true",
+                "data":{
+                    "ljll1":51561,
+                    "ssll1":1.3,
+                    "p5":4.658,
+                    "zd":0.185,
+                    "yl":0.0509
+                },
+                "message":"请求成功"
+            }
+            let data = res.data;
+            this.dataList = [data.ljll1,data.yl,data.zd,data.p5,data.ssll1];
+            this.dataList.splice();
+            this.option.series[0].data[0].value = this.dataList;
+            this.myChart.setOption(this.option);
+        },
         drawLine() {
             this.option = {
                 grid: {
