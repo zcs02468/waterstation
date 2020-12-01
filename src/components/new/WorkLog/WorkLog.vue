@@ -4,14 +4,20 @@
         <div class="panel-header">
             <Title title="今日值班" />
         </div>
-        <div class="content-box">
-            <div class="img-box">
-                <img src="" alt="">
-            </div>
-            <div class="name">张三</div>
-            <div class="phone">18612345678</div>
-            <div class="location">东区南</div>
-            <div class="icon iconfont iconright1"></div>
+        <div class="carousel-box">
+            <el-carousel height="45px" direction="vertical" :interval="5000" :autoplay="true" indicator-position="none" ref="workLog">
+                <el-carousel-item v-for="(item,i) in list" :key="`${i}${item.pumpStation}`">
+                    <div class="content-box">
+                        <div class="img-box">
+                            <img src="" alt="">
+                        </div>
+                        <div class="name">{{item.dutyName}}</div>
+                        <div class="phone">{{item.dutyPhone}}</div>
+                        <div class="location">{{stationList[item.pumpStation]}}</div>
+                        <div class="icon iconfont iconright1" @click="changNext"></div>
+                    </div>
+                </el-carousel-item>
+            </el-carousel>
         </div>
     </div>
 </template>
@@ -26,13 +32,13 @@ export default {
     mixins:[comMinxins],
     data() {
         return {
-            water_detectionRate_east: "90%",
-            water_detectionRate_west: "90%",
+            list:[],
+            stationList: ["",'西区','东区南','东区北']
         };
     },
 
     async created() {
-
+        this.getData();
     },
 
     methods:{
@@ -71,14 +77,11 @@ export default {
                     ],
                     "message":"获取值班人员列表成功"
                 }
-
-
-            let message = JSON.parse(res.message);
-            this.water_detectionRate_west = message.water_detectionRate_west;
-            this.water_detectionRate_east = message.water_detectionRate_east;
-            // setTimeout(()=> {
-            //     this.getData();
-            // },60000)
+            this.list = res.data;
+            this.list.splice();
+        },
+        changNext() {
+            this.$refs.workLog.next();
         }
     },
 
@@ -98,6 +101,10 @@ export default {
     // padding: 22px 0 0 23px;
     padding: 16px 0 0 23px;
 }
+.carousel-box {
+    width: 100%;
+    height: 45px;
+}
 .content-box {
     display: flex;
     margin-top: 8px;
@@ -113,6 +120,7 @@ export default {
     }
     .icon {
         color: #4BDCFF;
+        cursor: pointer;
     }
 }
 </style>
