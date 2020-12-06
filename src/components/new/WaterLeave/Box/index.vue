@@ -4,7 +4,7 @@
         <div class="water">
             <div
                 class="right-inside-cylinder"
-                :style="{ height: `${(num / 5) * 100}%`, backgroundImage: getInsideCyinderStyle }"
+                :style="{ height: `${(num / count) * 100}%`, backgroundImage: getInsideCyinderStyle }"
             >
                 <div class="inside-top"
                 :style="{ backgroundImage: getInsideTopStyle }"></div>
@@ -35,6 +35,10 @@ export default {
             default: "default",
         },
         num: {
+          type: [String, Number],
+          default: 2
+        },
+        count: {
           type: [String, Number],
           default: 2
         },
@@ -75,7 +79,7 @@ export default {
     margin-left: 11px;
     .water {
         width: 60px;
-        height: 116px;
+        height: 112px;
         // background: red;
         margin-left: 6px;
         position: relative;

@@ -13,7 +13,7 @@
                         </div>
                         <div class="name">{{item.dutyName}}</div>
                         <div class="phone">{{item.dutyPhone}}</div>
-                        <div class="location">{{stationList[item.pumpStation]}}</div>
+                        <div class="location">{{stationList[item.pumpStati]}}</div>
                         <div class="icon iconfont iconright1" @click="changNext"></div>
                     </div>
                 </el-carousel-item>

@@ -1,6 +1,6 @@
 <!--  -->
 <template>
-    <div class="box">
+    <div class="box" :id="myId">
         <span v-html="ruleStyle"></span>
         <div>
           <section class="ruler">
@@ -14,43 +14,44 @@
                   :style="{ top: `${twoPercentage}%` }"
               >
               </div>
-              <section class="cm">
-                  <section class="mm"></section>
-                  <section class="mm"></section>
-                  <section class="mm"></section>
-                  <section class="mm"></section>
-              </section>
-              <section class="cm">
-                  <section class="mm"></section>
-                  <section class="mm"></section>
-                  <section class="mm"></section>
-                  <section class="mm"></section>
-              </section>
-              <section class="cm">
-                  <section class="mm"></section>
-                  <section class="mm"></section>
-                  <section class="mm"></section>
-                  <section class="mm"></section>
-              </section>
-              <section class="cm">
-                  <section class="mm"></section>
-                  <section class="mm"></section>
-                  <section class="mm"></section>
-                  <section class="mm"></section>
-              </section>
-              <section class="cm">
-                  <section class="mm"></section>
-                  <section class="mm"></section>
-                  <section class="mm"></section>
-                  <section class="mm"></section>
-              </section>
-              <section class="cm">
+              <section class="cm" v-for="item in count" :key="item">
                   <section class="mm"></section>
                   <section class="mm"></section>
                   <section class="mm"></section>
                   <section class="mm"></section>
               </section>
               <section class="cm"></section>
+              <!-- <section class="cm">
+                  <section class="mm"></section>
+                  <section class="mm"></section>
+                  <section class="mm"></section>
+                  <section class="mm"></section>
+              </section>
+              <section class="cm">
+                  <section class="mm"></section>
+                  <section class="mm"></section>
+                  <section class="mm"></section>
+                  <section class="mm"></section>
+              </section>
+              <section class="cm">
+                  <section class="mm"></section>
+                  <section class="mm"></section>
+                  <section class="mm"></section>
+                  <section class="mm"></section>
+              </section>
+              <section class="cm">
+                  <section class="mm"></section>
+                  <section class="mm"></section>
+                  <section class="mm"></section>
+                  <section class="mm"></section>
+              </section>
+              <section class="cm">
+                  <section class="mm"></section>
+                  <section class="mm"></section>
+                  <section class="mm"></section>
+                  <section class="mm"></section>
+              </section>
+              <section class="cm"></section> -->
           </section>
         </div>
     </div>
@@ -59,19 +60,32 @@
 <script>
 export default {
     name: "rule",
+    props:{
+        oneH:{
+            type: [Number,String],
+            default: 1
+        },
+        twoH:{
+            type: [Number,String],
+            default: 3
+        },
+        count:{
+            type: [Number,String],
+            default: 6
+        },
+    },
     data() {
         return {
             ruleStyle: "",
-            oneH: 2.5,
-            twoH: 5.6
+            myId: Number(Math.random().toString().substr(3,length) + Date.now()).toString(36)
         };
     },
     computed: {
         onePercentage() {
-            return (1 - this.oneH / 6) * 100;
+            return (1 - this.oneH / this.count) * 100;
         },
         twoPercentage() {
-            return (1 - this.twoH / 6) * 100;
+            return (1 - this.twoH / this.count) * 100;
         },
     },
     created() {
@@ -79,7 +93,7 @@ export default {
     },
     methods: {
         setStyle() {
-            const count = 6;
+            const count = this.count;
             let str = "";
             let num = count;
             let top = Math.floor((100 / count) * 100) / 100;
@@ -87,19 +101,32 @@ export default {
                 str += this.getStyle(i + 1, num, i*top);
                 num--;
             }
+            str+= `
+            #${this.myId} .ruler .cm {
+                height: ${ 112/this.count }px;
+            }
+            #${this.myId} .ruler .mm {
+                height: ${ 112/this.count }px;
+            }
+            `
             this.ruleStyle = `<style>${str}</style>`;
         },
         getStyle(index, content, top) {
             return `
-          .ruler .cm:nth-of-type(${index}) {
+          #${this.myId} .ruler .cm:nth-of-type(${index}) {
             top: ${top}%;
           }
-          .ruler .cm:nth-of-type(${index}):before {
+          #${this.myId} .ruler .cm:nth-of-type(${index}):before {
             content: "${content}";
           }
       `;
         },
     },
+    watch:{
+        count() {
+            this.setStyle();
+        }
+    }
 };
 </script>
 <style lang="scss" scoped>
@@ -140,24 +167,23 @@ export default {
 }
 .ruler {
     position: relative;
-    // height: 225px;
-    height: 114px;
+    // height: 114px;
+    height: 112px;
     width: 14px;
     border-left: 2px solid #2565f3;
 }
 .ruler .cm {
     position: absolute;
     border-top: 2px solid #6da9ff;
-    // height: 45px;
-    height: 19px;
+    // height: 19px;
+    // height: 16px;
     width: 12px;
     left: -7px;
 }
 .ruler .mm {
     position: absolute;
     border-top: 1px solid #2565f3;
-    // height: 50px;
-    height: 52px;
+    // height: 52px;
     width: 6px;
     left: 3px;
 }
