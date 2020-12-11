@@ -4,7 +4,7 @@ import { get } from "./tools";
 const baseUrl = ''
 
 //今日值班http://10.23.1.168:8980/smartEnergy/todayWaterDuty
-export const getTodayWaterDuy = async () => await get({ url: baseUrl + "/smartEnergy/todayWaterDutye" });
+export const getTodayWaterDuy = async () => await get({ url: baseUrl + "/smartEnergy/todayWaterDuty" });
 
 //供水检测率接口
 // export const getDetectionRate = async () => await get({ url: baseUrl + "/smartEnergy/detectionrate" });
@@ -12,6 +12,9 @@ export const getDetectionRate = async () => await get({ url: baseUrl + "/smartEn
 
 //用水情况
 export const getWaterUsage = async () => await get({ url: baseUrl + "/smartEnergy/waterUsage" });
+
+//水质指数雷达图
+export const getWaterQuality = async () => await get({url: baseUrl + "/smartEnergy/waterQuality"})
 
 //施工信息情况接口
 export const getConstructionInfo = async () => await get({ url: baseUrl + "/smartEnergy/build" });

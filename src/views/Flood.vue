@@ -95,7 +95,7 @@ export default {
     created() {
         if (this.$route.name == "Normal") {
             this.show = true;
-            this.title = '环境生态监测';
+            this.title = '生态环境监测';
         }else {
             this.show = false;
             this.title = '防汛监测';
