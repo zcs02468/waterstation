@@ -239,7 +239,8 @@ export default {
             // poolHighest	蓄水池容量高度值
 
             data.forEach( item => {
-                let id = Number(Math.random().toString().substr(3,length) + Date.now()).toString(36);
+                let id = Number(Math.random().toString().substr(3,5) + Date.now()).toString(36);
+                console.log( id );
                 if( item.poolName.indexOf('东区南') != -1 ) {
                     list[0].children.push({
                         poolName: item.poolName,

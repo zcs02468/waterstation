@@ -15,7 +15,7 @@
 import Title from "@/components/common/Title";
 // import Container from "./Container";
 import comMinxins from "@/components/common/comMinxins";
-import { getWaterPressure } from "@/axios/index";
+// import { getWaterPressure } from "@/axios/index";
 export default {
     name: "DetectionRateLine",
     mixins: [comMinxins],
