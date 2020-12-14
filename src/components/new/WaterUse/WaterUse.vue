@@ -170,10 +170,22 @@ export default {
       // };
       let data = res.data;
       let {targetChartsData,nowChartsData,targetArr,nowArr,radarIndicator} = this.getRadarChartsData(data);
+
+        
+      //新增
+      //获取数组最大值
+      let maxNum = Math.max(...nowChartsData);
+      if( maxNum < 100 ) {
+          maxNum = 100;
+      }
+      radarIndicator.forEach(item => {
+          item.max = maxNum + 20
+      })
+
       this.targetArr = targetArr;
       this.nowArr = nowArr;
       this.radarIndicator = radarIndicator;
-      this.radarIndicator.splice();     
+      this.radarIndicator.splice();
       this.option.series[0].data[0].value = targetChartsData;
       this.option.series[0].data[1].value = nowChartsData;
       this.option.radar.indicator = radarIndicator;
@@ -236,7 +248,7 @@ export default {
           shape: "polygon",
           center: ["50%", "50%"],
           radius: "80%",
-          scale: true,
+          // scale: true,
           indicator: [
             {
               name: "累计进水",
@@ -280,36 +292,36 @@ export default {
             },
           },
         },
-        polar: {},
-        angleAxis: {
-          min: 0,
-          max: 100,
-          interval: 100,
-          clockwise: false,
-          axisTick: {
-            show: false,
-          },
-          axisLabel: {
-            show: false,
-          },
-          axisLine: {
-            show: false,
-          },
-          splitLine: {
-            show: false,
-          },
-        },
-        radiusAxis: {
-          // min: 0,
-          // max: 500,
-          interval: 100,
-          splitLine: {
-            show: false,
-          },
-          axisLabel: {
-            color: "rgb(16,186,253)",
-          },
-        },
+        // polar: {},
+        // angleAxis: {
+        //   min: 0,
+        //   max: 100,
+        //   interval: 100,
+        //   clockwise: false,
+        //   axisTick: {
+        //     show: false,
+        //   },
+        //   axisLabel: {
+        //     show: false,
+        //   },
+        //   axisLine: {
+        //     show: false,
+        //   },
+        //   splitLine: {
+        //     show: false,
+        //   },
+        // },
+        // radiusAxis: {
+        //   // min: 0,
+        //   // max: 500,
+        //   interval: 100,
+        //   splitLine: {
+        //     show: false,
+        //   },
+        //   axisLabel: {
+        //     color: "rgb(16,186,253)",
+        //   },
+        // },
         series: [
           {
             type: "radar",
