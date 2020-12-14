@@ -42,7 +42,7 @@
 <script>
 import Title from "@/components/common/Title";
 import comMinxins from "@/components/common/comMinxins";
-import { getWaterUsage } from "@/axios/index";
+import { getWaterUsage, getWaterQuality } from "@/axios/index";
 export default {
   name: "WaterUse",
   mixins: [comMinxins],
@@ -136,7 +136,7 @@ export default {
       this.dataList.splice();
     },
     async getRadarData() {
-      let [res] = await getWaterUsage();
+      let [res] = await getWaterQuality();
       // let res = {
       //   result: "true",
       //   data: [
