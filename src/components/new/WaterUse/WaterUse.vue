@@ -163,7 +163,7 @@ export default {
       //     {
       //       waterQualityNum: 100,
       //       waterQualityType: "5",
-      //       waterQualityActualNum: 200,
+      //       waterQualityActualNum: 0,
       //     },
       //   ],
       //   message: "请求成功",
@@ -205,9 +205,29 @@ export default {
             })
             targetArr.push(item.waterQualityNum);
             nowArr.push(item.waterQualityActualNum);
-            let num = Math.round((item.waterQualityActualNum/item.waterQualityNum) * 1000) / 1000;
+            let num;
+            if( item.waterQualityNum == 0 ) {
+              num = item.waterQualityActualNum + 100;
+            }else {
+              if( item.waterQualityActualNum < 0 ) {
+                let a = (Math.round((Math.abs(item.waterQualityActualNum)/Math.abs(item.waterQualityNum)) * 1000) / 1000) * 100;
+                if( a > 100 ) {
+                  num = 0;
+                }else {
+                  num = 100 -a;
+                }
+              }else {
+                if(item.waterQualityNum < 0 ) {
+                  let a = Math.abs(item.waterQualityActualNum)
+                  let b = Math.abs(item.waterQualityNum)
+                  num = (Math.round(((a + b)/b) * 1000) / 1000) * 100;
+                }else {
+                  num = (Math.round((item.waterQualityActualNum/item.waterQualityNum) * 1000) / 1000) * 100;
+                }
+              }
+            }
             targetChartsData.push(100);
-            nowChartsData.push(num*100);
+            nowChartsData.push(num);
         });
         return {targetChartsData,nowChartsData,targetArr,nowArr,radarIndicator};
     },
