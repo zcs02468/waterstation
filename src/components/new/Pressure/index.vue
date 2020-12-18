@@ -58,6 +58,7 @@ export default {
             this.xAxisData = xAxisData;
             this.enterWaterData = enterWaterData;
             this.outWaterData = outWaterData;
+            console.log( "enterWaterData", enterWaterData, outWaterData  );
             this.option.xAxis[0].data = this.xAxisData;
             this.option.series[0].data = this.enterWaterData;
             this.option.series[1].data = this.outWaterData;
@@ -68,7 +69,7 @@ export default {
         },
         drawLine() {
             this.option = {
-                color: ["#375FB0", "#368A7E"],
+                color: ["#368A7E","#375FB0"],
                 tooltip: {
                     trigger: "axis",
                 },
