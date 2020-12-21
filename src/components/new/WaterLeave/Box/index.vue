@@ -8,7 +8,7 @@
             >
                 <div class="inside-top"
                 :style="{ backgroundImage: getInsideTopStyle }"></div>
-                <!-- <div class="info" :class="textType">{{num}}m</div> -->
+                <div class="info" :class="textType">{{num}}m</div>
             </div>
         </div>
     </div>
@@ -58,6 +58,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+
 .default {
   color: #7BC7FF;
 }
@@ -68,9 +69,7 @@ export default {
     color: #FF5E3D;
 }
 .box {
-    // width: 104px;
-    // height: 98px;
-    width: 77px;
+    width: 100px;
     height: 124px;
     border: 3px solid rgba(255, 255, 255, 0.15);
     border-top: none;
@@ -78,9 +77,8 @@ export default {
     border-bottom-right-radius: 10px;
     margin-left: 11px;
     .water {
-        width: 60px;
+        width: 83px;
         height: 112px;
-        // background: red;
         margin-left: 6px;
         position: relative;
     }

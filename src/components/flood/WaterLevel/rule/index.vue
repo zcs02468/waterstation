@@ -3,7 +3,7 @@
     <div class="box">
         <section class="ruler">
             <div
-                class="line right-line"
+                class="line left-line"
                 :style="{ top: `${((standardList[1] / 5) * 100) > 100 ? 100 : ((standardList[1] / 5) * 100)}%`, border: `1px dashed #FF5E3D` }"
             ></div>
             <div

@@ -6,12 +6,12 @@
           <section class="ruler">
               <div
                   class="line left-line"
-                  :style="{ top: `${onePercentage}%` }"
+                  :style="{ top: `${onePercentage}%`, border: `1px dashed #F6BA16` }"
               >
               </div>
               <div
                   class="line right-line"
-                  :style="{ top: `${twoPercentage}%` }"
+                  :style="{ top: `${twoPercentage}%`, border: `1px dashed #FF5E3D`  }"
               >
               </div>
               <section class="cm" v-for="item in count" :key="item">
@@ -132,11 +132,10 @@ export default {
 <style lang="scss" scoped>
 .line {
     position: absolute;
-    width: 93.5px;
+    width: 117px;
     height: 2px;
-    // background: #1e6aff;
     border: 1px dashed red;
-    z-index: -1;
+    z-index: 9;
     left: 16px;
 }
 .right-line {
@@ -167,7 +166,6 @@ export default {
 }
 .ruler {
     position: relative;
-    // height: 114px;
     height: 112px;
     width: 14px;
     border-left: 2px solid #2565f3;
@@ -175,15 +173,12 @@ export default {
 .ruler .cm {
     position: absolute;
     border-top: 2px solid #6da9ff;
-    // height: 19px;
-    // height: 16px;
     width: 12px;
     left: -7px;
 }
 .ruler .mm {
     position: absolute;
     border-top: 1px solid #2565f3;
-    // height: 52px;
     width: 6px;
     left: 3px;
 }
@@ -200,48 +195,6 @@ export default {
 .ruler .mm {
     width: 6px;
 }
-// .ruler .cm:nth-of-type(1) {
-//     top: 0%;
-// }
-// .ruler .cm:nth-of-type(1):before {
-//     content: "6";
-// }
-// .ruler .cm:nth-of-type(2) {
-//   top: 16.67%;
-// }
-// .ruler .cm:nth-of-type(2):before {
-//     content: "5";
-// }
-// .ruler .cm:nth-of-type(3) {
-//     top: 33.34%;
-// }
-// .ruler .cm:nth-of-type(3):before {
-//     content: "4";
-// }
-// .ruler .cm:nth-of-type(4) {
-//     top: 50.01%;
-// }
-// .ruler .cm:nth-of-type(4):before {
-//     content: "3";
-// }
-// .ruler .cm:nth-of-type(5) {
-//     top: 66.68%;
-// }
-// .ruler .cm:nth-of-type(5):before {
-//     content: "2";
-// }
-// .ruler .cm:nth-of-type(6) {
-//     top: 83.35%;
-// }
-// .ruler .cm:nth-of-type(6):before {
-//     content: "1";
-// }
-// .ruler .cm:nth-of-type(7) {
-//     top: 100%;
-// }
-// .ruler .cm:nth-of-type(7):before {
-//     content: "0";
-// }
 
 .ruler .mm:nth-of-type(1) {
     top: 20%;

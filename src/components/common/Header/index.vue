@@ -23,13 +23,21 @@ export default {
     methods: {
         goToPage() {
             if (!this.isHref()) return;
-            this.$router.push({path: 'normal'});
+                console.log( '2222222' , this.$route.name);
+            if( this.$route.name == 'Flood' ){
+                // this.$router.push({name: 'Normal'});
+                window.location.href = '/water/normal'
+            }
+            if( this.$route.name == 'Normal' ){
+                // this.$router.push({name: 'Flood'});
+                window.location.href = '/water/flood'
+            }
         },
         isHref() {
-            if (this.$route.name != "Flood") {
-                return false;
-            }else {
+            if (this.$route.name == "Flood" || this.$route.name == "Normal") {
                 return true;
+            }else {
+                return false;
             }
         }
     },

@@ -15,7 +15,7 @@
                 <div class="single-box" v-for="attr in item.children" :key="attr.id">
                     <div class="container-box">
                         <Rule :oneH="attr.poolDown" :twoH="attr.poolUp" :count="attr.poolHighest"/>
-                        <Box :type="index" :num="attr.waterLevel" :count="attr.poolHighest"/>
+                        <Box :type="index" :num="attr.waterLevel" :count="attr.poolHighest" :textType="attr.textStyle"/>
                     </div>
                     <div class="title">{{attr.title}}</div>
                 </div>
@@ -241,6 +241,9 @@ export default {
             data.forEach( item => {
                 let id = Number(Math.random().toString().substr(3,5) + Date.now()).toString(36);
                 console.log( id );
+                let textStyle = 'default';
+                item.waterLevel > item.poolDown && (textStyle = 'yellow');
+                item.waterLevel > item.poolUp && (textStyle = 'orange');
                 if( item.poolName.indexOf('东区南') != -1 ) {
                     list[0].children.push({
                         poolName: item.poolName,
@@ -248,7 +251,8 @@ export default {
                         poolUp: item.poolUp,
                         poolHighest: Math.ceil(item.poolHighest),
                         waterLevel: item.waterLevel,
-                        id: id
+                        id: id,
+                        textStyle: textStyle
                     })
                     return
                 }
@@ -259,7 +263,8 @@ export default {
                         poolUp: item.poolUp,
                         poolHighest: Math.ceil(item.poolHighest),
                         waterLevel: item.waterLevel,
-                        id: id
+                        id: id,
+                        textStyle: textStyle
                     })
                     return
                 }
@@ -270,13 +275,27 @@ export default {
                         poolUp: item.poolUp,
                         poolHighest: Math.ceil(item.poolHighest),
                         waterLevel: item.waterLevel,
-                        id: id
+                        id: id,
+                        textStyle: textStyle
                     })
                     return
                 }
             })
             this.list = list;
             this.list.splice();
+        },
+        getClass(value, num1, num2) {
+            if( this.list[value] > arr[2] ) {
+                // this.$store.commit('setAutoUrlNum');
+                this.alarmList[index] = 1;
+                return 'orange';
+            }
+            if( this.list[value] > arr[1] ) {
+                // this.$store.commit('setAutoUrlNum');
+                this.alarmList[index] = 1;
+                return 'yellow';
+            }
+            return 'default';
         },
     },
 };
