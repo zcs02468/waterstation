@@ -23,7 +23,6 @@ export default {
     methods: {
         goToPage() {
             if (!this.isHref()) return;
-                console.log( '2222222' , this.$route.name);
             if( this.$route.name == 'Flood' ){
                 // this.$router.push({name: 'Normal'});
                 window.location.href = '/water/normal'

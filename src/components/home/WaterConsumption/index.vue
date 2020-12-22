@@ -123,7 +123,7 @@ export default {
                         type: "pie",
                         // radius: [77, 109],
                         // radius: [50, 109],
-                        radius: ["20%", "70%"],
+                        radius: ["20%", "58%"],
                         roseType: "radius",
                         minAngle: 20,
                         avoidLabelOverlap: true,
@@ -210,7 +210,8 @@ export default {
     .panel-content {
         position: relative;
         height: 400px;
-        width: 500px;
+        // width: 500px;
+        width: 642px;
         margin-top: 5px;
     }
     .make {
@@ -224,7 +225,8 @@ export default {
         transform: translate(-50%, -50%);
     }
     .chart-box {
-        width: 500px;
+        // width: 500px;
+        width: 630px;
         height: 400px;
         position: absolute;
         left: 50%;
@@ -232,7 +234,8 @@ export default {
         transform: translate(-50%, -50%);
     }
     .charts {
-        width: 500px;
+        // width: 500px;
+        width: 630px;
         height: 400px;
     }
 }
