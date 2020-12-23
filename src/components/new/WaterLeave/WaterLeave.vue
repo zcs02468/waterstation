@@ -283,19 +283,6 @@ export default {
             this.list = list;
             this.list.splice();
         },
-        getClass(value, num1, num2) {
-            if( this.list[value] > arr[2] ) {
-                // this.$store.commit('setAutoUrlNum');
-                this.alarmList[index] = 1;
-                return 'orange';
-            }
-            if( this.list[value] > arr[1] ) {
-                // this.$store.commit('setAutoUrlNum');
-                this.alarmList[index] = 1;
-                return 'yellow';
-            }
-            return 'default';
-        },
     },
 };
 </script>
