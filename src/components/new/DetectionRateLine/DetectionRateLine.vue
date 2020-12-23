@@ -15,7 +15,7 @@
 import Title from "@/components/common/Title";
 // import Container from "./Container";
 import comMinxins from "@/components/common/comMinxins";
-// import { getWaterPressure } from "@/axios/index";
+import { getWaterTendency } from "@/axios/index";
 export default {
     name: "DetectionRateLine",
     mixins: [comMinxins],
@@ -34,44 +34,191 @@ export default {
             this.getData();
         },
         async getData() {
-            // const [res] = await getWaterPressure();
-            // let data = JSON.parse(res.message).waterPressure;
+            
+            const [res] = await getWaterTendency();
+//             let res = {
+// "result": "true",
+// "data": {
+// "western": [
+// {
+// "regionname": "西区",
+// "percentage": "4639.68%",
+// "waterDate": "12.22"
+// },
+// {
+// "regionname": "西区",
+// "percentage": "1885708.72%",
+// "waterDate": "12.21"
+// },
+// {
+// "regionname": "西区",
+// "percentage": "-126279.79%",
+// "waterDate": "12.20"
+// },
+// {
+// "regionname": "西区",
+// "percentage": "1617281.90%",
+// "waterDate": "12.19"
+// },
+// {
+// "regionname": "西区",
+// "percentage": "1464827.98%",
+// "waterDate": "12.18"
+// },
+// {
+// "regionname": "西区",
+// "percentage": "4143.36%",
+// "waterDate": "12.17"
+// },
+// {
+// "regionname": "西区",
+// "percentage": "1643680.23%",
+// "waterDate": "12.15"
+// },
+// {
+// "regionname": "西区",
+// "percentage": "1915677.04%",
+// "waterDate": "12.14"
+// },
+// {
+// "regionname": "西区",
+// "percentage": "4597.22%",
+// "waterDate": "12.13"
+// },
+// {
+// "regionname": "西区",
+// "percentage": "4089.35%",
+// "waterDate": "12.12"
+// },
+// {
+// "regionname": "西区",
+// "percentage": "5112.42%",
+// "waterDate": "12.11"
+// },
+// {
+// "regionname": "西区",
+// "percentage": "4755.13%",
+// "waterDate": "12.10"
+// },
+// {
+// "regionname": "西区",
+// "percentage": "59880000.00%",
+// "waterDate": "12.08"
+// },
+// {
+// "regionname": "西区",
+// "percentage": "21700000.00%",
+// "waterDate": "12.07"
+// },
+// {
+// "regionname": "西区",
+// "percentage": "16780000.00%",
+// "waterDate": "12.06"
+// },
+// {
+// "regionname": "西区",
+// "percentage": "17470000.00%",
+// "waterDate": "12.05"
+// },
+// {
+// "regionname": "西区",
+// "percentage": "7298370000.00%",
+// "waterDate": "12.04"
+// },
+// {
+// "regionname": "西区",
+// "percentage": "24290000.00%",
+// "waterDate": "12.03"
+// },
+// {
+// "regionname": "西区",
+// "percentage": "4353.43%",
+// "waterDate": "12.01"
+// },
+// {
+// "regionname": "西区",
+// "percentage": "4615.38%",
+// "waterDate": "11.30"
+// },
+// {
+// "regionname": "西区",
+// "percentage": "3559.45%",
+// "waterDate": "11.29"
+// },
+// {
+// "regionname": "西区",
+// "percentage": "4215.93%",
+// "waterDate": "11.28"
+// },
+// {
+// "regionname": "西区",
+// "percentage": "4557.88%",
+// "waterDate": "11.27"
+// },
+// {
+// "regionname": "西区",
+// "percentage": "1818553.78%",
+// "waterDate": "11.26"
+// },
+// {
+// "regionname": "西区",
+// "percentage": "5197.10%",
+// "waterDate": "11.24"
+// },
+// {
+// "regionname": "西区",
+// "percentage": "5169.84%",
+// "waterDate": "11.23"
+// }
+// ],
+// "southeast": [],
+// "northeast": []
+// },
+// "message": "请求成功"
+// }
+            let western = res.data.western;
+            let southeast = res.data.southeast;
+            let northeast = res.data.northeast;
+            let westernData = this.filterData(western);
+            let xAxis = westernData.xAxis;
+            let westernY = westernData.yArr;
+            let southeastY = this.filterData(southeast).yArr;
+            let northeastY = this.filterData(northeast).yArr;
 
-            // let xAxisData = [],
-            //     enterWaterData = [],
-            //     outWaterData = [];
-            // data.forEach((ele) => {
-            //     let timeArr = ele.time.split(" ")[1].split(":");
-            //     xAxisData.push(`${timeArr[0]}:${timeArr[1]}`);
-            //     enterWaterData.push(ele.p1)
-            //     outWaterData.push(ele.p5)
+
+            // console.log( 'data', western);
+            // let xAxis = []
+            // let y1 = [], y2 = [], y3 = [];
+            // let arr = [1,2,3,4,5,6,7,8,9,10]
+            // arr.forEach(item => {
+            //     xAxis.push(`10.0${item*2}`)
+            //     let a = Math.floor(Math.random()*10)
+            //     y1.push(a*100)
+            //     y2.push(a*200)
+            //     y3.push(a*300)
             // });
-            // this.xAxisData = xAxisData;
-            // this.enterWaterData = enterWaterData;
-            // this.outWaterData = outWaterData;
-            // this.option.xAxis[0].data = this.xAxisData;
-            // this.option.series[0].data = this.enterWaterData;
-            // this.option.series[1].data = this.outWaterData;
-            // this.myChart.setOption(this.option);
-            let xAxis = []
-            let y1 = [], y2 = [], y3 = [];
-            let arr = [1,2,3,4,5,6,7,8,9,10]
-            arr.forEach(item => {
-                xAxis.push(`10.0${item*2}`)
-                let a = Math.floor(Math.random()*10)
-                y1.push(a*100)
-                y2.push(a*200)
-                y3.push(a*300)
-            });
             let series = [
-                this.getSeriesData({data:y1, name:"东区南", colorIndex:'one'}),
-                this.getSeriesData({data:y2, name:"东区北", colorIndex:'two'}),
-                this.getSeriesData({data:y3, name:"西区", colorIndex:'three'}),
+                this.getSeriesData({data:southeastY, name:"东区南", colorIndex:'one'}),
+                this.getSeriesData({data:northeastY, name:"东区北", colorIndex:'two'}),
+                this.getSeriesData({data:westernY, name:"西区", colorIndex:'three'}),
             ]
-            console.log( 'xAxis:',xAxis,"series:",series );
             this.option.xAxis[0].data = xAxis;
             this.option.series = series;
             this.myChart.setOption(this.option);
+        },
+        filterData(data) {
+            let xAxis = [], yArr = [];
+            data.forEach(item => {
+                item.percentage = item.percentage.substring(0,item.percentage.length-1)
+                xAxis.push(item.waterDate);
+                yArr.push(item.percentage);
+            })
+            xAxis.reverse();
+            yArr.reverse();
+            return {
+                xAxis,
+                yArr
+            }
         },
         getSeriesData({data,name,colorIndex}) {
             let colorObj = {

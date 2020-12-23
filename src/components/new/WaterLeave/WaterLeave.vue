@@ -240,7 +240,6 @@ export default {
 
             data.forEach( item => {
                 let id = Number(Math.random().toString().substr(3,5) + Date.now()).toString(36);
-                console.log( id );
                 let textStyle = 'default';
                 item.waterLevel > item.poolDown && (textStyle = 'yellow');
                 item.waterLevel > item.poolUp && (textStyle = 'orange');

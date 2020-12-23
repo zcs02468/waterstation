@@ -10,6 +10,9 @@ export const getTodayWaterDuy = async () => await get({ url: baseUrl + "/smartEn
 // export const getDetectionRate = async () => await get({ url: baseUrl + "/smartEnergy/detectionrate" });
 export const getDetectionRate = async () => await get({ url: baseUrl + "/smartEnergy/waterDetectionrate" });
 
+//供水检测率趋势
+export const getWaterTendency = async () => await get({ url: baseUrl + "/smartEnergy/waterTendency" });
+
 //用水情况
 export const getWaterUsage = async () => await get({ url: baseUrl + "/smartEnergy/waterUsage" });
 

@@ -58,7 +58,6 @@ export default {
             this.xAxisData = xAxisData;
             this.enterWaterData = enterWaterData;
             this.outWaterData = outWaterData;
-            console.log( "enterWaterData", enterWaterData, outWaterData  );
             this.option.xAxis[0].data = this.xAxisData;
             this.option.series[0].data = this.enterWaterData;
             this.option.series[1].data = this.outWaterData;
