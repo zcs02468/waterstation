@@ -289,6 +289,7 @@ export default {
                 color: ["#4E92F7", "#53B999", "#00A4E7"],
                 tooltip: {
                     trigger: "axis",
+                    // formatter: '{c} %'
                 },
                 legend: {
                     show: true,
@@ -303,7 +304,7 @@ export default {
                     },
                 },
                 grid: {
-                    top:"16%",
+                    top:"20%",
                     left: "4%",
                     right: "4%",
                     bottom: "0%",
@@ -329,6 +330,12 @@ export default {
                 yAxis: [
                     {
                         type: "value",
+                        name: '单位：%',
+                        nameTextStyle: {
+                            color: "#fff",
+                            fontSize: 12,
+                            lineHeight: 20
+                        },
                         splitLine: {
                             show: true,
                             lineStyle: {
