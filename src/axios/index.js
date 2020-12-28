@@ -19,6 +19,9 @@ export const getWaterUsage = async () => await get({ url: baseUrl + "/smartEnerg
 //水质指数雷达图
 export const getWaterQuality = async () => await get({url: baseUrl + "/smartEnergy/waterQuality"})
 
+//饮用水水质指数值
+export const getWaterQualityNum = async () => await get({url: baseUrl + "/smartEnergy/waterQualityNum"})
+
 //施工信息情况接口
 export const getConstructionInfo = async () => await get({ url: baseUrl + "/smartEnergy/build" });
 

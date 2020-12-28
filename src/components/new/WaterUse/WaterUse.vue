@@ -20,6 +20,9 @@
       </div>
       <div class="charts-box">
         <div class="charts" id="charts_waterUse"></div>
+        <div class="waterQualityNum">
+          <span class="num">{{waterQualityNum}}</span>
+        </div>
         <div class="direction-box" :style="`${directionStyle}`" v-show="isShowDirection">
           <div class="direction-left">
             <div style="opacity:0">111</div>
@@ -42,7 +45,7 @@
 <script>
 import Title from "@/components/common/Title";
 import comMinxins from "@/components/common/comMinxins";
-import { getWaterUsage, getWaterQuality } from "@/axios/index";
+import { getWaterUsage, getWaterQuality, getWaterQualityNum } from "@/axios/index";
 export default {
   name: "WaterUse",
   mixins: [comMinxins],
@@ -93,7 +96,8 @@ export default {
       targetArr:[],
       nowArr:[],
       directionStyle:``,
-      isShowDirection: false
+      isShowDirection: false,
+      waterQualityNum: 0
     };
   },
 
@@ -111,6 +115,7 @@ export default {
     async getData() {
       this.getList();
       this.getRadarData();
+      this.getWaterQualityNum();
     },
     async getList() {
       // ljll1	累计用水
@@ -190,6 +195,11 @@ export default {
       this.option.series[0].data[1].value = nowChartsData;
       this.option.radar.indicator = radarIndicator;
       this.myChart.setOption(this.option);
+    },
+    async getWaterQualityNum() {
+      let [res] = await getWaterQualityNum();
+      if( !res ) return;
+      this.waterQualityNum = res.data;
     },
     getRadarChartsData(data) {
         let targetChartsData = [];//echarts指标值
@@ -476,7 +486,7 @@ export default {
       height: 100%;
     }
   }
-  .direction-box {    
+  .direction-box {
     position: absolute;
     border-style: solid;
     white-space: nowrap;
@@ -494,6 +504,17 @@ export default {
     .direction-center{
       margin: 0 10px;
     }
+  }
+  .waterQualityNum {
+    position: absolute;
+    margin-left: 50px;
+    // left: 30px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    top: 0;
+    align-items: center;
+    justify-content: center;
   }
   .charts {
     // left: 30px;
