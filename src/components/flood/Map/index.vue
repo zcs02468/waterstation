@@ -254,7 +254,8 @@ export default {
             }
             // eaList	应急队伍对象
             // emList	应急物资对象
-            let [res] = await getEmergencyInfo()
+            let [err,res] = await getEmergencyInfo()
+            if( err ) return;
             let data = JSON.parse(res.message);
             let eaList = data.eaList;
             let emList = data.emList;

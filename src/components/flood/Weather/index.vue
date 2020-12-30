@@ -146,7 +146,8 @@ export default {
             this.getData();
         },
         async getData() {
-            let [res] = await getWeather();
+            let [err,res] = await getWeather();
+            if( err ) return;
             // let res = {
             //     result: "true",
             //     data: [

@@ -105,7 +105,8 @@ export default {
     methods: {
         ...mapMutations(["SET_ALARM"]),
         async getAlarm() {
-            let [res] = await getAlarm();
+            let [err,res] = await getAlarm();
+            if( err ) return;
             // let res = {"result":"true","message":"{\"waterIsAlarm\":\"0\",\"rainfallIsAlarm\":\"0\",\"waiweiIsAlarm\":\"0\",\"weichangIsAlarm\":\"0\",\"balancingIsAlarm\":\"0\"}"}
             let data = JSON.parse(res.message);
             // waterIsAlarm	积水声音报警	String	1：报警；0：不报警

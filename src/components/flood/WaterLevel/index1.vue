@@ -116,7 +116,8 @@ export default {
 
     methods: {
         async getData() {
-            let [res] = await getRiverCourseLevel();
+            let [err,res] = await getRiverCourseLevel();
+            if( err ) return;
             let data = JSON.parse(res.message);
             let standardList = data.standardList;
             Object.assign(this.list, data);

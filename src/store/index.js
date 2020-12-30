@@ -5,6 +5,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
+        isShowLogin: 1,
         home: {
             consumptionType: 0, // 0--日 1--周  2--月
             waterLevel: {

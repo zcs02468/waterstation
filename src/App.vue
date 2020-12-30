@@ -1,13 +1,18 @@
 <template>
   <div id="app">
-    <router-view :key="key" />
+    <router-view :key="key" v-if="!isShowLogin"/>
+    <qrCodeDialog v-if="isShowLogin"/>
   </div>
 </template>
 
 <script>
-import { mapMutations } from "vuex";
+import { mapState,mapMutations } from "vuex";
+import qrCodeDialog from "./components/common/qrCodeDialog"
 export default {
   name: "App",
+  components:{
+    qrCodeDialog
+  },
   methods: {
     ...mapMutations(["SET_RANDOM_NUM"]),
     setAllTime() {
@@ -21,10 +26,21 @@ export default {
   },
   mounted() {
     this.setAllTime();
+    setTimeout(()=> {
+      console.log( 'thiasdfasdfasdf', this.$store.state.aaa );
+    },5000)
   },
   computed: {
+    ...mapState({
+      isShowLogin: state => state.isShowLogin
+    }),
     key() {
       return this.$route.name !== undefined? this.$route.name +new Date(): this.$route +new Date()
+    }
+  },
+  watch:{
+    isShowLogin(value) {
+      console.log( 'value', value );
     }
   }
 };

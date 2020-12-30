@@ -34,7 +34,8 @@ export default {
             this.getData();
         },
         async getData() {
-            let [res] = await getTodayDuty();
+            let [err,res] = await getTodayDuty();
+            if( err ) return;
             let data = JSON.parse(res.message);
             this.platformClass = data.platformClass;
             this.charageClass = data.charageClass;

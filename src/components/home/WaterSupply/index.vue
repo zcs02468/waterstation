@@ -78,7 +78,7 @@ export default {
             this.getData();
         },
         async getData() {
-            let [res] = await getWaterVolume();
+            let [err,res] = await getWaterVolume();
             let data = JSON.parse(res.message);
             let hourX = [],
                 houtY = [],

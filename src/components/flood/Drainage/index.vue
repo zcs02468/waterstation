@@ -71,7 +71,9 @@ export default {
             this.getData();
         },
         async getData() {
-            let [res] = await getDrainagePumpingPlant();
+            let [err,res] = await getDrainagePumpingPlant();
+        console.log( "res", res );
+            if( err ) return;
             let data = JSON.parse(res.message);
             Object.assign(this.list, data)
             // setTimeout(()=> {

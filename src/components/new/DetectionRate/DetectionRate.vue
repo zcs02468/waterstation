@@ -63,7 +63,8 @@ export default {
         },
         async getData() {
             //parseFloat("0.3335%")
-            let [res] = await getDetectionRate();
+            let [err,res] = await getDetectionRate();
+            if( err ) return;
             // let res = {
             //     result: "true",
             //     data: [

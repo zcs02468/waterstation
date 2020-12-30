@@ -43,7 +43,8 @@ export default {
             this.getData();
         },
         async getData() {
-            const [res] = await getWaterPressure();
+            let [err,res] = await getWaterPressure();
+            if( err ) return;
             let data = JSON.parse(res.message).waterPressure;
 
             let xAxisData = [],

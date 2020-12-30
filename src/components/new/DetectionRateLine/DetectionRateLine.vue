@@ -35,7 +35,8 @@ export default {
         },
         async getData() {
             
-            const [res] = await getWaterTendency();
+            let [err,res] = await getWaterTendency();
+            if( err ) return;
 //             let res = {
 // "result": "true",
 // "data": {

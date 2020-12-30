@@ -168,7 +168,8 @@ export default {
             this.getData();
         },
         async getData() {
-            const [res] = await getReservoirLevel();
+            let [err,res] = await getReservoirLevel();
+            if( err ) return;
             // let res = {
             //     result: "true",
             //     data: [

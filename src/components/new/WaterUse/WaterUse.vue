@@ -124,7 +124,8 @@ export default {
       // zd	浊度
       // yl	余氯
 
-      let [res] = await getWaterUsage();
+      let [err,res] = await getWaterUsage();
+      if( err ) return;
       // let res = {
       //   result: "true",
       //   data: {
@@ -141,7 +142,8 @@ export default {
       this.dataList.splice();
     },
     async getRadarData() {
-      let [res] = await getWaterQuality();
+      let [err,res] = await getWaterQuality();
+      if( err ) return;
       // let res = {
       //   result: "true",
       //   data: [
@@ -197,7 +199,8 @@ export default {
       this.myChart.setOption(this.option);
     },
     async getWaterQualityNum() {
-      let [res] = await getWaterQualityNum();
+      let [err,res] = await getWaterQualityNum();
+      if( err ) return;
       if( !res ) return;
       this.waterQualityNum = res.data;
     },

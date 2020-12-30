@@ -51,7 +51,8 @@ export default {
         },
         async getData() {
             try {
-                let [res] = await getBulletinBoard();
+                let [err,res] = await getBulletinBoard();
+                if(err) return;
                 let data = JSON.parse(res.message)
                 this.bbList = data.bbList;
                 this.adadList = data.adList;

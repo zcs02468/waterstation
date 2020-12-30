@@ -66,7 +66,8 @@ export default {
       this.getData();
     },
     async getData() {
-      const [res] = await getReservoirLevel();
+      let [err,res] = await getReservoirLevel();
+      if( err ) return;
       let data = JSON.parse(res.message);
       this.oneH = this.keepTwoDecimal(data.sc1/100);
       this.twoH = this.keepTwoDecimal(data.sc2/100);

@@ -41,7 +41,8 @@ export default {
             this.getData();
         },
         async getData() {
-            const [res] = await getEffluentFlow();
+            let [err,res] = await getEffluentFlow();
+            if( err ) return;
             let data = JSON.parse(res.message).effluentFlow;
             let arr = [[],[],[],[]];
             let xAxisData = [];

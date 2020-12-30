@@ -1,4 +1,4 @@
-import Axios from "axios";
+import Request from "./request";
 
 /**
  * 公用get请求
@@ -7,13 +7,18 @@ import Axios from "axios";
  * @param msg       接口异常提示
  */
 export const get = ({ url, params }) =>
-    Axios.get(url, {
+Request.get(url, {
         params: params,
     })
-        .then((res) => [res.data])
+        // .then((res) => [res.data])
+        // .catch((err) => {
+        //     console.log("报错接口："+ url,err);
+        //     return [null];
+        // });
+        .then((res) => [null, res])
         .catch((err) => {
             console.log("报错接口："+ url,err);
-            return [null];
+            return [err, null];
         });
 
 /**
@@ -24,9 +29,9 @@ export const get = ({ url, params }) =>
  * @param config    接口所需配置
  */
 export const post = ({ url, params, config }) =>
-    Axios.post(url, params, config)
-        .then((res) => [res.data])
+Request.post(url, params, config)
+        .then((res) => [null, res])
         .catch((err) => {
             console.log(err);
-            return [null];
+            return [err, null];
         });

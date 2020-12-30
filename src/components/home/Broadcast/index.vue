@@ -72,7 +72,8 @@ export default {
             this.getData();
         },
         async getData() {
-            const [res] = await getBroadcastContent();
+            let [err,res] = await getBroadcastContent();
+            if( err ) return;
             let data = JSON.parse(res.message);
             this.broadcastContent = data.broadcastContent;
             // this.broadcastContent = "w哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇";

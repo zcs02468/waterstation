@@ -3,6 +3,12 @@ import { get } from "./tools";
 // const baseUrl = 'http://218.242.28.28:800'
 const baseUrl = ''
 
+//获取微信登陆二维码
+export const getQrCode = async () => await get({url:"/smartEnergy/weixin/qrCode"});
+
+//查询登录状态
+export const getToken = async (params) => await get({url:"/smartEnergy/weixin/findLoginToken", params});
+
 //今日值班http://10.23.1.168:8980/smartEnergy/todayWaterDuty
 export const getTodayWaterDuy = async () => await get({ url: baseUrl + "/smartEnergy/todayWaterDuty" });
 

@@ -9,11 +9,12 @@
                 <el-carousel-item v-for="(item,i) in list" :key="`${i}${item.pumpStation}`">
                     <div class="content-box">
                         <div class="img-box">
-                            <img src="" alt="">
+                            <!-- <img src="" alt=""> -->
+                            <i class="iconfont iconshigongrenyuan"></i>
                         </div>
                         <div class="name">{{item.dutyName}}</div>
                         <div class="phone">{{item.dutyPhone}}</div>
-                        <div class="location">{{stationList[item.pumpStati]}}</div>
+                        <div class="location">{{item.pumpStation}}</div>
                         <div class="icon iconfont iconright1" @click="changNext"></div>
                     </div>
                 </el-carousel-item>
@@ -46,7 +47,8 @@ export default {
             this.getData();
         },
         async getData() {
-            const [res] = await getTodayWaterDuy();
+            let [err,res] = await getTodayWaterDuy();
+            if( err ) return;
             // let res = {
             //     "result":"true",
             //     "data":[
@@ -113,9 +115,8 @@ export default {
     .img-box {
         width: 27px;
         height: 27px;
-        img {
-            width: 100%;
-            height: 100%;
+        .iconfont {
+            font-size: 24px;
         }
     }
     .icon {

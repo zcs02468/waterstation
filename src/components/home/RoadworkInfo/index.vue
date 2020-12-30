@@ -79,7 +79,8 @@ export default {
             this.getData();
         },
         async getData() {
-            const [res] = await getConstructionInfo();
+            let [err,res] = await getConstructionInfo();
+            if( err ) return;
             let data = JSON.parse(res.message);
             this.filterAjaxData(data.orderList);
         },
