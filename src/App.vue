@@ -20,7 +20,6 @@ export default {
       window.allTime = setTimeout(() => {
         this.SET_RANDOM_NUM();
         this.setAllTime();
-      // }, 10000);
       }, 60000);
     }
   },
