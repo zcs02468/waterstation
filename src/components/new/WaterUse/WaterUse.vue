@@ -86,7 +86,7 @@ export default {
         {
           name: "瞬时流量",
           color: "#00A4E6",
-          unit: "mg/L",
+          unit: "m³/h",
         },
       ],
       //（1=浊度，2=余氯，3=细菌总数，4=大肠杆菌，5=高锰酸盐）
