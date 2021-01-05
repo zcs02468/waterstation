@@ -7,9 +7,10 @@
             <div class="content">
                 <div class="block" v-for="item in list" :key="item.id">
                     <div class="left">{{item.type}}<br/>{{item.unit}}</div>
-                    <div class="right">
-                        <div class="target">标准：{{item.standardJudge}}{{item.standardValue}}</div>
-                        <div class="now" :class="{ select: item.isSelect }">当前：{{item.currentValue}}</div>
+                    <div class="right" :class="[ item.standardValue ? '' : 'center' ]">
+                        <div class="target" v-if="item.standardValue">标准：{{item.standardJudge}}{{item.standardValue}}</div>
+                        <div class="now"  v-if="item.standardValue" :class="{ select: item.isSelect }">当前：{{item.currentValue}}</div>
+                        <div  v-if="!item.standardValue">{{item.currentValue}}</div>
                     </div>
                 </div>
                 <!-- <div class="block">
@@ -107,6 +108,9 @@ export default {
                 if( item.standardJudge == '＜=' || item.standardJudge == '<=') {
                     item.currentValue > item.standardValue && (isSelect = true);
                 }
+                if(  item.standardJudge == '<' ) {
+                    item.currentValue >= item.standardValue && (isSelect = true);
+                }
                 if( item.standardJudge == '>' ) {
                     item.currentValue <= item.standardValue && (isSelect = true);
                 }
@@ -176,6 +180,11 @@ export default {
             align-items: center;
             justify-content: center;
             background: rgba(101, 149, 242, 0.12);
+        }
+        .center {
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .right {
             width: 140px;

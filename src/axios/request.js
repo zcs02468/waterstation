@@ -13,10 +13,10 @@ const Axios = axios.create({
 // 请求拦截器
 Axios.interceptors.request.use(
   (config) => {
-    let token = window.sessionStorage.getItem("websiteToken");
-    if (token) {
-      config.headers["Authorization"] = token;
-    }
+    // let token = window.sessionStorage.getItem("websiteToken");
+    // if (token) {
+    //   config.headers["Authorization"] = token;
+    // }
     return config;
   },
   (error) => {

@@ -41,10 +41,10 @@
                 >
             </div>
             <div class="block center">
-                <span class="iconfont iconfengxiang"></span>
+                <span class="iconfont iconeryanghualiu"></span>
                 <span class="text"
-                    >{{ weatherData.winddirection.value
-                    }}{{ weatherData.winddirection.unit }}</span
+                    >{{ weatherData.sq2.value
+                    }}{{ weatherData.sq2.unit }}</span
                 >
             </div>
             <!-- <div class="block">
@@ -114,7 +114,7 @@ export default {
                     value: 95.15361,
                     unit: "m/s",
                 },
-                winddirection: {
+                sq2: {
                     name: "风向",
                     value: '',
                     unit: "",
@@ -126,6 +126,7 @@ export default {
                 "a34002":"pm10",
                 "a34004":"pm25",
                 "a01007":"windspeed",
+                "a21026":"sq2"
             }
         };
     },
