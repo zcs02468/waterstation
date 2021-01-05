@@ -247,6 +247,7 @@ export default {
         align-content: center;
         flex-direction: column;
         margin-right: 53px;
+        min-width: 50px;
         .title {
             margin-top: 15px;
             text-align: center;
