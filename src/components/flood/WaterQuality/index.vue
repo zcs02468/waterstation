@@ -13,62 +13,6 @@
                         <div  v-if="!item.standardValue">{{item.currentValue}}</div>
                     </div>
                 </div>
-                <!-- <div class="block">
-                    <div class="left">PH<br/></div>
-                    <div class="right">
-                        <div class="target">标准：>9.10</div>
-                        <div class="now">当前：8.10</div>
-                    </div>
-                </div>
-                <div class="block">
-                    <div class="left">水温<br/>(℃)</div>
-                    <div class="right">
-                        <div class="target">标准：>9.10</div>
-                        <div class="now">当前：18.10</div>
-                    </div>
-                </div>
-                <div class="block">
-                    <div class="left">电导率<br/>(us/cm)</div>
-                    <div class="right">
-                        <div class="target">标准：>9.10</div>
-                        <div class="now">当前：297.38</div>
-                    </div>
-                </div>
-                <div class="block">
-                    <div class="left">浊度<br/>(NTU)</div>
-                    <div class="right">
-                        <div class="target">标准：>9.10</div>
-                        <div class="now">当前：8.10</div>
-                    </div>
-                </div>
-                <div class="block">
-                    <div class="left">溶解氧<br/>(mg/L)</div>
-                    <div class="right">
-                        <div class="target">标准：>9.10</div>
-                        <div class="now">当前：8.10</div>
-                    </div>
-                </div>
-                <div class="block">
-                    <div class="left">ORP<br/>(mv)</div>
-                    <div class="right">
-                        <div class="target">标准：>9.10</div>
-                        <div class="now select">当前：100.78</div>
-                    </div>
-                </div>
-                <div class="block">
-                    <div class="left">UVAS浓度<br/>(mg/L)</div>
-                    <div class="right">
-                        <div class="target">标准：>9.10</div>
-                        <div class="now select">当前：8.10</div>
-                    </div>
-                </div>
-                <div class="block">
-                    <div class="left">水中油<br/>(mg/L)</div>
-                    <div class="right">
-                        <div class="target">标准：>9.10</div>
-                        <div class="now">当前：8.10</div>
-                    </div>
-                </div> -->
             </div>
         </div>
     </div>

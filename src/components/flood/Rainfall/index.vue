@@ -124,9 +124,6 @@ export default {
             this.option.series[3].data = this.yAxisData[3];
             this.option.xAxis.data =this.xAxisData;
             this.myChart.setOption(this.option);
-            // setTimeout(()=> {
-            //     this.getData()
-            // },60000)
         },
         getMarkLine(data,index) {
             let colorArr = ['rgba(0,244,255,1)','#F6BA16','red','red','red']
@@ -149,7 +146,7 @@ export default {
                 grid: {
                     left: "5%",
                     right: "7%",
-                    bottom: "2%",
+                    bottom: "5%",
                     top: "8%",
                     containLabel: true,
                 },
@@ -221,24 +218,6 @@ export default {
                         smooth: true,
                         symbolSize: 1,
                     },
-                    // {
-                    //     data: rainData[4],
-                    //     type: "line",
-                    //     smooth: true,
-                    //     symbolSize: 1,
-                    // },
-                    // {
-                    //     data: rainData[5],
-                    //     type: "line",
-                    //     smooth: true,
-                    //     symbolSize: 1,
-                    // },
-                    // {
-                    //     data: rainData[6],
-                    //     type: "line",
-                    //     smooth: true,
-                    //     symbolSize: 1,
-                    // },
                     {
                         name: "最大库存",
                         type: "line",
@@ -293,61 +272,7 @@ export default {
                             }
                             ]
                         }
-                    },
-                    // {
-                    //     name: "安全库存",
-                    //     type: "line",
-                    //     markLine: {
-                    //         symbol: "none",
-                    //         silent: true,
-                    //         lineStyle: {
-                    //             normal: {
-                    //                 type: "solid"
-                    //             }
-                    //         },
-                    //         label: {
-                    //             position: "start"
-                    //         },
-                    //         data: [{
-                    //             yAxis: 500,
-                    //             lineStyle: {
-                    //                 width: 1.6560000000000001,
-                    //                 color: "rgba(0,244,255,1)"
-                    //             },
-                    //             label: {
-                    //                 show: true,
-                    //                 position: '',
-                    //             }
-                    //         }]
-                    //     }
-                    // },
-                    // {
-                    //     name: "安全库存",
-                    //     type: "line",
-                    //     markLine: {
-                    //         symbol: "none",
-                    //         silent: true,
-                    //         lineStyle: {
-                    //             normal: {
-                    //                 type: "solid"
-                    //             }
-                    //         },
-                    //         label: {
-                    //             position: "start"
-                    //         },
-                    //         data: [{
-                    //             yAxis: 600,
-                    //             lineStyle: {
-                    //                 width: 1.6560000000000001,
-                    //                 // color: "rgba(0,244,255,1)"
-                    //             },
-                    //             label: {
-                    //                 show: true,
-                    //                 position: '',
-                    //             }
-                    //         }]
-                    //     }
-                    // },
+                    }
                 ],
             };
             // 基于准备好的dom，初始化this.$echarts实例
@@ -377,12 +302,14 @@ export default {
 .panel {
     position: relative;
     width: 540px;
-    height: 337.5px;
+    // height: 337.5px;
+    height: 503px;
     margin-top: 20px;
 }
 .charts {
     width: 540px;
-    height: 258px;
+    // height: 258px;
+    height: 420px;
 }
 .panel-header {
     // display: flex;

@@ -12,10 +12,12 @@
             <div class="main-box">
                 <div class="colum">
                     <OnDuty />
-                    <Weather v-if="!show" />
+                    <!-- <Weather v-if="!show" /> -->
+                    
+                    <WeatherPlus/>
                     <Rainfall v-if="!show" />
-                    <Hydrops v-if="!show" />
-                    <WeatherPlus  v-if="show" />
+                    <!-- <Hydrops v-if="!show" /> -->
+                    <!-- <WeatherPlus  v-if="show" /> -->
                     <WaterQuality v-if="show" />
                 </div>
                 <div class="colum center">
@@ -40,10 +42,10 @@ import Time from "../components/flood/Time";
 import Phone from "../components/flood/Phone";
 
 import OnDuty from "../components/flood/OnDuty";
-import Weather from "../components/flood/Weather";
+// import Weather from "../components/flood/Weather";
 import WeatherPlus from "../components/flood/WeatherPlus";
 import Rainfall from "../components/flood/Rainfall";
-import Hydrops from "../components/flood/Hydrops";
+// import Hydrops from "../components/flood/Hydrops";
 
 import WaterQuality from "../components/flood/WaterQuality";
 
@@ -68,9 +70,9 @@ export default {
         Phone,
 
         OnDuty,
-        Weather,
+        // Weather,
         Rainfall,
-        Hydrops,
+        // Hydrops,
         WaterQuality,
         WeatherPlus,
 

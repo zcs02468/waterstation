@@ -69,6 +69,7 @@ export default {
 .panel-header {
     // padding: 22px 0 0 23px;
     padding: 16px 0 0 23px;
+        // padding: 0.2rem 0 0 0.2875rem;
 }
 .content-box {
     display: flex;

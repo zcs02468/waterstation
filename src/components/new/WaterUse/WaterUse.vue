@@ -64,24 +64,24 @@ export default {
       dataList: [250, 180, 480, 410, 110],
       indicator: [
         {
-          name: "累计进水",
+          name: "今日进水",
           color: "#F3F78A",
           unit: "m³",
         },
         {
           name: "平均余氯",
           color: "#478DF7",
-          unit: "m³/h",
+          unit: "mg/L",
         },
         {
           name: "平均浊度",
           color: "#0CA7A1",
-          unit: "Kpa",
+          unit: "NTU",
         },
         {
           name: "平均压力",
           color: "#4BDCFF",
-          unit: "NTU",
+          unit: "Kpa",
         },
         {
           name: "瞬时流量",
@@ -284,7 +284,7 @@ export default {
           // scale: true,
           indicator: [
             {
-              name: "累计进水",
+              name: "今日进水",
               // max: 500,
               color: "#F3F78A",
             },
