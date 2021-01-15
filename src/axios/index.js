@@ -88,4 +88,13 @@ export const getAlarm = async ()=> await get({url: baseUrl + '/smartEnergy/getAl
 // 1.	接口访问地址：http://47.110.226.205:8980/smartEnergy/getEmergencyMaterials?materialsWarehouse=
 export const getEmergencyMaterials = async (location)=> await get({url: baseUrl + `/smartEnergy/getEmergencyMaterials?materialsWarehouse=${location}`});
 
+//获取视频token
+export const getVideoToken = async ()=> await get({url: baseUrl + '/smartEnergy/token'});
+
+//获取视频设备列表
+export const getDeviceList = async ()=> await get({url: baseUrl + '/smartEnergy/getDeviceList'});
+
+//根据设备序列号获取视频URL
+export const getDeviceUrl = async (deviceSerial)=> await get({url: baseUrl + `/smartEnergy/getDeviceUrl?deviceSerial=${deviceSerial}`});
+
 

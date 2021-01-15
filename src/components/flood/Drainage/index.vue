@@ -72,13 +72,9 @@ export default {
         },
         async getData() {
             let [err,res] = await getDrainagePumpingPlant();
-        console.log( "res", res );
             if( err ) return;
             let data = JSON.parse(res.message);
             Object.assign(this.list, data)
-            // setTimeout(()=> {
-            //     this.getData();
-            // },60000)
         },
     },
 

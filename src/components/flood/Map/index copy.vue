@@ -3,9 +3,9 @@
     <div class="panel">
         <div class="map-header">
             <div @click="openDialog">
-                <Title class="title" title="查看全部" />
+                <Title class="title" :title="isShowVideo ? '关闭监控' : '查看全部' " />
             </div>
-            <div class="select-box" v-if="isShowTop">
+            <!-- <div class="select-box">
                 <ul>
                     <li @click="selectClick('team')">
                         <span>应急队伍</span>
@@ -17,9 +17,11 @@
                         ></b>
                     </li>
                 </ul>
-            </div>
+            </div> -->
         </div>
         <div class="map-bodyer" :class="[ selectType == 'team' ? 'selectEaMap':'selectEmMap']">
+            <!-- <div id="eaMap" v-show="selectType == 'team'"></div>
+            <div id="emMap" v-show="selectType == 'supplices'"></div> -->
             <div id="eaMap"></div>
             <div id="emMap"></div>
             <div class="team-mark" v-show="isShowList" @click="closeList">
@@ -49,25 +51,19 @@
             </div>
             <TeamDialog
                 v-if="selectType == 'team' && showDialog"
-                :propList="eaLists"
+                :propList="eaList"
                 @closeDailog="closeDailog"
             />
-            <SuppliesDialog
+            <videoDialog
                 v-if="selectType == 'supplices' && showDialog"
-                :propList="emLists"
+                :accessToken="token"
+                :videoUrl="videoUrl"
                 @closeDailog="closeDailog"
             />
             <SuppliesModal 
                 v-if="isShowSuppliesModal" 
                 :type="suppliesModalType" 
                 @closeDailog="closeDailog"
-            />
-            <videoDialog
-                ref="videoDialogRef"
-                v-if="isShowVideo"
-                :accessToken="token"
-                :videoUrl="videoUrl"
-                @closeDailog="closeVideoDailog"
             />
         </div>
     </div>
@@ -76,7 +72,7 @@
 <script>
 import Title from "../../common/Title";
 import TeamDialog from "./TeamDialog";
-import SuppliesDialog from "./SuppliesDialog";
+// import SuppliesDialog from "./SuppliesDialog";
 import SuppliesModal from "./suppliesModal"
 import videoDialog from "./videoDialog"
 import comMinxins from "../../common/comMinxins"
@@ -196,16 +192,15 @@ export default {
     mixins:[comMinxins],
     data() {
         return {
-            isShowTop: false,
-            selectType: "team",
+            selectType: "supplices",
             showDialog: false,
+            // selectType: "supplices",
+            // showDialog: true,
             isShowList: false,
             isShowBtn: false,
             isShowSuppliesModal: false,
             suppliesModalType: '',
             teamIndex: '',
-            eaLists: [],
-            emLists: [],
             eaList: [],
             emList: [],
             suppliesList:[],
@@ -217,7 +212,6 @@ export default {
                 num:'',
                 phone:''
             },
-            isShowVideo: false,
             token: '',
             videoUrl: ''
         };
@@ -226,16 +220,12 @@ export default {
     components: {
         Title,
         TeamDialog,
-        SuppliesDialog,
+        videoDialog,
         SuppliesModal,
-        videoDialog
     },
 
     mounted() {
         this.getData()
-    },
-
-    created() {
     },
 
     methods: {
@@ -258,44 +248,30 @@ export default {
             // 编写自定义函数,创建标注
             let that = this;
             function addMarker(point,index) {
-                let nowData = that.eaList[index];
-                let marker;
-                if( nowData.deviceSerial ){
-                    var myIcon = new BMap.Icon("/images/camera.png", new BMap.Size(30, 30));
-                    marker = new BMap.Marker(point,{
-                        icon: myIcon
-                    });
-                    marker.setTitle(nowData.deviceName)
+                var marker = new BMap.Marker(point);
+                if( index >= 10 ) {
+                    var label = new BMap.Label(index+1, {
+                        offset : new BMap.Size(0, 4)
+                    }); 
                 }else {
-                    marker = new BMap.Marker(point);
-                    if( index >= 10 ) {
-                        var label = new BMap.Label(index+1, {
-                            offset : new BMap.Size(0, 4)
-                        }); 
-                    }else {
-                        var label = new BMap.Label(index+1, {
-                            offset : new BMap.Size(4, 4)
-                        }); 
-                    }
-                    label.setStyle({
-                        background:'none',color:'#fff',border:'none'//只要对label样式进行设置就可达到在标注图标上显示数字的效果
-                    });
-                    marker.setLabel(label);//显示地理名称 a 
+                    var label = new BMap.Label(index+1, {
+                        offset : new BMap.Size(4, 4)
+                    }); 
                 }
+                label.setStyle({
+                    background:'none',color:'#fff',border:'none'//只要对label样式进行设置就可达到在标注图标上显示数字的效果
+                });
+                marker.setLabel(label);//显示地理名称 a 
                 that.eaBMap.addOverlay(marker);
                 marker.addEventListener("click",function() {
                     let eaList = that.eaList[index];
-                    if( eaList.deviceSerial ) {
-                        that.getDeviceUrl(eaList.deviceSerial);
-                    }else {
-                        that.info.location = `队伍驻点：${eaList.armyPlace}`   //队伍驻点：
-                        that.info.name = `队伍名称：${eaList.armyName}`      //队伍名称：XXXXX
-                        that.info.num = `人数：${eaList.headcount || 0}`        //人数：XXXXX
-                        that.info.userName = `现场负责人：${eaList.chargeLeadName}`       //现场负责人：13555555555
-                        that.info.phone = `联系电话：${eaList.phone}`       //联系电话：13555555555
-                        that.isShowList = true;
-                        that.isShowBtn = false;
-                    }
+                    that.info.location = `队伍驻点：${eaList.armyPlace}`   //队伍驻点：
+                    that.info.name = `队伍名称：${eaList.armyName}`      //队伍名称：XXXXX
+                    that.info.num = `人数：${eaList.headcount || 0}`        //人数：XXXXX
+                    that.info.userName = `现场负责人：${eaList.chargeLeadName}`       //现场负责人：13555555555
+                    that.info.phone = `联系电话：${eaList.phone}`       //联系电话：13555555555
+                    that.isShowList = true;
+                    that.isShowBtn = false;
                 });
             }
             this.eaList.forEach( (item,index)=> {
@@ -318,63 +294,15 @@ export default {
             // 编写自定义函数,创建标注
             let that = this;
             function addMarker(point,index) {
-                // var marker = new BMap.Marker(point);
-                // if( index >= 10 ) {
-                //     var label = new BMap.Label(index+1, {
-                //         offset : new BMap.Size(0, 4)
-                //     }); 
-                // }else {
-                //     var label = new BMap.Label(index+1, {
-                //         offset : new BMap.Size(4, 4)
-                //     }); 
-                // }
-                // label.setStyle({
-                //     background:'none',color:'#fff',border:'none'//只要对label样式进行设置就可达到在标注图标上显示数字的效果
-                // });
-                // marker.setLabel(label);//显示地理名称 a 
-
-                let nowData = that.emList[index];
-                let marker;
-                if( nowData.deviceSerial ){
-                    var myIcon = new BMap.Icon("/images/camera.png", new BMap.Size(30, 30));
-                    marker = new BMap.Marker(point,{
-                        icon: myIcon
-                    });
-                    marker.setTitle(nowData.deviceName)
-                }else {
-                    marker = new BMap.Marker(point);
-                    if( index >= 10 ) {
-                        var label = new BMap.Label(index+1, {
-                            offset : new BMap.Size(0, 4)
-                        }); 
-                    }else {
-                        var label = new BMap.Label(index+1, {
-                            offset : new BMap.Size(4, 4)
-                        }); 
-                    }
-                    label.setStyle({
-                        background:'none',color:'#fff',border:'none'//只要对label样式进行设置就可达到在标注图标上显示数字的效果
-                    });
-                    marker.setLabel(label);//显示地理名称 a 
-                }
+                var myIcon = new BMap.Icon("/images/camera.png", new BMap.Size(30, 30));
+                var marker = new BMap.Marker(point,{
+                    icon: myIcon
+                });
+                marker.setTitle(that.emList[index].deviceName)
+                
                 that.emBMap.addOverlay(marker);
                 marker.addEventListener("click",function() {
-                    
-                    let emList = that.emList[index];
-                    if( emList.deviceSerial ) {
-                        that.getDeviceUrl(emList.deviceSerial);
-                    }else {
-                        that.info.location = `物资仓库点位：${emList.materialsWarehouse}`   //队伍驻点：
-                        // that.info.name = `物资名称：${emList.materialsName}`      //队伍名称：XXXXX
-                        // that.info.num = `数量：${emList.materials || 0}`        //人数：XXXXX
-                        that.info.name = ``      //队伍名称：XXXXX
-                        that.info.num = ''        //人数：XXXXX
-                        that.info.userName = `保管人：${emList.keeperName}`          //现场负责人联系电话：13555555555
-                        that.info.phone = `联系电话：${emList.phone}`          //现场负责人联系电话：13555555555
-                        that.info.materialsWarehouse = emList.materialsWarehouse
-                        that.isShowList = true;
-                        that.isShowBtn = true;
-                    }
+                    that.getDeviceUrl(that.emList[index].deviceSerial)
                 });
             }
             this.emList.forEach( (item,index)=> {
@@ -384,26 +312,16 @@ export default {
         opSuppliesModal(location) {
             this.closeDailog();
             this.suppliesModalType = location;
-            // this.getEmergencyMaterials(location);
             this.isShowSuppliesModal = true;
         },
         openDialog() {
-            if( this.$route.name != "Normal" ) {
-                if( this.isShowVideo ) {
-                    this.$refs.videoDialogRef.closeDailog()
-                }else {
-                    this.showDialog = true;
-                    this.isShowList = false;
-                }
-            }
+            this.showDialog = true;
+            this.isShowList = false;
         },
         closeDailog() {
             this.isShowList = false;
             this.showDialog = false;
             this.isShowSuppliesModal = false;
-        },
-        closeVideoDailog() {
-            this.isShowVideo = false;
         },
         selectClick(type) {
             this.selectType = type;
@@ -412,8 +330,6 @@ export default {
             this.isShowList = false;
         },
         async getData() {
-            this.getVideoToken();
-
             if( this.eaBMap ) {
                 this.eaBMap.clearOverlays();
             }
@@ -422,45 +338,45 @@ export default {
             }
             // eaList	应急队伍对象
             // emList	应急物资对象
-            if( this.$route.name == "Normal" ) {
-                //生态环境监测  只显示摄像头信
-                this.isShowTop = false;
-                let list = await this.getDeviceList();
-                let eaList = [...list.list];
-                let emList = [...list.list];
-                
-                this.eaList = eaList;
-                this.emList = emList;
-                this.createEaMap();
-                this.createEmMap();
-            }else {
-                this.isShowTop = true;
-                let [err,res] = await getEmergencyInfo()
-                if( err ) return;
-                let data = JSON.parse(res.message);
-                let list = await this.getDeviceList();
-                this.eaLists = data.eaList;
-                this.emLists = data.emList;
-                let eaList = [...data.eaList,...list.list];
-                let emList = [...data.emList,...list.list];
-                
-                this.eaList = eaList;
-                this.emList = emList;
-                this.createEaMap();
-                this.createEmMap();
+            let [err,res] = await getEmergencyInfo()
+            if( err ) return;
+            let data = JSON.parse(res.message);
+            let eaList = data.eaList;
+            let emList = data.emList;
+            this.eaList = eaList;
+            this.emList = emList;
+            this.createEaMap();
+            this.createEmMap();
+        },
+        async initEaMap() {
+            if( this.eaBMap ) {
+                this.eaBMap.clearOverlays();
             }
+            // eaList	应急队伍对象
+            // emList	应急物资对象
+            let [err,res] = await getEmergencyInfo()
+            if( err ) return;
+            let data = JSON.parse(res.message);
+            let eaList = data.eaList;
+            // let emList = data.emList;
+            this.eaList = eaList;
+            // this.emList = emList;
+            // console.log( 'eaList:', eaList, "emList:", emList );
+            this.createEaMap();
+            // this.createEmMap();
         },
-        async initNormal() {
-            this.getVideoToken();
-            let [list] = await getDeviceList();
-            if(!list)return;
-            this.emList = list;
-        },
-        async getDeviceList() {
+        async initVideoMap() {
+            if( this.emBMap ) {
+                this.emBMap.clearOverlays();
+            }
+            // eaList	应急队伍对象
+            // emList	应急物资对象
             let [err,res] = await getDeviceList()
-            if( err ) return {list: []};
+            if( err ) return;
             // let res = videoData;
-            return {list: res.data};
+            let emList = res.data;
+            this.emList = emList;
+            this.createEmMap();
         },
         async getVideoToken() {
             let [err,res] = await getVideoToken();
@@ -472,17 +388,18 @@ export default {
         async getDeviceUrl(deviceSerial) {
             let [err,res] = await getDeviceUrl(deviceSerial);
             if( err ) return;
+            // console.log( 'rss', res );
             // let res = {
             //     "result": "true",
             //     "data": "ezopen://abcd1234@open.ys7.com/E92779082/1.hd.live",
             //     "message": "请求成功"
             // }
             this.videoUrl = res.data;
-            this.isShowVideo = true;
+            this.showDialog = true;
         },
         closeList() {
             this.isShowList = false
-        },
+        }
     },
 
     computed: {},
@@ -503,6 +420,13 @@ export default {
     .title {
         cursor: pointer;
     }
+}
+.point-station {
+    position: absolute;
+    width: 100px;
+    height: 20px;
+    background: #fff;
+    z-index: 9999;
 }
 .select-box {
     width: 215.5px;

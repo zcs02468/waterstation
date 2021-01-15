@@ -25,9 +25,9 @@ export default {
   },
   mounted() {
     this.setAllTime();
-    setTimeout(()=> {
-      console.log( 'thiasdfasdfasdf', this.$store.state.aaa );
-    },5000)
+    // setTimeout(()=> {
+    //   console.log( 'thiasdfasdfasdf', this.$store.state.aaa );
+    // },5000)
   },
   computed: {
     ...mapState({
@@ -39,7 +39,7 @@ export default {
   },
   watch:{
     isShowLogin(value) {
-      console.log( 'value', value );
+      // console.log( 'value', value );
     }
   }
 };

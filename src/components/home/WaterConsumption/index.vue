@@ -87,9 +87,6 @@ export default {
             } catch (error) {
                 console.log('error', error);
             }
-            // setTimeout(()=> {
-            //     this.getData()
-            // },60000)
         },
         setData() {
             this.option.series[0].data = this.consumptionArr[this.selectIndex].list
