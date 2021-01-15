@@ -3,7 +3,7 @@
     <div class="panel">
         <div class="map-header">
             <div @click="openDialog">
-                <Title class="title" title="查看全部" />
+                <Title class="title" :title="isShowVideo ? '关闭监控' : '查看全部' " />
             </div>
             <div class="select-box" v-if="isShowTop">
                 <ul>
@@ -81,116 +81,116 @@ import SuppliesModal from "./suppliesModal"
 import videoDialog from "./videoDialog"
 import comMinxins from "../../common/comMinxins"
 import {getEmergencyInfo, getVideoToken, getDeviceList, getDeviceUrl} from "../../../axios"
-let videoData =  {
-    "result": "true",
-    "data": [
-        {
-        "isNewRecord": false,
-        "id": "E92779082",
-        "status": "1",
-        "deviceSerial": "E92779082",
-        "deviceName": "迎宾八路河道东",
-        "deviceType": "DS-2DE42BC-XCR",
-        "deviceVersion": "V5.6.15 build 191211",
-        "addTime": "2020-10-11 16:57:03",
-        "updateTime": "2020-10-11 16:57:03",
-        "longitude": 121.35575,
-        "latitude": 31.19405
-        },
-        {
-        "isNewRecord": false,
-        "id": "E92779081",
-        "status": "1",
-        "deviceSerial": "E92779081",
-        "deviceName": "空港三路东西河道",
-        "deviceType": "DS-2DE42BC-XCR",
-        "deviceVersion": "V5.6.15 build 191211",
-        "addTime": "2020-10-11 17:00:59",
-        "updateTime": "2020-10-11 17:00:59",
-        "longitude": 121.35575,
-        "latitude": 31.19405
-        },
-        {
-        "isNewRecord": false,
-        "id": "E92779078",
-        "status": "1",
-        "deviceSerial": "E92779078",
-        "deviceName": "空港三路联虹路口南北河道",
-        "deviceType": "DS-2DE42BC-XCR",
-        "deviceVersion": "V5.6.15 build 191211",
-        "addTime": "2020-10-11 16:53:11",
-        "updateTime": "2020-10-11 16:53:55",
-        "longitude": 121.35575,
-        "latitude": 31.19405
-        },
-        {
-        "isNewRecord": false,
-        "id": "E92779077",
-        "status": "1",
-        "deviceSerial": "E92779077",
-        "deviceName": "迎宾八路河道中",
-        "deviceType": "DS-2DE42BC-XCR",
-        "deviceVersion": "V5.6.15 build 191211",
-        "addTime": "2020-10-11 16:58:55",
-        "updateTime": "2020-10-11 16:57:22",
-        "longitude": 121.35575,
-        "latitude": 31.19405
-        },
-        {
-        "isNewRecord": false,
-        "id": "E92779075",
-        "status": "1",
-        "deviceSerial": "E92779075",
-        "deviceName": "空港三路联虹路口东西河道",
-        "deviceType": "DS-2DE42BC-XCR",
-        "deviceVersion": "V5.6.15 build 191211",
-        "addTime": "2020-10-11 16:58:24",
-        "updateTime": "2020-10-11 16:58:24",
-        "longitude": 121.35575,
-        "latitude": 31.19405
-        },
-        {
-        "isNewRecord": false,
-        "id": "E92779074",
-        "status": "1",
-        "deviceSerial": "E92779074",
-        "deviceName": "南水塔河道西",
-        "deviceType": "DS-2DE42BC-XCR",
-        "deviceVersion": "V5.6.15 build 191211",
-        "addTime": "2020-10-11 16:59:37",
-        "updateTime": "2020-10-11 16:59:37",
-        "longitude": 121.35575,
-        "latitude": 31.19405
-        },
-        {
-        "isNewRecord": false,
-        "id": "E92779073",
-        "status": "1",
-        "deviceSerial": "E92779073",
-        "deviceName": "空港三路南北河道",
-        "deviceType": "DS-2DE42BC-XCR",
-        "deviceVersion": "V5.6.15 build 191211",
-        "addTime": "2020-10-11 17:00:17",
-        "updateTime": "2020-10-11 17:00:16",
-        "longitude": 121.35575,
-        "latitude": 31.19405
-        },
-        {
-        "isNewRecord": false,
-        "id": "E92779071",
-        "status": "1",
-        "deviceSerial": "E92779071",
-        "deviceName": "南水塔河道南",
-        "deviceType": "DS-2DE42BC-XCR",
-        "deviceVersion": "V5.6.15 build 191211",
-        "addTime": "2021-01-12 12:30:53",
-        "updateTime": "2021-01-12 12:31:46",
-        "longitude": 121.35575,
-        "latitude": 31.19405
-        }
-    ],
-    "message": "请求成功"
-}
+// let videoData =  {
+//     "result": "true",
+//     "data": [
+//         {
+//         "isNewRecord": false,
+//         "id": "E92779082",
+//         "status": "1",
+//         "deviceSerial": "E92779082",
+//         "deviceName": "迎宾八路河道东",
+//         "deviceType": "DS-2DE42BC-XCR",
+//         "deviceVersion": "V5.6.15 build 191211",
+//         "addTime": "2020-10-11 16:57:03",
+//         "updateTime": "2020-10-11 16:57:03",
+//         "longitude": 121.35575,
+//         "latitude": 31.19405
+//         },
+//         {
+//         "isNewRecord": false,
+//         "id": "E92779081",
+//         "status": "1",
+//         "deviceSerial": "E92779081",
+//         "deviceName": "空港三路东西河道",
+//         "deviceType": "DS-2DE42BC-XCR",
+//         "deviceVersion": "V5.6.15 build 191211",
+//         "addTime": "2020-10-11 17:00:59",
+//         "updateTime": "2020-10-11 17:00:59",
+//         "longitude": 121.35575,
+//         "latitude": 31.19405
+//         },
+//         {
+//         "isNewRecord": false,
+//         "id": "E92779078",
+//         "status": "1",
+//         "deviceSerial": "E92779078",
+//         "deviceName": "空港三路联虹路口南北河道",
+//         "deviceType": "DS-2DE42BC-XCR",
+//         "deviceVersion": "V5.6.15 build 191211",
+//         "addTime": "2020-10-11 16:53:11",
+//         "updateTime": "2020-10-11 16:53:55",
+//         "longitude": 121.35575,
+//         "latitude": 31.19405
+//         },
+//         {
+//         "isNewRecord": false,
+//         "id": "E92779077",
+//         "status": "1",
+//         "deviceSerial": "E92779077",
+//         "deviceName": "迎宾八路河道中",
+//         "deviceType": "DS-2DE42BC-XCR",
+//         "deviceVersion": "V5.6.15 build 191211",
+//         "addTime": "2020-10-11 16:58:55",
+//         "updateTime": "2020-10-11 16:57:22",
+//         "longitude": 121.35575,
+//         "latitude": 31.19405
+//         },
+//         {
+//         "isNewRecord": false,
+//         "id": "E92779075",
+//         "status": "1",
+//         "deviceSerial": "E92779075",
+//         "deviceName": "空港三路联虹路口东西河道",
+//         "deviceType": "DS-2DE42BC-XCR",
+//         "deviceVersion": "V5.6.15 build 191211",
+//         "addTime": "2020-10-11 16:58:24",
+//         "updateTime": "2020-10-11 16:58:24",
+//         "longitude": 121.35575,
+//         "latitude": 31.19405
+//         },
+//         {
+//         "isNewRecord": false,
+//         "id": "E92779074",
+//         "status": "1",
+//         "deviceSerial": "E92779074",
+//         "deviceName": "南水塔河道西",
+//         "deviceType": "DS-2DE42BC-XCR",
+//         "deviceVersion": "V5.6.15 build 191211",
+//         "addTime": "2020-10-11 16:59:37",
+//         "updateTime": "2020-10-11 16:59:37",
+//         "longitude": 121.35575,
+//         "latitude": 31.19405
+//         },
+//         {
+//         "isNewRecord": false,
+//         "id": "E92779073",
+//         "status": "1",
+//         "deviceSerial": "E92779073",
+//         "deviceName": "空港三路南北河道",
+//         "deviceType": "DS-2DE42BC-XCR",
+//         "deviceVersion": "V5.6.15 build 191211",
+//         "addTime": "2020-10-11 17:00:17",
+//         "updateTime": "2020-10-11 17:00:16",
+//         "longitude": 121.35575,
+//         "latitude": 31.19405
+//         },
+//         {
+//         "isNewRecord": false,
+//         "id": "E92779071",
+//         "status": "1",
+//         "deviceSerial": "E92779071",
+//         "deviceName": "南水塔河道南",
+//         "deviceType": "DS-2DE42BC-XCR",
+//         "deviceVersion": "V5.6.15 build 191211",
+//         "addTime": "2021-01-12 12:30:53",
+//         "updateTime": "2021-01-12 12:31:46",
+//         "longitude": 121.35575,
+//         "latitude": 31.19405
+//         }
+//     ],
+//     "message": "请求成功"
+// }
 export default {
     name: "Map",
     mixins:[comMinxins],
