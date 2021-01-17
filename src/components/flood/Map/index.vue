@@ -65,7 +65,6 @@
             <videoDialog
                 ref="videoDialogRef"
                 v-if="isShowVideo"
-                :accessToken="token"
                 :videoUrl="videoUrl"
                 @closeDailog="closeVideoDailog"
             />
@@ -412,7 +411,7 @@ export default {
             this.isShowList = false;
         },
         async getData() {
-            this.getVideoToken();
+            // this.getVideoToken();
 
             if( this.eaBMap ) {
                 this.eaBMap.clearOverlays();
@@ -462,13 +461,13 @@ export default {
             // let res = videoData;
             return {list: res.data};
         },
-        async getVideoToken() {
-            let [err,res] = await getVideoToken();
-            if( err ) return;
-            this.token = res.data;
+        // async getVideoToken() {
+        //     let [err,res] = await getVideoToken();
+        //     if( err ) return;
+        //     this.token = res.data;
 
-            // this.token = 'at.be062kpedlzopk4q7vcouso0davk8909-6m2dwkb4ly-16ltzgw-njfdujzrd'
-        },
+        //     // this.token = 'at.be062kpedlzopk4q7vcouso0davk8909-6m2dwkb4ly-16ltzgw-njfdujzrd'
+        // },
         async getDeviceUrl(deviceSerial) {
             let [err,res] = await getDeviceUrl(deviceSerial);
             if( err ) return;
@@ -477,7 +476,8 @@ export default {
             //     "data": "ezopen://abcd1234@open.ys7.com/E92779082/1.hd.live",
             //     "message": "请求成功"
             // }
-            this.videoUrl = res.data;
+            // this.videoUrl = res.data;
+            this.videoUrl = "rtmp://58.200.131.2:1935/livetv/hunantv"
             this.isShowVideo = true;
         },
         closeList() {

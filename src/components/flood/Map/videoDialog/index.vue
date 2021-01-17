@@ -2,30 +2,40 @@
 <template>
     <div class="map-mark">
         <div class="dialog-box">
-          <div id="playWind"></div>
+           <video :id="videoId"
+              class="video-js vjs-default-skin vjs-big-play-centered"
+              preload="auto"
+              autoplay
+              style="width: 100%;height: 100%;"
+              data-setup='{"html5" : { "nativeTextTracks" : false }}'>
+              <source :src="videoUrl" type="rtmp/flv">
+            </video>
         </div>
     </div>
 </template>
 
 <script>
-import EZUIKit from '../../../../assets/js/ezuikit.js'
+import videojs from 'video.js'
+import 'video.js/dist/video-js.css'
+import SWF_URL from 'videojs-swf/dist/video-js.swf'
+videojs.options.flash.swf = SWF_URL
 export default {
     name: "Dialog",
 
     props:{
-      accessToken: {
-        type: String,
-        default: ''
+      videoId:{
+          type:String,
+          default:'playWind',
       },
       videoUrl: {
         type: String,
-        default:""
+        default:"rtmp://58.200.131.2:1935/livetv/hunantv"
       }
     },
 
     data() {
       return {
-        playerInstance: null
+        videoPlayer: null
       };
     },
     
@@ -38,32 +48,21 @@ export default {
     methods: {
       closeDailog() {
         this.stop()
-          this.$emit("closeDailog");
+        this.$emit("closeDailog");
       },
       initPlayer() {
-        let that = this;
-        this.playerInstance = new EZUIKit.EZUIPlayer({
-          id: 'playWind',
-          autoplay: true,
-          url: that.videoUrl,
-          accessToken: that.accessToken,
-          decoderPath: './static',
-          width: 754,
-          height: 668,
-          splitBasis: 2, // 1*1 2*2 3*3 4*4
+        this.videoPlayer = videojs(this.videoId);// 关联video标签的id
+        this.videoPlayer.src({
+            src: this.videoUrl,
+            type: 'rtmp/flv'
         });
+        this.videoPlayer.play();
+        this.videoPlayer.pause();
       },
       stop() {
-        var url = this.videoUrl;
-        var urlList = [];
-        if(url.length >0){
-          urlList = url.split(',');
-        }
-        for(var i = 0; i<urlList.length; i++){
-          if(urlList[i] && urlList[i].length>0){
-            this.playerInstance.stop(i);
-          }
-        }
+        if(this.videoPlayer){
+            this.videoPlayer.dispose()
+        } 
       }
     }
 };
