@@ -79,7 +79,7 @@ import SuppliesDialog from "./SuppliesDialog";
 import SuppliesModal from "./suppliesModal"
 import videoDialog from "./videoDialog"
 import comMinxins from "../../common/comMinxins"
-import {getEmergencyInfo, getVideoToken, getDeviceList, getDeviceUrl} from "../../../axios"
+import {getEmergencyInfo, getDeviceList, getDeviceUrl} from "../../../axios"
 // let videoData =  {
 //     "result": "true",
 //     "data": [
@@ -476,8 +476,8 @@ export default {
             //     "data": "ezopen://abcd1234@open.ys7.com/E92779082/1.hd.live",
             //     "message": "请求成功"
             // }
-            // this.videoUrl = res.data;
-            this.videoUrl = "rtmp://58.200.131.2:1935/livetv/hunantv"
+            this.videoUrl = res.data;
+            // this.videoUrl = "rtmp://58.200.131.2:1935/livetv/hunantv"
             this.isShowVideo = true;
         },
         closeList() {

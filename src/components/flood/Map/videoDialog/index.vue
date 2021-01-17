@@ -89,8 +89,8 @@ export default {
     top: 0;
   }
 }
-#playWind {
-  width: 757px;
-  height: 669.5px;
+video {
+  width: 100%;
+  height: 100%;
 }
 </style>

@@ -287,7 +287,6 @@ export default {
 
     computed: {
         ...mapState({
-            // rainfallIsAlarm: state => state.flood.alarm.rainfallIsAlarm
             alarm: state => state.flood.alarm
         })
     },
