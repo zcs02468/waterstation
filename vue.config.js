@@ -39,12 +39,7 @@ module.exports = {
                 // 超过4kb压缩
                 threshold: 4096,
             })
-        );
-    
-        config.module.rules.push({ 
-          test: /\.(swf|ttf|eot|svg|woff(2))(\?[a-z0-9]+)?$/,
-           loader: 'file-loader', 
-      })
+        )
         // }
     },
     // // 压缩图片
