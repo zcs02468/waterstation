@@ -477,7 +477,6 @@ export default {
             //     "message": "请求成功"
             // }
             this.videoUrl = res.data;
-            // this.videoUrl = "rtmp://58.200.131.2:1935/livetv/hunantv"
             this.isShowVideo = true;
         },
         closeList() {

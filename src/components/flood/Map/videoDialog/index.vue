@@ -1,24 +1,30 @@
 <!--  -->
 <template>
     <div class="map-mark">
-        <div class="dialog-box">
-           <video :id="videoId"
-              class="video-js vjs-default-skin vjs-big-play-centered"
-              preload="auto"
-              autoplay
-              style="width: 100%;height: 100%;"
-              data-setup='{"html5" : { "nativeTextTracks" : false }}'>
-              <source :src="videoUrl" type="rtmp/flv">
-            </video>
-        </div>
+      <video
+        id="myPlayer"
+        poster=""
+        controls
+        playsInline
+        webkit-playsinline
+        autoplay
+      >
+          <source :src="videoUrl" type="application/x-mpegURL" />
+      </video>
     </div>
 </template>
 
 <script>
-import videojs from 'video.js'
-import 'video.js/dist/video-js.css'
-import SWF_URL from 'videojs-swf/dist/video-js.swf'
-videojs.options.flash.swf = SWF_URL
+// import videojs from 'video.js'
+// import 'video.js/dist/video-js.css'
+// import SWF_URL from 'videojs-swf/dist/video-js.swf'
+// videojs.options.flash.swf = SWF_URL
+
+
+// import EZUIKit from "ezuikit-js";
+
+import EZuikit from "@/assets/js/ezuikit"
+
 export default {
     name: "Dialog",
 
@@ -51,17 +57,11 @@ export default {
         this.$emit("closeDailog");
       },
       initPlayer() {
-        this.videoPlayer = videojs(this.videoId);// 关联video标签的id
-        this.videoPlayer.src({
-            src: this.videoUrl,
-            type: 'rtmp/flv'
-        });
-        this.videoPlayer.play();
-        this.videoPlayer.pause();
+        this.videoPlayer = new EZuikit.EZUIPlayer('myPlayer');
       },
       stop() {
         if(this.videoPlayer){
-            this.videoPlayer.dispose()
+          this.videoPlayer.stop();
         } 
       }
     }
@@ -77,20 +77,22 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(7, 7, 7, 0.43);
+  background: rgba(7, 7, 7, 1);
   z-index: 999;
   .dialog-box {
     width: 757px;
     height: 669.5px;
     border: 1px solid #57bdff;
     position: absolute;
-    background: rgba(1, 24, 63, 0.8);
+    background: rgba(1, 24, 63, 1);
     left: 0;
     top: 0;
   }
 }
-video {
+#myPlayer {
   width: 100%;
   height: 100%;
+    // width: 757px;
+    // height: 669.5px;
 }
 </style>
