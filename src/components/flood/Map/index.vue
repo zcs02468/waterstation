@@ -387,13 +387,13 @@ export default {
             this.isShowSuppliesModal = true;
         },
         openDialog() {
+            if( this.isShowVideo ) {
+                this.$refs.videoDialogRef.closeDailog();
+                return;
+            }
             if( this.$route.name != "Normal" ) {
-                if( this.isShowVideo ) {
-                    this.$refs.videoDialogRef.closeDailog()
-                }else {
-                    this.showDialog = true;
-                    this.isShowList = false;
-                }
+                this.showDialog = true;
+                this.isShowList = false;
             }
         },
         closeDailog() {

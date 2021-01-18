@@ -35,7 +35,7 @@ export default {
       },
       videoUrl: {
         type: String,
-        default:"rtmp://58.200.131.2:1935/livetv/hunantv"
+        default:""
       }
     },
 
