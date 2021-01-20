@@ -518,12 +518,7 @@ export default {
     top: 0;
     align-items: center;
     justify-content: center;
-  }
-  .charts {
-    // left: 30px;
-    // height: 280px;
-    // width: 340px;
-    // margin-left: 50px;
+    pointer-events: none;
   }
 }
 li {
