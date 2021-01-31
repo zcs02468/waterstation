@@ -36,8 +36,8 @@
                                 <p><span></span> 时间：{{ item.planTimeInterval }}</p>
                                 <p><span></span>内容：{{ item.workContent }}</p>
                                 <p><span></span>特种作业：{{ workTypeArr[item.specialWork] }}</p>
-                                <p><span></span>科室负责人：{{ item.deptHeadName }}</p>
-                                <p><span></span>监管员：{{ item.supervisorNames }}</p>
+                                <p><span></span>当日班组长：{{ item.deptHeadName }}</p>
+                                <p><span></span>供水监管员：{{ item.supervisorNames }}</p>
                             </div>
                         </div>
                     </el-carousel-item>

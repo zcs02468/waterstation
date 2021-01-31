@@ -3,7 +3,7 @@
     <div class="panel left-container-angle">
         <div class="panel-top">
             <div class="title-main">
-                <Title title="进水/出水压力趋势" />
+                <Title title="夜间最小流量趋势" />
             </div>
             <!-- <div class="unit">单位：m<sup>3</sup></div> -->
         </div>

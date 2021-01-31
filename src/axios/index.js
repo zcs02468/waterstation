@@ -13,8 +13,7 @@ export const getToken = async (params) => await get({url:"/smartEnergy/weixin/fi
 export const getTodayWaterDuy = async () => await get({ url: baseUrl + "/smartEnergy/todayWaterDuty" });
 
 //供水检测率接口
-export const getDetectionRate = async () => await get({ url: baseUrl + "/smartEnergy/detectionrate" });
-// export const getDetectionRate = async () => await get({ url: baseUrl + "/smartEnergy/waterDetectionrate" });
+export const getDetectionRate = async () => await get({ url: baseUrl + "/smartEnergy/waterDetectionrate" });
 
 //供水检测率趋势
 export const getWaterTendency = async () => await get({ url: baseUrl + "/smartEnergy/waterTendency" });

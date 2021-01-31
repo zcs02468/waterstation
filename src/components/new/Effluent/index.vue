@@ -3,7 +3,7 @@
     <div class="panel left-container-angle">
         <div class="panel-top">
             <div class="title-main">
-                <Title title="出水瞬时流量" />
+                <Title title="用水趋势图" />
             </div>
             <!-- <div class="unit">单位：m<sup>3</sup></div> -->
         </div>
