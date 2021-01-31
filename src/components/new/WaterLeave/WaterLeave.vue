@@ -311,7 +311,8 @@ export default {
     align-items: center;
 }
 .single-box {
-    margin-top: 26px;
+    // margin-top: 26px;
+    margin-top: 40px;
 }
 .container-box {
     display: flex;

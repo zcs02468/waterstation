@@ -2,7 +2,7 @@
 <template>
   <div class="panel detection-rate left-container-angle">
     <div class="panel-header">
-      <Title title="用水情况" />
+      <Title title="西区泵站运行数据" />
     </div>
     <div class="warp-container">
       <div class="tab-box">
@@ -20,21 +20,11 @@
       </div>
       <div class="charts-box">
         <div class="charts" id="charts_waterUse"></div>
+        <div class="title">水质综合指数</div>
         <div class="waterQualityNum">
-          <span class="num">{{waterQualityNum}}</span>
-        </div>
-        <div class="direction-box" :style="`${directionStyle}`" v-show="isShowDirection">
-          <div class="direction-left">
-            <div style="opacity:0">111</div>
-            <div v-for="(item) in radarIndicator" :key="item.name">{{item.name}}</div>
-          </div>
-          <div class="direction-center">
-            <div>指标值</div>
-            <div v-for="(item,index) in targetArr" :key="`${index}_${item}_quota`">{{item}}</div>
-          </div>
-          <div class="direction-right">
-            <div>实际值</div>
-            <div v-for="(item,index) in nowArr" :key="`${index}_${item}fact`">{{item}}</div>
+          <div>
+            <p class="num">{{ waterQualityNum }}</p>
+            <p>（WQI）</p>
           </div>
         </div>
       </div>
@@ -45,7 +35,7 @@
 <script>
 import Title from "@/components/common/Title";
 import comMinxins from "@/components/common/comMinxins";
-import { getWaterUsage, getWaterQuality, getWaterQualityNum } from "@/axios/index";
+import { getWaterUsage, getWaterQualityNum } from "@/axios/index";
 export default {
   name: "WaterUse",
   mixins: [comMinxins],
@@ -64,7 +54,7 @@ export default {
       dataList: [250, 180, 480, 410, 110],
       indicator: [
         {
-          name: "今日进水",
+          name: "今日出水",
           color: "#F3F78A",
           unit: "m³",
         },
@@ -90,14 +80,14 @@ export default {
         },
       ],
       //（1=浊度，2=余氯，3=细菌总数，4=大肠杆菌，5=高锰酸盐）
-      nameList:['','浊度','余氯','细菌总数','大肠杆菌','高锰酸盐'],
-      colorList:['','#F3F78A','#478DF7','#0CA7A1','#4BDCFF','#00A4E6'],
-      radarIndicator:[],
-      targetArr:[],
-      nowArr:[],
-      directionStyle:``,
+      nameList: ["", "浊度", "余氯", "细菌总数", "大肠杆菌", "高锰酸盐"],
+      colorList: ["", "#F3F78A", "#478DF7", "#0CA7A1", "#4BDCFF", "#00A4E6"],
+      radarIndicator: [],
+      targetArr: [],
+      nowArr: [],
+      directionStyle: ``,
       isShowDirection: false,
-      waterQualityNum: 0
+      waterQualityNum: 0,
     };
   },
 
@@ -114,7 +104,6 @@ export default {
     },
     async getData() {
       this.getList();
-      this.getRadarData();
       this.getWaterQualityNum();
     },
     async getList() {
@@ -124,8 +113,8 @@ export default {
       // zd	浊度
       // yl	余氯
 
-      let [err,res] = await getWaterUsage();
-      if( err ) return;
+      let [err, res] = await getWaterUsage();
+      if (err) return;
       // let res = {
       //   result: "true",
       //   data: {
@@ -141,132 +130,30 @@ export default {
       this.dataList = [data.ljll1, data.yl, data.zd, data.p5, data.ssll1];
       this.dataList.splice();
     },
-    async getRadarData() {
-      let [err,res] = await getWaterQuality();
-      if( err ) return;
-      // let res = {
-      //   result: "true",
-      //   data: [
-      //     {
-      //       waterQualityNum: 100,
-      //       waterQualityType: "1",
-      //       waterQualityActualNum: 200,
-      //     },
-      //     {
-      //       waterQualityNum: 100,
-      //       waterQualityType: "2",
-      //       waterQualityActualNum: 200,
-      //     },
-      //     {
-      //       waterQualityNum: 100,
-      //       waterQualityType: "3",
-      //       waterQualityActualNum: 200,
-      //     },
-      //     {
-      //       waterQualityNum: 100,
-      //       waterQualityType: "4",
-      //       waterQualityActualNum: 200,
-      //     },
-      //     {
-      //       waterQualityNum: 100,
-      //       waterQualityType: "5",
-      //       waterQualityActualNum: 0,
-      //     },
-      //   ],
-      //   message: "请求成功",
-      // };
-      let data = res.data;
-      let {targetChartsData,nowChartsData,targetArr,nowArr,radarIndicator} = this.getRadarChartsData(data);
-
-        
-      //新增
-      //获取数组最大值
-      let maxNum = Math.max(...nowChartsData);
-      if( maxNum < 100 ) {
-          maxNum = 100;
-      }
-      radarIndicator.forEach(item => {
-          item.max = maxNum + 20
-      })
-
-      this.targetArr = targetArr;
-      this.nowArr = nowArr;
-      this.radarIndicator = radarIndicator;
-      this.radarIndicator.splice();
-      this.option.series[0].data[0].value = targetChartsData;
-      this.option.series[0].data[1].value = nowChartsData;
-      this.option.radar.indicator = radarIndicator;
-      this.myChart.setOption(this.option);
-    },
     async getWaterQualityNum() {
-      let [err,res] = await getWaterQualityNum();
-      if( err ) return;
-      if( !res ) return;
+      let [err, res] = await getWaterQualityNum();
+      if (err) return;
+      if (!res) return;
       this.waterQualityNum = res.data;
-    },
-    getRadarChartsData(data) {
-        let targetChartsData = [];//echarts指标值
-        let nowChartsData = [];//echarts实际值
-        let radarIndicator = [];
-        let targetArr = [];
-        let nowArr = [];
-        data.forEach(item => {
-            radarIndicator.push({
-                name: this.nameList[item.waterQualityType],
-                color: this.colorList[item.waterQualityType],
-                min: 0,
-            })
-            targetArr.push(item.waterQualityNum);
-            nowArr.push(item.waterQualityActualNum);
-            let num;
-            if( item.waterQualityNum == 0 ) {
-              num = item.waterQualityActualNum + 100;
-            }else {
-              if( item.waterQualityActualNum < 0 ) {
-                let a = (Math.round((Math.abs(item.waterQualityActualNum)/Math.abs(item.waterQualityNum)) * 1000) / 1000) * 100;
-                if( a > 100 ) {
-                  num = 0;
-                }else {
-                  num = 100 -a;
-                }
-              }else {
-                if(item.waterQualityNum < 0 ) {
-                  let a = Math.abs(item.waterQualityActualNum)
-                  let b = Math.abs(item.waterQualityNum)
-                  num = (Math.round(((a + b)/b) * 1000) / 1000) * 100;
-                }else {
-                  num = (Math.round((item.waterQualityActualNum/item.waterQualityNum) * 1000) / 1000) * 100;
-                }
-              }
-            }
-            targetChartsData.push(100);
-            nowChartsData.push(num);
-        });
-        return {targetChartsData,nowChartsData,targetArr,nowArr,radarIndicator};
     },
     drawLine() {
       this.option = {
         color: ["#385CA5", "RGBA(189, 26, 26, 1)"],
         legend: {
-            data: ["指标值", "实际值"],
-            orient: "vertical",
-            selectedMode:false,
-            // icon: "circle",
-            // left: "10%",
-            // top: "6%",
-            right:0,
-            top:0,
-            itemWidth: 10,
-            itemHeight: 10,
-            // itemGap: 24,
-            textStyle: {
-                color: "#fff",
-                fontSize: 12,
-            },
-            // show:false
+          orient: "vertical",
+          selectedMode: false,
+          right: 0,
+          top: 0,
+          itemWidth: 10,
+          itemHeight: 10,
+          // itemGap: 24,
+          textStyle: {
+            color: "#fff",
+            fontSize: 12,
+          },
         },
         grid: {
-          top: "20%",
+          top: "2%",
           left: "2%",
           right: "2%",
           bottom: "3%",
@@ -278,83 +165,64 @@ export default {
               fontSize: 12,
             },
           },
-          shape: "polygon",
+          // shape: "polygon",
           center: ["50%", "50%"],
-          radius: "80%",
-          // scale: true,
-          indicator: [
-            {
-              name: "今日进水",
-              // max: 500,
-              color: "#F3F78A",
-            },
-            {
-              name: "平均余氯",
-              // max: 500,
-              color: "#478DF7",
-            },
-            {
-              name: "平均浊度",
-              // max: 500,
-              color: "#0CA7A1",
-            },
-            {
-              name: "平均压力",
-              // max: 500,
-              color: "#4BDCFF",
-            },
-            {
-              name: "瞬时流量",
-              // max: 500,
-              color: "#00A4E6",
-            },
-          ],
+          radius: "70%",
+          startAngle: 90,
+          splitNumber: 4,
+          shape: "circle",
           splitArea: {
+            areaStyle: {
+              color: ["transparent"],
+            },
+          },
+          axisLabel: {
             show: false,
+            fontSize: 18,
+            color: "#fff",
+            fontStyle: "normal",
+            fontWeight: "normal",
           },
           axisLine: {
+            show: true,
             lineStyle: {
-              color: "rgb(16,186,253)",
+              color: "#04598F", //
             },
           },
           splitLine: {
             show: true,
             lineStyle: {
-              width: 1,
-              color: "rgb(16,186,253)",
+              color: "#04598F", //
             },
           },
+          indicator: [
+            {
+              name: "今日出水",
+              max: 100,
+              color: "#F3F78A",
+            },
+            {
+              name: "平均余氯",
+              max: 100,
+              color: "#478DF7",
+            },
+            {
+              name: "平均浊度",
+              max: 100,
+              color: "#0CA7A1",
+            },
+            {
+              name: "平均压力",
+              max: 100,
+              color: "#4BDCFF",
+            },
+            {
+              name: "瞬时流量",
+              max: 100,
+              color: "#00A4E6",
+            }
+          ],
         },
-        // polar: {},
-        // angleAxis: {
-        //   min: 0,
-        //   max: 100,
-        //   interval: 100,
-        //   clockwise: false,
-        //   axisTick: {
-        //     show: false,
-        //   },
-        //   axisLabel: {
-        //     show: false,
-        //   },
-        //   axisLine: {
-        //     show: false,
-        //   },
-        //   splitLine: {
-        //     show: false,
-        //   },
-        // },
-        // radiusAxis: {
-        //   // min: 0,
-        //   // max: 500,
-        //   interval: 100,
-        //   splitLine: {
-        //     show: false,
-        //   },
-        //   axisLabel: {
-        //     color: "rgb(16,186,253)",
-        //   },
-        // },
         series: [
           {
             type: "radar",
@@ -369,52 +237,26 @@ export default {
               width: 0,
             },
             data: [
-              // {
-              //   value: [250, 180, 480, 410, 110],
-              // },
-              
-                            {
-                                value: [100, 90, 84],
-                                name: "指标值",
-                                itemStyle: {
-                                    normal: {
-                                        borderColor: "#5B8FF9",
-                                        borderWidth: 1,
-                                    },
-                                },
-                                lineStyle: {
-                                    normal: {
-                                        color: "#5B8FF9",
-                                        width: 2,
-                                    },
-                                },
-                                areaStyle: {
-                                    normal: {
-                                        color: "RGBA(91, 143, 249, .5)",
-                                    },
-                                },
-                            },
-                            {
-                                value: [56, 70, 100],
-                                name: "实际值",
-                                itemStyle: {
-                                    normal: {
-                                        borderColor: "#5AD2A5",
-                                        borderWidth: 1,
-                                    },
-                                },
-                                lineStyle: {
-                                    normal: {
-                                        color: "RGBA(189, 26, 26, 1)",
-                                        width: 2,
-                                    },
-                                },
-                                areaStyle: {
-                                    normal: {
-                                        color: "RGBA(205, 33, 33, .5)",
-                                    },
-                                },
-                            },
+              {
+                value: [100, 100, 100, 100, 100],
+                itemStyle: {
+                  normal: {
+                    borderColor: "#5B8FF9",
+                    borderWidth: 1,
+                  },
+                },
+                lineStyle: {
+                  normal: {
+                    color: "#5B8FF9",
+                    width: 2,
+                  },
+                },
+                areaStyle: {
+                  normal: {
+                    color: "RGBA(91, 143, 249, .5)",
+                  },
+                },
+              },
             ],
           },
         ],
@@ -423,23 +265,6 @@ export default {
       this.myChart = this.$echarts.init(
         document.getElementById("charts_waterUse")
       );
-      this.myChart.on('mouseover', (params)=> {
-          this.isShowDirection = true;
-          let event = params.event;
-          let offsetX = event.offsetX;
-          let offsetY = event.offsetY;
-          this.directionStyle = `left:${offsetX + 20 + 30 }px;top:${offsetY + 20}px;`
-      });
-      this.myChart.on('mousemove', (params)=> {
-          this.isShowDirection = true;
-          let event = params.event;
-          let offsetX = event.offsetX;
-          let offsetY = event.offsetY;
-          this.directionStyle = `left:${offsetX + 20 + 30 }px;top:${offsetY + 20}px;`
-      });
-      this.myChart.on('mouseout', ()=> {
-          this.isShowDirection = false;
-      });
       // 绘制图表
       this.myChart.setOption(this.option);
       window.addEventListener("resize", () => {
@@ -489,25 +314,6 @@ export default {
       height: 100%;
     }
   }
-  .direction-box {
-    position: absolute;
-    border-style: solid;
-    white-space: nowrap;
-    z-index: 9999999;
-    transition: left 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s, top 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s;
-    background-color: rgba(50, 50, 50, 0.7);
-    border-width: 0px;
-    border-color: rgb(51, 51, 51);
-    border-radius: 4px;
-    color: rgb(255, 255, 255);
-    font: 14px / 21px "Microsoft YaHei";
-    padding: 5px;
-    pointer-events: none;
-    display: flex;
-    .direction-center{
-      margin: 0 10px;
-    }
-  }
   .waterQualityNum {
     position: absolute;
     margin-left: 50px;
@@ -519,6 +325,24 @@ export default {
     align-items: center;
     justify-content: center;
     pointer-events: none;
+    p:nth-child(1) {
+      font-size: 35px;
+      color: #ffffff;
+      line-height: 50px;
+    }
+    p:nth-child(2) {
+      font-size: 16px;
+      color: #ffffff;
+      line-height: 21px;
+    }
+  }
+  .title {
+    position: absolute;
+    top: -27px;
+    left: 50%;
+    font-size: 18px;
+    color: #478df7;
+    line-height: 25px;
   }
 }
 li {

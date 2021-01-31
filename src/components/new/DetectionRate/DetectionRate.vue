@@ -37,11 +37,6 @@ export default {
                     id: 0,
                 },
                 {
-                    title: "东区南水塔",
-                    value: 83,
-                    id: 1
-                },
-                {
                     title: "东区新北泵站",
                     value: 90,
                     id: 2

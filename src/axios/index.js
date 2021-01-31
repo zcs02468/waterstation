@@ -9,15 +9,16 @@ export const getQrCode = async () => await get({url:"/smartEnergy/weixin/qrCode"
 //查询登录状态
 export const getToken = async (params) => await get({url:"/smartEnergy/weixin/findLoginToken", params});
 
-//今日值班http://10.23.1.168:8980/smartEnergy/todayWaterDuty
+//今日值班
 export const getTodayWaterDuy = async () => await get({ url: baseUrl + "/smartEnergy/todayWaterDuty" });
 
 //供水检测率接口
-// export const getDetectionRate = async () => await get({ url: baseUrl + "/smartEnergy/detectionrate" });
-export const getDetectionRate = async () => await get({ url: baseUrl + "/smartEnergy/waterDetectionrate" });
+export const getDetectionRate = async () => await get({ url: baseUrl + "/smartEnergy/detectionrate" });
+// export const getDetectionRate = async () => await get({ url: baseUrl + "/smartEnergy/waterDetectionrate" });
 
 //供水检测率趋势
 export const getWaterTendency = async () => await get({ url: baseUrl + "/smartEnergy/waterTendency" });
+// export const getWaterTendency = async () => await get({ url: 'http://218.242.28.28:800/smartEnergy/waterTendency' });
 
 //用水情况
 export const getWaterUsage = async () => await get({ url: baseUrl + "/smartEnergy/waterUsage" });
@@ -48,6 +49,7 @@ export const getWaterVolume = async () => await get({ url: baseUrl + "/smartEner
 
 //用户累计用水量接口
 export const getWaterConsumption = async () => await get({ url: baseUrl + "/smartEnergy/waterConsumption" });
+// export const getWaterConsumption = async () => await get({ url: 'http://218.242.28.28:800/smartEnergy/waterConsumption'});
 
 //应急物资接口 
 export const getEmergencyInfo = async () => await get({ url: baseUrl + "/smartEnergy/emergencyInfo" });

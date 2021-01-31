@@ -36,170 +36,18 @@ export default {
         async getData() {
             
             let [err,res] = await getWaterTendency();
+            console.log( 'res', res );
             if( err ) return;
-//             let res = {
-// "result": "true",
-// "data": {
-// "western": [
-// {
-// "regionname": "西区",
-// "percentage": "4639.68%",
-// "waterDate": "12.22"
-// },
-// {
-// "regionname": "西区",
-// "percentage": "1885708.72%",
-// "waterDate": "12.21"
-// },
-// {
-// "regionname": "西区",
-// "percentage": "-126279.79%",
-// "waterDate": "12.20"
-// },
-// {
-// "regionname": "西区",
-// "percentage": "1617281.90%",
-// "waterDate": "12.19"
-// },
-// {
-// "regionname": "西区",
-// "percentage": "1464827.98%",
-// "waterDate": "12.18"
-// },
-// {
-// "regionname": "西区",
-// "percentage": "4143.36%",
-// "waterDate": "12.17"
-// },
-// {
-// "regionname": "西区",
-// "percentage": "1643680.23%",
-// "waterDate": "12.15"
-// },
-// {
-// "regionname": "西区",
-// "percentage": "1915677.04%",
-// "waterDate": "12.14"
-// },
-// {
-// "regionname": "西区",
-// "percentage": "4597.22%",
-// "waterDate": "12.13"
-// },
-// {
-// "regionname": "西区",
-// "percentage": "4089.35%",
-// "waterDate": "12.12"
-// },
-// {
-// "regionname": "西区",
-// "percentage": "5112.42%",
-// "waterDate": "12.11"
-// },
-// {
-// "regionname": "西区",
-// "percentage": "4755.13%",
-// "waterDate": "12.10"
-// },
-// {
-// "regionname": "西区",
-// "percentage": "59880000.00%",
-// "waterDate": "12.08"
-// },
-// {
-// "regionname": "西区",
-// "percentage": "21700000.00%",
-// "waterDate": "12.07"
-// },
-// {
-// "regionname": "西区",
-// "percentage": "16780000.00%",
-// "waterDate": "12.06"
-// },
-// {
-// "regionname": "西区",
-// "percentage": "17470000.00%",
-// "waterDate": "12.05"
-// },
-// {
-// "regionname": "西区",
-// "percentage": "7298370000.00%",
-// "waterDate": "12.04"
-// },
-// {
-// "regionname": "西区",
-// "percentage": "24290000.00%",
-// "waterDate": "12.03"
-// },
-// {
-// "regionname": "西区",
-// "percentage": "4353.43%",
-// "waterDate": "12.01"
-// },
-// {
-// "regionname": "西区",
-// "percentage": "4615.38%",
-// "waterDate": "11.30"
-// },
-// {
-// "regionname": "西区",
-// "percentage": "3559.45%",
-// "waterDate": "11.29"
-// },
-// {
-// "regionname": "西区",
-// "percentage": "4215.93%",
-// "waterDate": "11.28"
-// },
-// {
-// "regionname": "西区",
-// "percentage": "4557.88%",
-// "waterDate": "11.27"
-// },
-// {
-// "regionname": "西区",
-// "percentage": "1818553.78%",
-// "waterDate": "11.26"
-// },
-// {
-// "regionname": "西区",
-// "percentage": "5197.10%",
-// "waterDate": "11.24"
-// },
-// {
-// "regionname": "西区",
-// "percentage": "5169.84%",
-// "waterDate": "11.23"
-// }
-// ],
-// "southeast": [],
-// "northeast": []
-// },
-// "message": "请求成功"
-// }
             let western = res.data.western;
-            let southeast = res.data.southeast;
+            // let southeast = res.data.southeast;
             let northeast = res.data.northeast;
             let westernData = this.filterData(western);
             let xAxis = westernData.xAxis;
             let westernY = westernData.yArr;
-            let southeastY = this.filterData(southeast).yArr;
+            // let southeastY = this.filterData(southeast).yArr;
             let northeastY = this.filterData(northeast).yArr;
-
-
-            // console.log( 'data', western);
-            // let xAxis = []
-            // let y1 = [], y2 = [], y3 = [];
-            // let arr = [1,2,3,4,5,6,7,8,9,10]
-            // arr.forEach(item => {
-            //     xAxis.push(`10.0${item*2}`)
-            //     let a = Math.floor(Math.random()*10)
-            //     y1.push(a*100)
-            //     y2.push(a*200)
-            //     y3.push(a*300)
-            // });
             let series = [
-                this.getSeriesData({data:southeastY, name:"东区南", colorIndex:'one'}),
+                // this.getSeriesData({data:southeastY, name:"东区南", colorIndex:'one'}),
                 this.getSeriesData({data:northeastY, name:"东区北", colorIndex:'two'}),
                 this.getSeriesData({data:westernY, name:"西区", colorIndex:'three'}),
             ]
@@ -210,7 +58,10 @@ export default {
         filterData(data) {
             let xAxis = [], yArr = [];
             data.forEach(item => {
-                item.percentage = item.percentage.substring(0,item.percentage.length-1)
+                let a = String(item.percentage)
+                if( a.indexOf("%") >= 0){
+                    item.percentage = item.percentage.substring(0,item.percentage.length-1)
+                }
                 xAxis.push(item.waterDate);
                 yArr.push(item.percentage);
             })
@@ -264,7 +115,7 @@ export default {
                 },
                 lineStyle: {
                     normal: {
-                        width: 1,
+                        width: 2,
                         color: {
                             type: "linear",
 
@@ -296,7 +147,7 @@ export default {
                     show: true,
                     icon: "rect",
                     top: "4%",
-                    left: "56%",
+                    right: '4%',
                     itemWidth: 26,
                     itemHeight: 15,
                     itemGap: 24,
