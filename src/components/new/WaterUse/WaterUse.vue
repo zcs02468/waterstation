@@ -197,27 +197,27 @@ export default {
           },
           indicator: [
             {
-              name: "今日出水",
+              name: "浊度",
               max: 100,
               color: "#F3F78A",
             },
             {
-              name: "平均余氯",
+              name: "余氯",
               max: 100,
               color: "#478DF7",
             },
             {
-              name: "平均浊度",
+              name: "细菌总数",
               max: 100,
               color: "#0CA7A1",
             },
             {
-              name: "平均压力",
+              name: "大肠杆菌",
               max: 100,
               color: "#4BDCFF",
             },
             {
-              name: "瞬时流量",
+              name: "高锰酸盐",
               max: 100,
               color: "#00A4E6",
             }
