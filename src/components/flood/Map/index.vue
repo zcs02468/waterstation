@@ -251,7 +251,7 @@ export default {
                 this.eaBMap.enableScrollWheelZoom();
                 // 初始化地图，设置中心点坐标和地图级别
                 this.eaBMap.setMapStyleV2({
-                    styleId: "b670429936d6b760f493c0af69582f6c",
+                    styleId: "beda1b53ef0b60c06200da39068b025e",
                 });
             }
             // 编写自定义函数,创建标注
@@ -311,7 +311,7 @@ export default {
                 this.emBMap.enableScrollWheelZoom();
                 // 初始化地图，设置中心点坐标和地图级别
                 this.emBMap.setMapStyleV2({
-                    styleId: "b670429936d6b760f493c0af69582f6c",
+                    styleId: "beda1b53ef0b60c06200da39068b025e",
                 });
             }
             // 编写自定义函数,创建标注
