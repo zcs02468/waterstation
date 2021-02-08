@@ -57,33 +57,8 @@ export default {
             this.getData();
         },
         async getData() {
-            //parseFloat("0.3335%")
             let [err,res] = await getDetectionRate();
             if( err ) return;
-            // let res = {
-            //     result: "true",
-            //     data: [
-            //         {
-            //             dailyDose: 0,
-            //             regionname: "西区",
-            //             waterSupply: 0,
-            //             percentage: "00.00%",
-            //         },
-            //         {
-            //             dailyDose: 0,
-            //             regionname: "东区南",
-            //             waterSupply: 0,
-            //             percentage: "80.00%",
-            //         },
-            //         {
-            //             dailyDose: 0,
-            //             regionname: "东区北",
-            //             waterSupply: 0,
-            //             percentage: "50.00%",
-            //         },
-            //     ],
-            //     message: "请求成功",
-            // };
             res.data.forEach(item => {
                 if( item.regionname == '西区' ){
                     this.list[0].value = parseFloat(item.percentage);

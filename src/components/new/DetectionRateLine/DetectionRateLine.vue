@@ -13,7 +13,6 @@
 
 <script>
 import Title from "@/components/common/Title";
-// import Container from "./Container";
 import comMinxins from "@/components/common/comMinxins";
 import { getWaterTendency } from "@/axios/index";
 export default {

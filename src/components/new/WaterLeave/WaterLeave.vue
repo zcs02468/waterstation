@@ -4,11 +4,6 @@
         <div class="panel-header">
             <Title title="蓄水池水位" />
         </div>
-        
-                        <!-- poolDown: item.poolDown,
-                        poolUp: item.poolUp,
-                        poolHighest: Math.ceil(item.poolHighest),
-                        waterLevel: item.waterLevel, -->
         <div class="content-box">
             <div class="left-content" v-for="(item,index) in list" :key="item.title">
                 <div class="top-title" :class="`top_title${index+1}`">{{item.title}}</div>
@@ -20,57 +15,6 @@
                     <div class="title">{{attr.title}}</div>
                 </div>
             </div>
-            <!-- <div class="left-content">
-                <div class="top-title top_title1">东区南</div>
-                <div class="single-box">
-                    <div class="container-box">
-                        <Rule :oneH="1.5" :twoH="3" :count="4" />
-                        <Box :type="0" />
-                    </div>
-                    <div class="title">东区南水塔1#</div>
-                </div>
-                <div class="single-box">
-                    <div class="container-box">
-                        <Rule :oneH="1.5" :twoH="3" :count="4" />
-                        <Box :type="0" />
-                    </div>
-                    <div class="title">东区南水塔2#</div>
-                </div>
-            </div>
-            <div class="left-content">
-                <div class="top-title top_title2">东区北</div>
-                <div class="single-box">
-                    <div class="container-box">
-                        <Rule :oneH="3" :twoH="5.45" :count="7" />
-                        <Box :type="1" />
-                    </div>
-                    <div class="title">东区新北泵站1#</div>
-                </div>
-                <div class="single-box">
-                    <div class="container-box">
-                        <Rule :oneH="3" :twoH="5.45" :count="7" />
-                        <Box :type="1" />
-                    </div>
-                    <div class="title">东区新北泵站2#</div>
-                </div>
-            </div>
-            <div class="left-content">
-                <div class="top-title top_title3">西区</div>
-                <div class="single-box">
-                    <div class="container-box">
-                        <Rule :oneH="1.2" :twoH="3" :count="4" />
-                        <Box :type="2" />
-                    </div>
-                    <div class="title">西区南水泵站1#</div>
-                </div>
-                <div class="single-box">
-                    <div class="container-box">
-                        <Rule :oneH="1.2" :twoH="3" :count="4" />
-                        <Box :type="2" />
-                    </div>
-                    <div class="title">西区南水泵站2#</div>
-                </div>
-            </div> -->
         </div>
     </div>
 </template>
@@ -170,54 +114,6 @@ export default {
         async getData() {
             let [err,res] = await getReservoirLevel();
             if( err ) return;
-            // let res = {
-            //     result: "true",
-            //     data: [
-            //         {
-            //             waterLevel: 1.926,
-            //             poolName: "西区南泵站1#",
-            //             poolUp: 3,
-            //             poolDown: 1.2,
-            //             poolHighest: 4,
-            //         },
-            //         {
-            //             waterLevel: 2.0185,
-            //             poolName: "西区南泵站2#",
-            //             poolUp: 3,
-            //             poolDown: 1.2,
-            //             poolHighest: 4,
-            //         },
-            //         {
-            //             waterLevel: 0,
-            //             poolName: "东区南水塔1#",
-            //             poolUp: 3,
-            //             poolDown: 1.5,
-            //             poolHighest: 3.48,
-            //         },
-            //         {
-            //             waterLevel: 0,
-            //             poolName: "东区南水塔2#",
-            //             poolUp: 3,
-            //             poolDown: 1.5,
-            //             poolHighest: 3.9,
-            //         },
-            //         {
-            //             waterLevel: 2.1,
-            //             poolName: "东区新北泵站1#",
-            //             poolUp: 5.45,
-            //             poolDown: 3,
-            //             poolHighest: 6.5,
-            //         },
-            //         {
-            //             waterLevel: 2,
-            //             poolName: "东区新北泵站2#",
-            //             poolUp: 5.45,
-            //             poolDown: 3,
-            //             poolHighest: 6.5,
-            //         },
-            //     ],
-            //     message: "获取蓄水池成功",
-            // };
             let data = res.data;
             let list = [
                 {
@@ -296,7 +192,6 @@ export default {
 }
 
 .panel-header {
-    // padding: 22px 0 0 23px;
     padding: 16px 0 0 23px;
 }
 .content-box {
@@ -311,7 +206,6 @@ export default {
     align-items: center;
 }
 .single-box {
-    // margin-top: 26px;
     margin-top: 40px;
 }
 .container-box {

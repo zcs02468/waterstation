@@ -47,34 +47,6 @@
                     }}{{ weatherData.sq2.unit }}</span
                 >
             </div>
-            <!-- <div class="block">
-                <span class="iconfont iconkongqizhiliang1"></span>
-                <span class="text">{{weatherData.aqi_level_name}}</span>
-            </div> -->
-            <!-- <div class="block">
-                <span class="iconfont iconshidu"></span>
-                <span class="text">40%</span>
-            </div>
-            <div class="block center">
-                <span class="iconfont iconwendu2x"></span>
-                <span class="text">20&#8451;-26&#8451;</span>
-            </div>
-            <div class="block">
-                <span class="iconfont iconkongqizhiliang1"></span>
-                <span class="text">良好</span>
-            </div>
-            <div class="block">
-                <span class="iconfont iconfengsufengxiang"></span>
-                <span class="text">东北风二级</span>
-            </div>
-            <div class="block center">
-                <span class="iconfont iconyanjing"></span>
-                <span class="text">1000m</span>
-            </div>
-            <div class="block">
-                <span class="iconfont iconqitalei_ziranzaihai"></span>
-                <span class="text">低</span>
-            </div> -->
         </div>
     </div>
 </template>

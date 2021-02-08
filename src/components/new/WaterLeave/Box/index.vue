@@ -15,15 +15,6 @@
 </template>
 
 <script>
-    //1
-    // background-image: linear-gradient(to left, #0441c2 0%, #549dfe 100%);
-    // background-image: linear-gradient(to bottom, #0441c2 0%, #549dfe 100%);
-    // 2
-    // background-image: linear-gradient(to left, #0497C6 0%, #549dfe 100%);
-    // background-image: linear-gradient(to bottom, #4CCCF5 0%, #4CCCF5 100%);
-    // 3
-    // background-image: linear-gradient(to left, #087A85 0%, #0CA7A1 100%);
-    // background-image: linear-gradient(to bottom, #1DA3B0 0%,#1DA3B0 100%);
 const InsideCyinderStyle = ['linear-gradient(to left, #0441c2 0%, #549dfe 100%)','linear-gradient(to left, #0497C6 0%, #549dfe 100%)','linear-gradient(to left, #087A85 0%, #0CA7A1 100%)']
 const insideTopStyle = ['linear-gradient(to bottom, #0441c2 0%, #549dfe 100%)','linear-gradient(to bottom, #4CCCF5 0%, #4CCCF5 100%)','linear-gradient(to bottom, #1DA3B0 0%,#1DA3B0 100%)']
 export default {

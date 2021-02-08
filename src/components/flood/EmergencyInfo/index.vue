@@ -62,9 +62,6 @@ export default {
             } catch (error) {
                 console.error('error', error)
             }
-            // setTimeout(()=> {
-            //     this.getData();
-            // },60000)
         }
     
     },

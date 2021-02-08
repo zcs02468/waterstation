@@ -115,17 +115,6 @@ export default {
 
       let [err, res] = await getWaterUsage();
       if (err) return;
-      // let res = {
-      //   result: "true",
-      //   data: {
-      //     ljll1: 51561,
-      //     ssll1: 1.3,
-      //     p5: 4.658,
-      //     zd: 0.185,
-      //     yl: 0.0509,
-      //   },
-      //   message: "请求成功",
-      // };
       let data = res.data;
       this.dataList = [data.ljll1, data.yl, data.zd, data.p5, data.ssll1];
       this.dataList.splice();
