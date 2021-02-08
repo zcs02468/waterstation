@@ -149,45 +149,6 @@ export default {
         async getData() {
             let [err,res] = await getWeather();
             if( err ) return;
-            // let res = {
-            //     result: "true",
-            //     data: [
-            //         {
-            //             monitoringFactor: "湿度",
-            //             factorCoding: "a01002",
-            //             factorValue: 95.15361,
-            //             factorUnit: "mg/l",
-            //         },
-            //         {
-            //             monitoringFactor: "风速",
-            //             factorCoding: "a01007",
-            //             factorValue: 1.03294,
-            //             factorUnit: "m/s",
-            //         },
-            //         {
-            //             monitoringFactor: "PM10",
-            //             factorCoding: "a34002",
-            //             factorValue: 0.0262,
-            //             factorUnit: "mg/m³",
-            //         },
-            //         {
-            //             monitoringFactor: "温度",
-            //             factorCoding: "a01001",
-            //             factorValue: 23.10029,
-            //             factorUnit: "℃",
-            //         },
-            //         {
-            //             monitoringFactor: "PM2.5",
-            //             factorCoding: "a34004",
-            //             factorValue: 0.0199,
-            //             factorUnit: "mg/m³",
-            //         },
-            //     ],
-            //     message: "请求成功",
-            // };
-            
-            // console.log("11111111111111", res);
-            // let data = JSON.parse(res.message);
             let data = res.data;
             data.forEach(item => {
                 let key = this.codingList[item.factorCoding]

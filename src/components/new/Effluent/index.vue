@@ -58,23 +58,112 @@ export default {
       let arr1 = ["末端用户用水量", "泵站瞬时流量"];
       let seriesArr = [];
       arr1.forEach((item, index) => {
-        seriesArr.push(this.getSerierData(item, this.effluentFlow[index]));
+        seriesArr.push(this.getSerierData(item, this.effluentFlow[index],index));
       });
       this.option.series = seriesArr;
       this.myChart.setOption(this.option);
     },
-    getSerierData(item, value) {
-      return {
-        smooth: true,
-        name: item,
-        type: "line",
-        symbolSize: 0,
-        areaStyle: {
-          opacity: 0.2,
-        },
-        lineStyle: {},
-        data: value,
-      };
+    getSerierData(item, value,index) {
+      if(index == 0) {
+        return {
+          smooth: true,
+          name: item,
+          type: "line",
+          symbolSize: 0,
+          data: value,
+            areaStyle: {
+              normal: {
+                color: new this.$echarts.graphic.LinearGradient(
+                  0,
+                  0,
+                  0,
+                  1,
+                  [
+                    {
+                      offset: 0,
+                      color: "rgba(253, 0, 0, 0.6)",
+                    },
+                    {
+                      offset: 1,
+                      color: "rgba(253, 0, 0, 0)",
+                    },
+                  ],
+                  false
+                ),
+              },
+            },
+            lineStyle: {
+              normal: {
+                width: 3,
+                color: {
+                  type: "linear",
+
+                  colorStops: [
+                    {
+                      offset: 0,
+                      color: "#FF0D23", // 0% 处的颜色
+                    },
+                    {
+                      offset: 1,
+                      color: "#FF8A8A", // 100% 处的颜色
+                    },
+                  ],
+                  globalCoord: false, // 缺省为 false
+                },
+              },
+            },
+        }
+      }else {
+        
+        return {
+          smooth: true,
+          name: item,
+          type: "line",
+          symbolSize: 0,
+          data: value,
+          areaStyle: {
+            normal: {
+              color: new this.$echarts.graphic.LinearGradient(
+                0,
+                0,
+                0,
+                1,
+                [
+                  {
+                    offset: 0,
+                    color: "rgba(90, 216, 166, 0.6)",
+                  },
+                  {
+                    offset: 1,
+                    color: "rgba(90, 216, 166, 0)",
+                  },
+                ],
+                false
+              ),
+            },
+          },
+          lineStyle: {
+            normal: {
+              width: 3,
+              color: {
+                type: "linear",
+
+                colorStops: [
+                  {
+                    offset: 0,
+                    color: "#0782F8", // 0% 处的颜色
+                  },
+                  {
+                    offset: 1,
+                    color: "#E3EA33", // 100% 处的颜色
+                  },
+                ],
+                globalCoord: false, // 缺省为 false
+              },
+            },
+          },
+        }
+      }
     },
     drawLine() {
       this.option = {

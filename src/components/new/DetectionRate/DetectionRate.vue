@@ -89,13 +89,9 @@ export default {
                     this.list[0].value = parseFloat(item.percentage);
                     this.list[0].id = Number(Math.random().toString().substr(3,5) + Date.now()).toString(36)
                 }
-                if( item.regionname == '东区南' ){
+                if( item.regionname == '东区北' ){
                     this.list[1].value = parseFloat(item.percentage);
                     this.list[1].id = Number(Math.random().toString().substr(3,5) + Date.now()).toString(36)
-                }
-                if( item.regionname == '东区北' ){
-                    this.list[2].value = parseFloat(item.percentage);
-                    this.list[2].id = Number(Math.random().toString().substr(3,5) + Date.now()).toString(36)
                 }
             })
         },

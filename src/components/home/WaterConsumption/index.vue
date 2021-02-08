@@ -81,7 +81,6 @@ export default {
                 let [err,res] = await getWaterConsumption();
                 if(err) return;
                 let data = JSON.parse(res.message);
-                console.log( 'data', data );
                 Object.assign(this.consumptionArr, data);
                 // dayTotalWater，weekTotalWater，monthTotalWater
                 this.consumptionArr[0].sum = data.expLevel;

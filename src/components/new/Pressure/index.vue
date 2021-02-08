@@ -45,8 +45,7 @@ export default {
     async getData() {
       let [err, res] = await getWaterPressure();
       if (err) return;
-      let data = res.data.reverse();
-      // data = res.data.reverse();
+      let data = res.data;
       let arr = [];
       let arr0 = [],
         arr1 = [],
@@ -64,7 +63,6 @@ export default {
       });
       this.allData = arr;
       this.allData.splice();
-      console.log("alldata", this.allData);
 
       this.option.xAxis[0].data = xAxisData;
       this.option.series[0].data = arr0;
@@ -85,8 +83,8 @@ export default {
             for (let i = 0; i < param.length; i++) {
               let seriesName = param[i].seriesName;
               let time = "";
-              i == 0 && (time = _this.allData[i].userDate);
-              i == 1 && (time = _this.allData[i].effluentDate);
+              i == 0 && (time = _this.allData[param[i].dataIndex].userDate);
+              i == 1 && (time = _this.allData[param[i].dataIndex].effluentDate);
               str += ` 
                 <div>
                     <span style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:${param[i].color};"></span>

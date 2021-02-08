@@ -36,7 +36,6 @@ export default {
         async getData() {
             
             let [err,res] = await getWaterTendency();
-            console.log( 'res', res );
             if( err ) return;
             let western = res.data.western;
             // let southeast = res.data.southeast;
