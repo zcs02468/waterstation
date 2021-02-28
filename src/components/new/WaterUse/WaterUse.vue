@@ -115,17 +115,6 @@ export default {
 
       let [err, res] = await getWaterUsage();
       if (err) return;
-      // let res = {
-      //   result: "true",
-      //   data: {
-      //     ljll1: 51561,
-      //     ssll1: 1.3,
-      //     p5: 4.658,
-      //     zd: 0.185,
-      //     yl: 0.0509,
-      //   },
-      //   message: "请求成功",
-      // };
       let data = res.data;
       this.dataList = [data.ljll1, data.yl, data.zd, data.p5, data.ssll1];
       this.dataList.splice();
@@ -197,27 +186,27 @@ export default {
           },
           indicator: [
             {
-              name: "今日出水",
+              name: "浊度",
               max: 100,
               color: "#F3F78A",
             },
             {
-              name: "平均余氯",
+              name: "余氯",
               max: 100,
               color: "#478DF7",
             },
             {
-              name: "平均浊度",
+              name: "细菌总数",
               max: 100,
               color: "#0CA7A1",
             },
             {
-              name: "平均压力",
+              name: "大肠杆菌",
               max: 100,
               color: "#4BDCFF",
             },
             {
-              name: "瞬时流量",
+              name: "高锰酸盐",
               max: 100,
               color: "#00A4E6",
             }

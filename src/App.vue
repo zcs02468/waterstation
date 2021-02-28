@@ -25,9 +25,6 @@ export default {
   },
   mounted() {
     this.setAllTime();
-    // setTimeout(()=> {
-    //   console.log( 'thiasdfasdfasdf', this.$store.state.aaa );
-    // },5000)
   },
   computed: {
     ...mapState({
@@ -35,11 +32,6 @@ export default {
     }),
     key() {
       return this.$route.name !== undefined? this.$route.name +new Date(): this.$route +new Date()
-    }
-  },
-  watch:{
-    isShowLogin(value) {
-      // console.log( 'value', value );
     }
   }
 };

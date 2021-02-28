@@ -28,7 +28,6 @@ export default {
     },
 
     created() {
-        // setTimeout(this.showLeftTime, 1000 * 60)
         this.showLeftTime();
     },
 

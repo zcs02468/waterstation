@@ -4,8 +4,6 @@
         <div class="content">
             <span class="iconfont icondianhua"></span>
             <span class="text">
-                <!-- <span>22369831</span>
-                <span>22369800</span> -->
                 <span v-for="item in phoneArr" :key="item">{{ item }}</span>
             </span>
             <div class="icon-box">

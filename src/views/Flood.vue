@@ -12,12 +12,8 @@
             <div class="main-box">
                 <div class="colum">
                     <OnDuty />
-                    <!-- <Weather v-if="!show" /> -->
-                    
                     <WeatherPlus/>
                     <Rainfall v-if="!show" />
-                    <!-- <Hydrops v-if="!show" /> -->
-                    <!-- <WeatherPlus  v-if="show" /> -->
                     <WaterQuality v-if="show" />
                 </div>
                 <div class="colum center">
@@ -29,7 +25,6 @@
                     <Drainage />
                 </div>
             </div>
-            <!-- 警报声音  http://data.huiyi8.com/2017/gha/03/17/1702.mp3 -->
             <audio id="eventAudio" src=""></audio>
         </div>
     </div>
@@ -109,7 +104,6 @@ export default {
         async getAlarm() {
             let [err,res] = await getAlarm();
             if( err ) return;
-            // let res = {"result":"true","message":"{\"waterIsAlarm\":\"0\",\"rainfallIsAlarm\":\"0\",\"waiweiIsAlarm\":\"0\",\"weichangIsAlarm\":\"0\",\"balancingIsAlarm\":\"0\"}"}
             let data = JSON.parse(res.message);
             // waterIsAlarm	积水声音报警	String	1：报警；0：不报警
             // rainfallIsAlarm	雨量声音报警 	String	1：报警；0：不报警

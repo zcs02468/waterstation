@@ -39,9 +39,6 @@ export default {
             let data = JSON.parse(res.message);
             this.platformClass = data.platformClass;
             this.charageClass = data.charageClass;
-            // setTimeout(()=> {
-            //     this.getData()
-            // },60000)
         }
     },
 

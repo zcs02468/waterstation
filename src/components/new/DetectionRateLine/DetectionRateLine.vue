@@ -13,7 +13,6 @@
 
 <script>
 import Title from "@/components/common/Title";
-// import Container from "./Container";
 import comMinxins from "@/components/common/comMinxins";
 import { getWaterTendency } from "@/axios/index";
 export default {
@@ -36,7 +35,6 @@ export default {
         async getData() {
             
             let [err,res] = await getWaterTendency();
-            console.log( 'res', res );
             if( err ) return;
             let western = res.data.western;
             // let southeast = res.data.southeast;
@@ -48,8 +46,8 @@ export default {
             let northeastY = this.filterData(northeast).yArr;
             let series = [
                 // this.getSeriesData({data:southeastY, name:"东区南", colorIndex:'one'}),
-                this.getSeriesData({data:northeastY, name:"东区北", colorIndex:'two'}),
-                this.getSeriesData({data:westernY, name:"西区", colorIndex:'three'}),
+                this.getSeriesData({data:northeastY, name:"东区北", colorIndex:'three'}),
+                this.getSeriesData({data:westernY, name:"西区", colorIndex:'two'}),
             ]
             this.option.xAxis[0].data = xAxis;
             this.option.series = series;

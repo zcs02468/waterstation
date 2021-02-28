@@ -3,12 +3,7 @@
         <div class="wrap" ref="editor">
             <div class="main-head">
                 <Header title="智慧水务供水监测" />
-                <!-- <div class="info">
-                    <Time />
-                    <Phone :phoneArr="['22369831', '22369800']" />
-                </div> -->
             </div>
-            <!-- <Header title="供水监测"/> -->
             <div class="main-box">
                 <div class="colum">
                     <DetectionRate />

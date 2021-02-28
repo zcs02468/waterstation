@@ -37,11 +37,12 @@ export const getReservoirLevel = async () => await get({ url: baseUrl + "/smartE
 //实时播报内容接口
 export const getBroadcastContent = async () => await get({ url: baseUrl + "/smartEnergy/broadcastContent" });
 
-//出水瞬时流量接口
-export const getEffluentFlow = async () => await get({ url: baseUrl + "/smartEnergy/effluentFlow" });
+// 用水趋势图
+export const getEffluentFlow = async () => await get({ url: baseUrl + "/smartEnergy/findWaterConsumptionTrend" });
 
 //进水/出水压力趋势接口
-export const getWaterPressure = async () => await get({ url: baseUrl + "/smartEnergy/waterPressure" });
+export const getWaterPressure = async () => await get({ url: baseUrl + "/smartEnergy/findMinimumFlow" });
+// export const getWaterPressure = async () => await get({ url: baseUrl + "/smartEnergy/waterPressure" });
 
 //泵站供水量接口
 export const getWaterVolume = async () => await get({ url: baseUrl + "/smartEnergy/waterVolume" });

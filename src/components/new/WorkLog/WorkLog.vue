@@ -25,7 +25,6 @@
 
 <script>
 import Title from "@/components/common/Title";
-// import Container from "./Container";
 import comMinxins from "@/components/common/comMinxins"
 import { getTodayWaterDuy } from "@/axios/index";
 export default {
@@ -49,36 +48,6 @@ export default {
         async getData() {
             let [err,res] = await getTodayWaterDuy();
             if( err ) return;
-            // let res = {
-            //     "result":"true",
-            //     "data":[
-            //         {
-            //             "dutyDate":"2020-11-29",
-            //             "dutyName":"老李",
-            //             "dutyPhone":"13554280987",
-            //             "pumpStation":"1"
-            //         },
-            //         {
-            //             "dutyDate":"2020-11-29",
-            //             "dutyName":"老李",
-            //             "dutyPhone":"13554280987",
-            //             "pumpStation":"1"
-            //         },
-            //         {
-            //             "dutyDate":"2020-11-29",
-            //             "dutyName":"老刘",
-            //             "dutyPhone":"13554289876",
-            //             "pumpStation":"2"
-            //         },
-            //         {
-            //             "dutyDate":"2020-11-29",
-            //             "dutyName":"老王",
-            //             "dutyPhone":"13554290987",
-            //             "pumpStation":"3"
-            //         }
-            //     ],
-            //     "message":"获取值班人员列表成功"
-            // }
             this.list = res.data;
             this.list.splice();
         },

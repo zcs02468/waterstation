@@ -47,34 +47,6 @@
                     }}{{ weatherData.sq2.unit }}</span
                 >
             </div>
-            <!-- <div class="block">
-                <span class="iconfont iconkongqizhiliang1"></span>
-                <span class="text">{{weatherData.aqi_level_name}}</span>
-            </div> -->
-            <!-- <div class="block">
-                <span class="iconfont iconshidu"></span>
-                <span class="text">40%</span>
-            </div>
-            <div class="block center">
-                <span class="iconfont iconwendu2x"></span>
-                <span class="text">20&#8451;-26&#8451;</span>
-            </div>
-            <div class="block">
-                <span class="iconfont iconkongqizhiliang1"></span>
-                <span class="text">良好</span>
-            </div>
-            <div class="block">
-                <span class="iconfont iconfengsufengxiang"></span>
-                <span class="text">东北风二级</span>
-            </div>
-            <div class="block center">
-                <span class="iconfont iconyanjing"></span>
-                <span class="text">1000m</span>
-            </div>
-            <div class="block">
-                <span class="iconfont iconqitalei_ziranzaihai"></span>
-                <span class="text">低</span>
-            </div> -->
         </div>
     </div>
 </template>
@@ -149,45 +121,6 @@ export default {
         async getData() {
             let [err,res] = await getWeather();
             if( err ) return;
-            // let res = {
-            //     result: "true",
-            //     data: [
-            //         {
-            //             monitoringFactor: "湿度",
-            //             factorCoding: "a01002",
-            //             factorValue: 95.15361,
-            //             factorUnit: "mg/l",
-            //         },
-            //         {
-            //             monitoringFactor: "风速",
-            //             factorCoding: "a01007",
-            //             factorValue: 1.03294,
-            //             factorUnit: "m/s",
-            //         },
-            //         {
-            //             monitoringFactor: "PM10",
-            //             factorCoding: "a34002",
-            //             factorValue: 0.0262,
-            //             factorUnit: "mg/m³",
-            //         },
-            //         {
-            //             monitoringFactor: "温度",
-            //             factorCoding: "a01001",
-            //             factorValue: 23.10029,
-            //             factorUnit: "℃",
-            //         },
-            //         {
-            //             monitoringFactor: "PM2.5",
-            //             factorCoding: "a34004",
-            //             factorValue: 0.0199,
-            //             factorUnit: "mg/m³",
-            //         },
-            //     ],
-            //     message: "请求成功",
-            // };
-            
-            // console.log("11111111111111", res);
-            // let data = JSON.parse(res.message);
             let data = res.data;
             data.forEach(item => {
                 let key = this.codingList[item.factorCoding]

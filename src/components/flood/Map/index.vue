@@ -141,7 +141,7 @@ export default {
                 this.eaBMap.enableScrollWheelZoom();
                 // 初始化地图，设置中心点坐标和地图级别
                 this.eaBMap.setMapStyleV2({
-                    styleId: "b670429936d6b760f493c0af69582f6c",
+                    styleId: "beda1b53ef0b60c06200da39068b025e",
                 });
             }
             // 编写自定义函数,创建标注
@@ -201,27 +201,12 @@ export default {
                 this.emBMap.enableScrollWheelZoom();
                 // 初始化地图，设置中心点坐标和地图级别
                 this.emBMap.setMapStyleV2({
-                    styleId: "b670429936d6b760f493c0af69582f6c",
+                    styleId: "beda1b53ef0b60c06200da39068b025e",
                 });
             }
             // 编写自定义函数,创建标注
             let that = this;
             function addMarker(point,index) {
-                // var marker = new BMap.Marker(point);
-                // if( index >= 10 ) {
-                //     var label = new BMap.Label(index+1, {
-                //         offset : new BMap.Size(0, 4)
-                //     }); 
-                // }else {
-                //     var label = new BMap.Label(index+1, {
-                //         offset : new BMap.Size(4, 4)
-                //     }); 
-                // }
-                // label.setStyle({
-                //     background:'none',color:'#fff',border:'none'//只要对label样式进行设置就可达到在标注图标上显示数字的效果
-                // });
-                // marker.setLabel(label);//显示地理名称 a 
-
                 let nowData = that.emList[index];
                 let marker;
                 if( nowData.deviceSerial ){
@@ -273,7 +258,6 @@ export default {
         opSuppliesModal(location) {
             this.closeDailog();
             this.suppliesModalType = location;
-            // this.getEmergencyMaterials(location);
             this.isShowSuppliesModal = true;
         },
         openDialog() {

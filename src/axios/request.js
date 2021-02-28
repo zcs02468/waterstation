@@ -36,8 +36,12 @@ Axios.interceptors.response.use(
         case 400:
           error.message = "请求错误";
           break;
+        case 401:
+          store.state.isShowLogin = true;
+          error.message = "拒绝访问";
+          break;
         case 403:
-          store.state.aaa = new Date().getTime();
+          store.state.isShowLogin = true;
           error.message = "拒绝访问";
           break;
         case 404:
