@@ -57,7 +57,7 @@ export default {
         key: this.key,
       });
       if (err) return;
-      if (res.message) {
+      if (res.result == 'true') {
         this.$store.state.isShowLogin = false
       } else {
         this.pollingLoginType();

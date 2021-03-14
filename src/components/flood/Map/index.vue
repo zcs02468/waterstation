@@ -338,9 +338,7 @@ export default {
             let [err,res] = await getDeviceUrl(deviceSerial);
             if( err ) return;
             this.videoUrl = res.data;
-            this.isShowVideo = false
-            await this.$nextTick()
-            this.isShowVideo = true
+            this.isShowVideo = true;
         },
         closeList() {
             this.isShowList = false
