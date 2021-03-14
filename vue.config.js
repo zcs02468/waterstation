@@ -42,9 +42,6 @@ module.exports = {
         )
         // }
     },
-
-
-    
     // // 压缩图片
     // chainWebpack: (config) => {
     //     config.module 
