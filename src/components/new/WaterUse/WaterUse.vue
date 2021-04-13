@@ -36,6 +36,7 @@
 import Title from "@/components/common/Title";
 import comMinxins from "@/components/common/comMinxins";
 import { getWaterUsage, getWaterQualityNum } from "@/axios/index";
+import { mapMutations } from "vuex";
 export default {
   name: "WaterUse",
   mixins: [comMinxins],
@@ -99,6 +100,7 @@ export default {
   },
 
   methods: {
+    ...mapMutations(["SET_HOME_AUTO_URL_NUM"]),
     updateData() {
       this.getData();
     },
@@ -118,6 +120,7 @@ export default {
       let data = res.data;
       this.dataList = [data.ljll1, data.yl, data.zd, data.p5, data.ssll1];
       this.dataList.splice();
+      if (data.isOverrun) this.SET_HOME_AUTO_URL_NUM();
     },
     async getWaterQualityNum() {
       let [err, res] = await getWaterQualityNum();
@@ -318,6 +321,7 @@ export default {
       font-size: 35px;
       color: #ffffff;
       line-height: 50px;
+      text-align: center;
     }
     p:nth-child(2) {
       font-size: 16px;

@@ -3,7 +3,7 @@
     <div class="img-box">
       <img :src="imgData" alt="" />
       <div class="refresh" v-show="isShowRefresh" @click="refresh">
-        <i class="el-icon-refresh" :class="[ loading ? 'loading' : '' ]"></i>
+        <i class="el-icon-refresh" :class="[loading ? 'loading' : '']"></i>
       </div>
     </div>
   </div>
@@ -19,7 +19,7 @@ export default {
       key: "1343854013443919872",
       isShowRefresh: false,
       nowTime: 0,
-      loading: false
+      loading: false,
     };
   },
 
@@ -31,9 +31,11 @@ export default {
 
   methods: {
     //刷新
-    refresh() {
+    async refresh() {
       this.loading = true;
-      this.getQrCode()
+      this.nowTime = new Date().getTime();
+      await this.getQrCode();
+      await this.getToken();
     },
     async getQrCode() {
       let [err, res] = await getQrCode();
@@ -43,7 +45,7 @@ export default {
       }
       this.imgData = res.data;
       this.key = res.message;
-      this.loading = true;
+      this.loading = false;
       this.isShowRefresh = false;
     },
     pollingQrCode() {
@@ -57,8 +59,8 @@ export default {
         key: this.key,
       });
       if (err) return;
-      if (res.message) {
-        this.$store.state.isShowLogin = false
+      if (res.result == "true") {
+        this.$store.state.isShowLogin = false;
       } else {
         this.pollingLoginType();
       }

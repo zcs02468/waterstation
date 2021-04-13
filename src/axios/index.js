@@ -54,6 +54,9 @@ export const getWaterConsumption = async () => await get({ url: baseUrl + "/smar
 //应急物资接口 
 export const getEmergencyInfo = async () => await get({ url: baseUrl + "/smartEnergy/emergencyInfo" });
 
+//关闭警报
+export const closeAlarm = async() => await get({url:baseUrl + '/smartEnergy/saveInstantaneousFlowAlarmLog'})
+
 
 //flood
 //当日值班接口

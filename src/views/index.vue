@@ -21,7 +21,9 @@
                     <Pressure />
                 </div>
             </div>
+            <audio id="indexEventAudio" src="" loop></audio>
         </div>
+        <alarmDialog @close="closeAlarmDialog" v-if="isShowAlarmDialog"></alarmDialog>
     </div>
 </template>
 
@@ -38,6 +40,10 @@ import WorkLog from "@/components/new/WorkLog"
 import RoadworkInfo from "@/components/new/RoadworkInfo"
 import Effluent from "@/components/new/Effluent"
 import Pressure from "@/components/new/Pressure"
+//音频文件
+import audioFile from "../assets/audio/jinbao.mp3";
+
+import alarmDialog from "../components/common/alarmDialog"
 
 export default {
     name: "Home",
@@ -54,11 +60,33 @@ export default {
         WorkLog,
         RoadworkInfo,
         Effluent,
-        Pressure
+        Pressure,
+
+        alarmDialog
     },
     data() {
-        return {};
+        return {
+            isShowAlarmDialog: false
+        };
     },
+    computed: {
+        autoUrlNum() {
+            return this.$store.state.home.autoUrlNum;
+        },
+    },
+    watch: {
+        autoUrlNum() {
+            let buttonAudio = document.getElementById("indexEventAudio");
+            buttonAudio.setAttribute("src", audioFile);
+            buttonAudio.play();
+            this.isShowAlarmDialog = true
+        }
+    },
+    methods:{
+        closeAlarmDialog() {
+            this.isShowAlarmDialog = false
+        }
+    }
 };
 </script>
 

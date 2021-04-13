@@ -12,6 +12,7 @@ export default new Vuex.Store({
                 oneH: 0,
                 twoH: 0,
             },
+            autoUrlNum: "",
         },
         flood: {
             autoUrlNum: "",
@@ -29,6 +30,9 @@ export default new Vuex.Store({
         setWaterLevel(state, obj) {
             state.home.waterLevel.oneH = obj.oneH;
             state.home.waterLevel.twoH = obj.twoH;
+        },
+        SET_HOME_AUTO_URL_NUM(state) {
+            state.home.autoUrlNum = Math.random();
         },
         setAutoUrlNum(state) {
             state.flood.autoUrlNum = Math.random();

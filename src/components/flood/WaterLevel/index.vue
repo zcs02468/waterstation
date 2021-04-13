@@ -17,19 +17,19 @@
               <rule :standardList="standardList"/>
               <div class="water-box-content">
                 <div class="water-box">
-                  <Box textType="orange" :num="4.32"/>
+                  <Box :textType="classType.value1" :num="list.value1"/>
                   <div class="title">南水塔</div>
                 </div>
                 <div class="water-box">
-                  <Box textType="yellow" :num="2"/>
+                  <Box :textType="classType.value2" :num="list.value2"/>
                   <div class="title">迎宾三路</div>
                 </div>
                 <div class="water-box">
-                  <Box :textType="defaultColor" :num="1.92"/>
-                  <div class="title">空港三路污水泵站</div>
+                  <Box :textType="classType.value3" :num="list.value3"/>
+                  <div class="title">东泵站</div>
                 </div>
                 <div class="water-box">
-                  <Box :textType="defaultColor" :num="1.92"/>
+                  <Box :textType="classType.value4" :num="list.value4"/>
                   <div class="title">北水塔</div>
                 </div>
               </div>
@@ -117,6 +117,11 @@ export default {
             categoryArr1:['安全水位','可控水位','警戒水位'],
             colorArr:['default','yellow','orange'],
             list:{
+              value1:'2.244',
+              value2:'1.966',
+              value3:'2.33',
+              value4:'2.327',
+
               youle_level: '',
               north_out_level:'',
               south_out_level:'',
@@ -127,6 +132,10 @@ export default {
               standardList:[]
             },
             classType: {
+              value1:'',
+              value2:'',
+              value3:'',
+
               youle_level: 'default',
               north_out_level:'default',
               south_out_level:'default',
@@ -135,7 +144,7 @@ export default {
               north_east_level:'default',
               north_west_level:'default',
             },
-            standardList:[],
+            standardList:[2,3],
             alarmList:[0,0,0]
         };
     },
@@ -159,6 +168,7 @@ export default {
             if( err ) return;
             let data = JSON.parse(res.message);
             let standardList = data.standardList;
+
             this.list.youle_level = this.keepTwoDecimal(data.youle_level);
             this.list.north_out_level = this.keepTwoDecimal(data.north_out_level);
             this.list.south_out_level = this.keepTwoDecimal(data.south_out_level);
@@ -174,6 +184,12 @@ export default {
             this.standardList.splice();
             this.alarmList = [0,0,0];
             //0 围场河  1 外围河道   2 - 调节水池 
+            this.classType.value1 = this.getClass(arr,'value1',0);
+            this.classType.value2 = this.getClass(arr,'value2',0);
+            this.classType.value3 = this.getClass(arr,'value3',0);
+            this.classType.value4 = this.getClass(arr,'value4',0);
+
+
             this.classType.youle_level = this.getClass(arr,'youle_level',1);
             this.classType.north_out_level = this.getClass(arr,'north_out_level',1);
             this.classType.south_out_level = this.getClass(arr,'south_out_level',1);
