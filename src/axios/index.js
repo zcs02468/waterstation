@@ -74,7 +74,7 @@ export const getPonding = async ()=> await get({url: baseUrl + '/smartEnergy/pon
 export const getDrainagePumpingPlant = async () => await get({ url: baseUrl + "/smartEnergy/drainagePumpingPlant" });
 
 //河道及水池水位接口
-export const getRiverCourseLevel = async () => await get({ url: baseUrl + "/smartEnergy/riverCourseLevel" });
+// export const getRiverCourseLevel = async () => await get({ url: baseUrl + "/smartEnergy/riverCourseLevel" });
 
 //雨量接口
 export const getRainfall = async () => await get({ url: baseUrl + "/smartEnergy/rainfall" });
@@ -103,3 +103,13 @@ export const getDeviceList = async ()=> await get({url: baseUrl + '/smartEnergy/
 export const getDeviceUrl = async (deviceSerial)=> await get({url: baseUrl + `/smartEnergy/getDeviceUrl?deviceSerial=${deviceSerial}`});
 
 
+
+
+//地图手环点位
+export const getWristbandList = async ()=> await get({url: baseUrl + '/smartEnergy/findWristbandList'});
+
+//地图执法记录仪点位
+export const getSinglePawn = async ()=> await get({url: baseUrl + '/smartEnergy/findSinglePawn'});
+
+//河道及水池水位和地图点位
+export const getRiverCourseLevel = async ()=> await get({url: baseUrl + '/smartEnergy/riverCourseLevel'});

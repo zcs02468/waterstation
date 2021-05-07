@@ -10,7 +10,8 @@ module.exports = {
         // baseUrl: "/",
         proxy: {
             "/smartEnergy": {
-                target: "http://10.23.1.168:8980/",
+                // target: "http://10.23.1.168:8980/",
+                target: "http://47.110.226.205:8980",
                 changeOrigin: true,
             },
         },

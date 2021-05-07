@@ -3,49 +3,51 @@
     <div class="panel left-container-angle">
         <div class="panel-header">
             <Title title="气象信息" />
-            <div class="unit">
-                <span>当前平均温度：</span
-                >{{ parsingNumber(weatherData.temperature.value) }}&#8451;
-            </div>
+            <!-- <div class="unit"><span>当前平均温度：</span>{{weatherData.temperature}}&#8451;</div> -->
+            <div class="unit"><span>当前平均温度：</span>{{parsingNumber(weatherData.temperature.value)}}&#8451;</div>
         </div>
         <div class="panel-bodyer">
             <div class="block">
-                <span class="iconfont iconwendu2x"></span>
-                <span class="text"
-                    >{{ parsingNumber(weatherData.temperature.value)
-                    }}{{ weatherData.temperature.unit }}</span
-                >
-            </div>
-            <div class="block center">
-                <span class="iconfont iconshidu"></span>
-                <span class="text"
-                    >{{ parsingNumber(weatherData.humidity.value)
-                    }}{{ weatherData.humidity.unit }}</span
-                >
+                <div class="icon-box">
+                    <span class="iconfont iconwendu2x"></span>
+                    <span class="title">温度</span>
+                </div>
+                <span class="text">{{parsingNumber(weatherData.temperature.value)}}{{weatherData.temperature.unit}}</span>
             </div>
             <div class="block">
-                <span class="iconfont iconapp_icons--1"></span>
-                <span class="text">{{ parsingNumber(weatherData.pm10.value)
-                    }}{{ weatherData.pm10.unit }}</span>
+                <div class="icon-box">
+                    <span class="iconfont iconshidu"></span>
+                    <span class="title">湿度</span>
+                </div>
+                <span class="text">{{parsingNumber(weatherData.humidity.value)}}{{weatherData.humidity.unit}}</span>
             </div>
             <div class="block">
-                <span class="iconfont iconapp_icons--"></span>
-                <span class="text">{{ parsingNumber(weatherData.pm25.value)
-                    }}{{ weatherData.pm25.unit }}</span>
+                <div class="icon-box">
+                    <span class="iconfont iconapp_icons--1"></span>
+                    <span class="title">PM10</span>
+                </div>
+                <span class="text">{{parsingNumber(weatherData.pm10.value)}}{{weatherData.pm10.unit}}</span>
             </div>
-            <div class="block center">
-                <span class="iconfont iconfengsu1"></span>
-                <span class="text"
-                    >{{ parsingNumber(weatherData.windspeed.value)
-                    }}{{ weatherData.windspeed.unit }}</span
-                >
+            <div class="block">
+                <div class="icon-box">
+                    <span class="iconfont iconapp_icons--"></span>
+                    <span class="title">PM2.5</span>
+                </div>
+                <span class="text">{{parsingNumber(weatherData.pm25.value)}}{{weatherData.pm25.unit}}</span>
             </div>
-            <div class="block center">
-                <span class="iconfont iconeryanghualiu"></span>
-                <span class="text"
-                    >{{ weatherData.sq2.value
-                    }}{{ weatherData.sq2.unit }}</span
-                >
+            <div class="block">
+                <div class="icon-box">
+                    <span class="iconfont iconfengsu1"></span>
+                    <span class="title">风速</span>
+                </div>
+                <span class="text">{{parsingNumber(weatherData.windspeed.value)}}{{weatherData.windspeed.unit}}</span>
+            </div>
+            <div class="block">
+                <div class="icon-box">
+                    <span class="iconfont iconeryanghualiu"></span>
+                    <span class="title">二氧化硫</span>
+                </div>
+                <span class="text">{{weatherData.sq2.value}}{{weatherData.sq2.unit}}</span>
             </div>
         </div>
     </div>
@@ -53,11 +55,11 @@
 
 <script>
 import Title from "../../common/Title";
-import comMinxins from "../../common/comMinxins";
-import { getWeather } from "../../../axios";
+import comMinxins from "../../common/comMinxins"
+import {getWeather} from "../../../axios"
 export default {
-    name: "Weather",
-    mixins: [comMinxins],
+    name: "WeatherPlus",
+    mixins:[comMinxins],
     data() {
         return {
             weatherData: {
@@ -87,7 +89,7 @@ export default {
                     unit: "m/s",
                 },
                 sq2: {
-                    name: "风向",
+                    name: "二氧化硫",
                     value: '',
                     unit: "",
                 },
@@ -108,12 +110,12 @@ export default {
     },
 
     created() {
-        this.getData();
+        this.getData()
     },
 
     methods: {
         parsingNumber(num) {
-            return Math.round(Number(num) * 100) / 100;
+            return Math.round( Number(num) * 100) / 100
         },
         updateData() {
             this.getData();
@@ -128,7 +130,7 @@ export default {
                 this.weatherData[key].value = item.factorValue;
                 this.weatherData[key].unit = item.factorUnit;
             })
-        },
+        }
     },
 
     computed: {},
@@ -138,7 +140,8 @@ export default {
 .panel {
     position: relative;
     width: 540px;
-    height: 184px;
+    // height: 184px;
+    height: 347px;
     margin-top: 20px;
 }
 .panel-header {
@@ -157,14 +160,13 @@ export default {
 .iconfont {
     font-size: 35px;
     vertical-align: middle;
-    margin-right: 10px;
+    text-align: center;
 }
 .text {
     font-size: 14px;
     vertical-align: middle;
 }
 .panel-bodyer {
-    margin-top: 25px;
     display: flex;
     flex-wrap: wrap;
     .center {
@@ -192,10 +194,25 @@ export default {
         }
     }
     .block {
-        height: 36px;
+        height: 102px;
         width: 175px;
-        margin-bottom: 18.5px;
-        padding-left: 32px;
+        // padding-left: 32px;
+        flex: 0 0 50%;
+        display: flex;
+        align-items: center;
+        padding-left: 60px;
+    }
+    .icon-box {
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        flex-direction: column;
+        margin-right: 53px;
+        min-width: 50px;
+        .title {
+            margin-top: 15px;
+            text-align: center;
+        }
     }
 }
 // .left-line {

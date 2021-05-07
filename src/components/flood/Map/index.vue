@@ -79,7 +79,7 @@ import SuppliesDialog from "./SuppliesDialog";
 import SuppliesModal from "./suppliesModal"
 import videoDialog from "./videoDialog"
 import comMinxins from "../../common/comMinxins"
-import {getEmergencyInfo, getDeviceList, getDeviceUrl} from "../../../axios"
+import {getEmergencyInfo, getDeviceList, getDeviceUrl, getWristbandList, getSinglePawn, getRiverCourseLevel} from "../../../axios"
 export default {
     name: "Map",
     mixins:[comMinxins],
@@ -131,6 +131,11 @@ export default {
         updateData() {
             this.getData();
         },
+        //创建手环点位
+        addBraceletMarker(point,index) {
+
+        },
+        //应急队伍
         createEaMap() {
             if( !this.emBMap ) {
                 this.eaBMap = new BMap.Map("eaMap");
@@ -173,24 +178,59 @@ export default {
                 }
                 that.eaBMap.addOverlay(marker);
                 marker.addEventListener("click",function() {
-                    let eaList = that.eaList[index];
-                    if( eaList.deviceSerial ) {
+                    let eaData = that.eaList[index];
+                    //视频列表
+                    if( eaData.deviceSerial ) {
                         that.getDeviceUrl(eaList.deviceSerial);
-                    }else {
-                        that.info.location = `队伍驻点：${eaList.armyPlace}`   //队伍驻点：
-                        that.info.name = `队伍名称：${eaList.armyName}`      //队伍名称：XXXXX
-                        that.info.num = `人数：${eaList.headcount || 0}`        //人数：XXXXX
-                        that.info.userName = `现场负责人：${eaList.chargeLeadName}`       //现场负责人：13555555555
-                        that.info.phone = `联系电话：${eaList.phone}`       //联系电话：13555555555
+                    }
+                    //应急队伍
+                    if( eaData.deviceSerial.armyPlace && eaData.deviceSerial.phone ) {
+                        that.info.location = `队伍驻点：${eaData.armyPlace}`   //队伍驻点：
+                        that.info.name = `队伍名称：${eaData.armyName}`      //队伍名称：XXXXX
+                        that.info.num = `人数：${eaData.headcount || 0}`        //人数：XXXXX
+                        that.info.userName = `现场负责人：${eaData.chargeLeadName}`       //现场负责人：13555555555
+                        that.info.phone = `联系电话：${eaData.phone}`       //联系电话：13555555555
                         that.isShowList = true;
                         that.isShowBtn = false;
                     }
+                    //手环
+                    if( eaData.wristbandName ) {
+                        that.info.location = `手环名称：${eaData.wristbandName}`
+                        that.info.name = `设备描述：${eaData.deviceInfo}`
+                        that.isShowList = true;
+                        that.isShowBtn = false;
+                    }
+                    //执法仪
+                    if( eaData.singlePawnName ) {
+                        
+                    }
+                    //河道水位
+                    if( eaData.isOverproof ) {
+                        that.info.location = `名称：${eaData.name}`
+                        that.info.name = `水位值：${eaData.value}`
+                        that.isShowList = true;
+                        that.isShowBtn = false;
+                    }
+
+                    // let eaList = that.eaList[index];
+                    // if( eaList.deviceSerial ) {
+                    //     that.getDeviceUrl(eaList.deviceSerial);
+                    // }else {
+                    //     that.info.location = `队伍驻点：${eaList.armyPlace}`   //队伍驻点：
+                    //     that.info.name = `队伍名称：${eaList.armyName}`      //队伍名称：XXXXX
+                    //     that.info.num = `人数：${eaList.headcount || 0}`        //人数：XXXXX
+                    //     that.info.userName = `现场负责人：${eaList.chargeLeadName}`       //现场负责人：13555555555
+                    //     that.info.phone = `联系电话：${eaList.phone}`       //联系电话：13555555555
+                    //     that.isShowList = true;
+                    //     that.isShowBtn = false;
+                    // }
                 });
             }
             this.eaList.forEach( (item,index)=> {
                 addMarker(new BMap.Point(item.longitude, item.latitude),index)
             })
         },
+        //应急仓库
         createEmMap() {
             if( !this.emBMap ) {
                 this.emBMap = new BMap.Map("emMap");
@@ -284,6 +324,31 @@ export default {
             this.isShowSuppliesModal = false;
             this.isShowList = false;
         },
+        async getEaAllData() {
+            //地图手环点位 WristbandList
+            //地图执法记录仪点位 SinglePawn
+            //河道及水池水位和地图点位 RiverCourseLevel
+
+            const [EmergencyInfo,DeviceList,WristbandList,SinglePawn,RiverCourseLevel ] = Promise.all[
+                getEmergencyInfo(),
+                this.getDeviceList(),
+                getWristbandList(),
+                getSinglePawn(),
+                getRiverCourseLevel()
+            ]
+            if (EmergencyInfo[0]) throw '获取 应急队伍 应急物资 出错'
+            if (DeviceList[0] || DeviceList[1].result != 'true') throw '获取视频设备列表出错'
+            if (WristbandList[0] || WristbandList[1].result != 'true') throw '获取地图手环点位出错'
+            if (SinglePawn[0] || SinglePawn[1].result != 'true') throw '获取地图执法记录仪点位出错'
+            if (RiverCourseLevel[0] || RiverCourseLevel[1].result != 'true') throw '获取河道及水池水位和地图点位出错'
+            return {
+                emergencyInfoData: JSON.parse(EmergencyInfo[1].message),
+                deviceListData: DeviceList[1].list,
+                wristbandListData: WristbandList[1].data,
+                singlePawnData: SinglePawn[1].data,
+                riverCourseLevelData: RiverCourseLevel[1].data,
+            }
+        },
         async getData() {
             // this.getVideoToken();
 
@@ -308,14 +373,21 @@ export default {
                 this.createEmMap();
             }else {
                 this.isShowTop = true;
-                let [err,res] = await getEmergencyInfo()
-                if( err ) return;
-                let data = JSON.parse(res.message);
-                let list = await this.getDeviceList();
-                this.eaLists = data.eaList;
-                this.emLists = data.emList;
-                let eaList = [...data.eaList,...list.list];
-                let emList = [...data.emList,...list.list];
+                const { emergencyInfoData,deviceListData,wristbandListData,singlePawnData,riverCourseLevelData } = await this.getEaAllData()
+                this.eaLists = emergencyInfoData.eaList;
+                this.emLists = emergencyInfoData.emList;
+                let eaList = [...emergencyInfoData.eaList,...deviceListData,...wristbandListData,...singlePawnData,...riverCourseLevelData];
+                let emList = [...emergencyInfoData.emList,...deviceListData,];
+
+                // this.isShowTop = true;
+                // let [err,res] = await getEmergencyInfo()
+                // if( err ) return;
+                // let data = JSON.parse(res.message);
+                // let list = await this.getDeviceList();
+                // this.eaLists = data.eaList;
+                // this.emLists = data.emList;
+                // let eaList = [...data.eaList,...list.list];
+                // let emList = [...data.emList,...list.list];
                 
                 this.eaList = eaList;
                 this.emList = emList;
