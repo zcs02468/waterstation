@@ -125,6 +125,7 @@ export default {
     },
 
     created() {
+        console.log( "this.$route ", this.$route  );
     },
 
     methods: {
@@ -154,13 +155,19 @@ export default {
             function addMarker(point,index) {
                 let nowData = that.eaList[index];
                 let marker;
-                if( nowData.deviceSerial ){
-                    var myIcon = new BMap.Icon("/images/camera.png", new BMap.Size(30, 30));
-                    marker = new BMap.Marker(point,{
-                        icon: myIcon
-                    });
-                    marker.setTitle(nowData.deviceName)
-                }else {
+                let type = "video"
+                //视频列表
+                if( nowData.deviceSerial ) type = "video"
+                //应急队伍
+                if( nowData.armyPlace && nowData.phone ) type = "ea"
+                //手环
+                if( nowData.wristbandName ) type = "wristband"
+                //执法仪
+                if( nowData.singlePawnName ) type = "singlePawn"
+                //河道水位
+                if( nowData.isOverproof ) type = "water"
+                console.log( "type", type );
+                if( type == 'ea' ) {
                     marker = new BMap.Marker(point);
                     if( index >= 10 ) {
                         var label = new BMap.Label(index+1, {
@@ -175,16 +182,43 @@ export default {
                         background:'none',color:'#fff',border:'none'//只要对label样式进行设置就可达到在标注图标上显示数字的效果
                     });
                     marker.setLabel(label);//显示地理名称 a 
+                }else {
+                    if( type == 'video' ) {
+                        var myIcon = new BMap.Icon("/images/camera.png", new BMap.Size(30, 30));
+                        marker = new BMap.Marker(point,{
+                            icon: myIcon
+                        });
+                        marker.setTitle(nowData.deviceName)
+                    }
+                    if( type == 'wristband' ) {
+                        var myIcon = new BMap.Icon("/images/wristband.png", new BMap.Size(30, 30));
+                        marker = new BMap.Marker(point,{
+                            icon: myIcon
+                        });
+                    }
+                    if( type == 'singlePawn' ) {
+                        var myIcon = new BMap.Icon("/images/lawEnforcement.png", new BMap.Size(30, 30));
+                        marker = new BMap.Marker(point,{
+                            icon: myIcon
+                        });
+                    }
+                    if( type == 'water' ) {
+                        let url = `/images/status${nowData.isOverproof}.png`
+                        var myIcon = new BMap.Icon(url, new BMap.Size(30, 30));
+                        marker = new BMap.Marker(point,{
+                            icon: myIcon
+                        });
+                    }
                 }
                 that.eaBMap.addOverlay(marker);
                 marker.addEventListener("click",function() {
                     let eaData = that.eaList[index];
                     //视频列表
-                    if( eaData.deviceSerial ) {
-                        that.getDeviceUrl(eaList.deviceSerial);
+                    if( type == "video" ) {
+                        that.getDeviceUrl(eaData.deviceSerial);
                     }
                     //应急队伍
-                    if( eaData.deviceSerial.armyPlace && eaData.deviceSerial.phone ) {
+                    if( type == "ea" ) {
                         that.info.location = `队伍驻点：${eaData.armyPlace}`   //队伍驻点：
                         that.info.name = `队伍名称：${eaData.armyName}`      //队伍名称：XXXXX
                         that.info.num = `人数：${eaData.headcount || 0}`        //人数：XXXXX
@@ -194,18 +228,18 @@ export default {
                         that.isShowBtn = false;
                     }
                     //手环
-                    if( eaData.wristbandName ) {
+                    if( type == "wristband" ) {
                         that.info.location = `手环名称：${eaData.wristbandName}`
                         that.info.name = `设备描述：${eaData.deviceInfo}`
                         that.isShowList = true;
                         that.isShowBtn = false;
                     }
                     //执法仪
-                    if( eaData.singlePawnName ) {
-                        
+                    if( type == "singlePawn" ) {
+                        //待定打开 vlc
                     }
                     //河道水位
-                    if( eaData.isOverproof ) {
+                    if( type == "water" ) {
                         that.info.location = `名称：${eaData.name}`
                         that.info.name = `水位值：${eaData.value}`
                         that.isShowList = true;
@@ -324,7 +358,152 @@ export default {
             this.isShowSuppliesModal = false;
             this.isShowList = false;
         },
+        getWristbandList() {
+            let arr = {
+                result: "true",
+                data: [
+                    {
+                        wristbandName:'示例：手环1（手环名称）',
+                        longitude:'113.50000',
+                        latitude:'22.20000',
+                        deviceInfo:'手环（设备描述）',
+                    },
+                    {
+                        wristbandName:'示例：手环1（手环名称）',
+                        longitude:'113.50000',
+                        latitude:'22.20000',
+                        deviceInfo:'手环（设备描述）',
+                    },
+                    {
+                        wristbandName:'示例：手环1（手环名称）',
+                        longitude:'113.50000',
+                        latitude:'22.20000',
+                        deviceInfo:'手环（设备描述）',
+                    }
+                ]
+            }
+            return [null,arr]
+        },
+        getSinglePawn() {
+            let arr = {
+                result: "true",
+                data: [
+                    {
+                        singlePawnName:'示例：设备1（设备名称）',
+                        longitude:'117.17',
+                        latitude:'31.52',
+                        videoUrl:'/dsfds/dsfsd',
+                    },
+                    {
+                        singlePawnName:'示例：设备1（设备名称）',
+                        longitude:'117.17',
+                        latitude:'31.52',
+                        videoUrl:'/dsfds/dsfsd',
+                    },
+                    {
+                        singlePawnName:'示例：设备1（设备名称）',
+                        longitude:'117.17',
+                        latitude:'31.52',
+                        videoUrl:'/dsfds/dsfsd',
+                    }
+                ]
+            }
+            return [null,arr]
+        },
+        getRiverCourseLevel() {
+            let arr = {
+                result: "true",
+                data: [
+                    {
+                    name: "南水塔",
+                    value: "2.32",
+                    isOverproof: 1,
+                        longitude:'116.46',
+                        latitude:'39.92',
+                    },
+                    {
+                    name: "南水塔",
+                    value: "2.32",
+                    isOverproof: 2,
+                        longitude:'106.26667',
+                        latitude:'38.46667',
+                    },
+                    {
+                    name: "南水塔",
+                    value: "2.32",
+                    isOverproof: 3,
+                        longitude:'116.46',
+                        latitude:'39.92',
+                    },
+                    {
+                    name: "南水塔",
+                    value: "2.32",
+                    isOverproof: 1,
+                        longitude:'116.46',
+                        latitude:'39.92',
+                    },
+                    {
+                    name: "南水塔",
+                    value: "2.32",
+                    isOverproof: 1,
+                        longitude:'116.46',
+                        latitude:'39.92',
+                    },
+                    {
+                    name: "南水塔",
+                    value: "2.32",
+                    isOverproof: 1,
+                        longitude:'116.46',
+                        latitude:'39.92',
+                    },
+                    {
+                    name: "南水塔",
+                    value: "2.32",
+                    isOverproof: 3,
+                        longitude:'114.48333',
+                        latitude:'38.03333',
+                    },
+                    {
+                    name: "南水塔",
+                    value: "2.32",
+                    isOverproof: 1,
+                        longitude:'116.46',
+                        latitude:'39.92',
+                    },
+                    {
+                    name: "南水塔",
+                    value: "2.32",
+                    isOverproof: 1,
+                        longitude:'116.46',
+                        latitude:'39.92',
+                    },
+                    {
+                    name: "南水塔",
+                    value: "2.32",
+                    isOverproof: 1,
+                        longitude:'116.46',
+                        latitude:'39.92',
+                    },
+                    {
+                    name: "南水塔",
+                    value: "2.32",
+                    isOverproof: 1,
+                        longitude:'116.46',
+                        latitude:'39.92',
+                    },
+                    {
+                    name: "南水塔",
+                    value: "2.32",
+                    isOverproof: 1,
+                        longitude:'116.46',
+                        latitude:'39.92',
+                    },
+                ]
+            }
+            return [null,arr]
+        },
         async getEaAllData() {
+            // console.log(33333);
             //地图手环点位 WristbandList
             //地图执法记录仪点位 SinglePawn
             //河道及水池水位和地图点位 RiverCourseLevel
@@ -348,10 +527,33 @@ export default {
                 singlePawnData: SinglePawn[1].data,
                 riverCourseLevelData: RiverCourseLevel[1].data,
             }
+
+
+            
+            // let [WristbandList,SinglePawn,RiverCourseLevel ] = await Promise.all([
+            //     // getEmergencyInfo(),
+            //     // this.getDeviceList(),
+            //     this.getWristbandList(),
+            //     this.getSinglePawn(),
+            //     this.getRiverCourseLevel()
+            // ])
+            // console.log("4444444");
+            // // if (EmergencyInfo[0]) throw '获取 应急队伍 应急物资 出错'
+            // // if (DeviceList[0] || DeviceList[1].result != 'true') throw '获取视频设备列表出错'
+            // if (WristbandList[0] || WristbandList[1].result != 'true') throw '获取地图手环点位出错'
+            // if (SinglePawn[0] || SinglePawn[1].result != 'true') throw '获取地图执法记录仪点位出错'
+            // if (RiverCourseLevel[0] || RiverCourseLevel[1].result != 'true') throw '获取河道及水池水位和地图点位出错'
+            // return {
+            //     emergencyInfoData: {eaList:[],emList:[]},
+            //     deviceListData: [],
+            //     wristbandListData: WristbandList[1].data,
+            //     singlePawnData: SinglePawn[1].data,
+            //     riverCourseLevelData: RiverCourseLevel[1].data,
+            // }
         },
         async getData() {
             // this.getVideoToken();
-
+            // console.log("2222222");
             if( this.eaBMap ) {
                 this.eaBMap.clearOverlays();
             }
@@ -388,7 +590,7 @@ export default {
                 // this.emLists = data.emList;
                 // let eaList = [...data.eaList,...list.list];
                 // let emList = [...data.emList,...list.list];
-                
+                console.log( "eaList", eaList,emList  );
                 this.eaList = eaList;
                 this.emList = emList;
                 this.createEaMap();

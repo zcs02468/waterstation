@@ -13,7 +13,7 @@
           <div></div>
           <div>应开启数量</div>
           <div>开启数量/总数</div>
-          <div>5分钟排水量/排水</div>
+          <div>5分钟排水量/排水能力（m³）</div>
         </li>
         <li v-for="(item, index) in list" :key="index">
           <div>{{ item.name }}</div>
@@ -57,16 +57,6 @@ export default {
     return {
       list: [],
       nameArr: ["南调东侧", "南调西侧", "北调东侧", "北调西侧"],
-      // list: {
-      //     north_east_displacement: 0,
-      //     north_east_open: 0,
-      //     north_west_displacement: 0,
-      //     north_west_open: 0,
-      //     south_east_displacement: 0,
-      //     south_east_open: 0,
-      //     south_west_displacement: 0,
-      //     south_west_open: 0,
-      // },
     };
   },
 
@@ -99,8 +89,6 @@ export default {
       });
       this.list = data;
       this.list.splice();
-      // let data = JSON.parse(res.message);
-      // Object.assign(this.list, data)
     },
   },
 
@@ -134,16 +122,16 @@ ul {
   margin-top: 15px;
   &::before {
     @extend %ul-line;
-    left: 50%;
+    left: 15%;
   }
   &::after {
     @extend %ul-line;
-    right: 25%;
+    left: 35%;
   }
   span:nth-child(1) {
     @extend %ul-line;
     display: inline-block;
-    left: 25%;
+    left: 57%;
     height: 100%;
   }
   li {
@@ -157,11 +145,23 @@ ul {
     div {
       // width: 166px;
       // width: 118.5px;
-      flex: 1;
+      // flex: 1;
       height: 34px;
       font-size: 14px;
       line-height: 34px;
       text-align: center;
+    }
+    div:nth-child(1) {
+      width: 15%;
+    }
+    div:nth-child(2) {
+      width: 20%;
+    }
+    div:nth-child(3) {
+      width: 22%;
+    }
+    div:nth-child(4) {
+      flex: 1;
     }
   }
 }

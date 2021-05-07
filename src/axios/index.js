@@ -113,3 +113,6 @@ export const getSinglePawn = async ()=> await get({url: baseUrl + '/smartEnergy/
 
 //河道及水池水位和地图点位
 export const getRiverCourseLevel = async ()=> await get({url: baseUrl + '/smartEnergy/riverCourseLevel'});
+
+//获取气象信息
+export const getFloodWeatherInfo = async()=> await get({url: baseUrl + '/smartEnergy/getFloodWeatherInfo'});

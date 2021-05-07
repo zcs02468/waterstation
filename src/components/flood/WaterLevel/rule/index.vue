@@ -2,14 +2,14 @@
 <template>
     <div class="box">
         <section class="ruler">
-            <div
+            <!-- <div
                 class="line left-line"
                 :style="{ top: `${((standardList[1] / 5) * 100) > 100 ? 100 : ((standardList[1] / 5) * 100)}%`, border: `1px dashed #FF5E3D` }"
             ></div>
             <div
                 class="line right-line"
                 :style="{ top: `${ ((standardList[2] / 5) * 100) > 100 ? 100 : ((standardList[2] / 5) * 100) }%`, border: `1px dashed #F6BA16` }"
-            ></div>
+            ></div> -->
             <section class="cm"></section>
             <section class="cm"></section>
             <section class="cm"></section>

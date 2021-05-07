@@ -17,14 +17,13 @@ module.exports = {
         },
     },
     productionSourceMap: false,
-    css: {
-        loaderOptions: {
-            postcss: {
-                plugins: [postcss],
-            },
-        },
-    },
-
+    // css: {
+    //     loaderOptions: {
+    //         postcss: {
+    //             plugins: [postcss],
+    //         },
+    //     },
+    // },
     lintOnSave: false, // 取消 eslint 验证
     // configureWebpack: {
     //     externals: {
@@ -43,8 +42,6 @@ module.exports = {
         )
         // }
     },
-
-    
     // // 压缩图片
     // chainWebpack: (config) => {
     //     config.module 
@@ -54,5 +51,5 @@ module.exports = {
     //         .options({ bypassOnDebug: true })
     //         .end();
     // },
-  outputDir: 'waterstation',
+    outputDir: 'waterstation',
 };
