@@ -79,7 +79,7 @@ import SuppliesDialog from "./SuppliesDialog";
 import SuppliesModal from "./suppliesModal"
 import videoDialog from "./videoDialog"
 import comMinxins from "../../common/comMinxins"
-import {getEmergencyInfo, getDeviceList, getDeviceUrl, getWristbandList, getSinglePawn, getRiverCourseLevel} from "../../../axios"
+import {getEmergencyInfo, getDeviceList, getDeviceUrl, getWristbandList, getSinglePawn, getFloodControlAndWaterLevel} from "../../../axios"
 export default {
     name: "Map",
     mixins:[comMinxins],
@@ -513,7 +513,7 @@ export default {
                 this.getDeviceList(),
                 getWristbandList(),
                 getSinglePawn(),
-                getRiverCourseLevel()
+                getFloodControlAndWaterLevel()
             ]
             if (EmergencyInfo[0]) throw '获取 应急队伍 应急物资 出错'
             if (DeviceList[0] || DeviceList[1].result != 'true') throw '获取视频设备列表出错'

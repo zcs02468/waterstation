@@ -49,7 +49,7 @@
 <script>
 import Title from "../../common/Title";
 import comMinxins from "../../common/comMinxins";
-import { getDrainagePumpingPlant } from "../../../axios";
+import { getFloodControlAndDrainage } from "../../../axios";
 export default {
   name: "Drainage",
   mixins: [comMinxins],
@@ -73,16 +73,16 @@ export default {
       this.getData();
     },
     async getData() {
-      // let [err, res] = await getDrainagePumpingPlant();
-      // if (err || res.result != "true") return;
-      const res = {
-        data:[
-          {quantityToBeOpened: 5, openedQuantity: "1/5", waterDischarge:"3500/4500"},
-          {quantityToBeOpened: 5, openedQuantity: "1/5", waterDischarge:"3500/4500"},
-          {quantityToBeOpened: 5, openedQuantity: "1/5", waterDischarge:"3500/4500"},
-          {quantityToBeOpened: 5, openedQuantity: "1/5", waterDischarge:"3500/4500"},
-        ]
-      }
+      let [err, res] = await getFloodControlAndDrainage();
+      if (err || res.result != "true") return;
+      // const res = {
+      //   data:[
+      //     {quantityToBeOpened: 5, openedQuantity: "1/5", waterDischarge:"3500/4500"},
+      //     {quantityToBeOpened: 5, openedQuantity: "1/5", waterDischarge:"3500/4500"},
+      //     {quantityToBeOpened: 5, openedQuantity: "1/5", waterDischarge:"3500/4500"},
+      //     {quantityToBeOpened: 5, openedQuantity: "1/5", waterDischarge:"3500/4500"},
+      //   ]
+      // }
       const data = res.data;
       data.forEach((item, i) => {
         item.name = this.nameArr[i];

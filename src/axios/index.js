@@ -116,3 +116,9 @@ export const getRiverCourseLevel = async ()=> await get({url: baseUrl + '/smartE
 
 //获取气象信息
 export const getFloodWeatherInfo = async()=> await get({url: baseUrl + '/smartEnergy/getFloodWeatherInfo'});
+
+//排水泵运行情况
+export const getFloodControlAndDrainage = async()=> await get({url: baseUrl + '/smartEnergy/floodControlAndDrainage'});
+
+//河道及水池水位和地图点位
+export const getFloodControlAndWaterLevel = async()=> await get({url: baseUrl + '/smartEnergy/floodControlAndWaterLevel'});

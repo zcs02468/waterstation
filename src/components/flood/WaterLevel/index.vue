@@ -119,7 +119,7 @@ import Title from "../../common/Title";
 import rule from "./rule";
 import Box from "./Box";
 import comMinxins from "../../common/comMinxins";
-import { getRiverCourseLevel } from "../../../axios/index";
+import { getFloodControlAndWaterLevel } from "../../../axios/index";
 import { mapState } from "vuex";
 
 export default {
@@ -180,95 +180,95 @@ export default {
       this.getData();
     },
     async getData() {
-      // let [err, res] = await getRiverCourseLevel();
-      // if (err || res.result != "true") return;
-      // const data = res.data;
-      const data = [
-        {
-          name: "南水塔",
-          value: "2.32",
-          isOverproof: 1,
-          longitude:'32.54573',
-          latitude:'32.54573',
-        },
-        {
-          name: "南水塔",
-          value: "2.32",
-          isOverproof: 2,
-          longitude:'32.54573',
-          latitude:'32.54573',
-        },
-        {
-          name: "南水塔",
-          value: "2.32",
-          isOverproof: 3,
-          longitude:'32.54573',
-          latitude:'32.54573',
-        },
-        {
-          name: "南水塔",
-          value: "2.32",
-          isOverproof: 1,
-          longitude:'32.54573',
-          latitude:'32.54573',
-        },
-        {
-          name: "南水塔",
-          value: "2.32",
-          isOverproof: 1,
-          longitude:'32.54573',
-          latitude:'32.54573',
-        },
-        {
-          name: "南水塔",
-          value: "2.32",
-          isOverproof: 1,
-          longitude:'32.54573',
-          latitude:'32.54573',
-        },
-        {
-          name: "南水塔",
-          value: "2.32",
-          isOverproof: 3,
-          longitude:'32.54573',
-          latitude:'32.54573',
-        },
-        {
-          name: "南水塔",
-          value: "2.32",
-          isOverproof: 1,
-          longitude:'32.54573',
-          latitude:'32.54573',
-        },
-        {
-          name: "南水塔",
-          value: "2.32",
-          isOverproof: 1,
-          longitude:'32.54573',
-          latitude:'32.54573',
-        },
-        {
-          name: "南水塔",
-          value: "2.32",
-          isOverproof: 1,
-          longitude:'32.54573',
-          latitude:'32.54573',
-        },
-        {
-          name: "南水塔",
-          value: "2.32",
-          isOverproof: 1,
-          longitude:'32.54573',
-          latitude:'32.54573',
-        },
-        {
-          name: "南水塔",
-          value: "2.32",
-          isOverproof: 1,
-          longitude:'32.54573',
-          latitude:'32.54573',
-        },
-      ]
+      let [err, res] = await getFloodControlAndWaterLevel();
+      if (err || res.result != "true") return;
+      const data = res.data;
+      // const data = [
+      //   {
+      //     name: "南水塔",
+      //     value: "2.32",
+      //     isOverproof: 1,
+      //     longitude:'32.54573',
+      //     latitude:'32.54573',
+      //   },
+      //   {
+      //     name: "南水塔",
+      //     value: "2.32",
+      //     isOverproof: 2,
+      //     longitude:'32.54573',
+      //     latitude:'32.54573',
+      //   },
+      //   {
+      //     name: "南水塔",
+      //     value: "2.32",
+      //     isOverproof: 3,
+      //     longitude:'32.54573',
+      //     latitude:'32.54573',
+      //   },
+      //   {
+      //     name: "南水塔",
+      //     value: "2.32",
+      //     isOverproof: 1,
+      //     longitude:'32.54573',
+      //     latitude:'32.54573',
+      //   },
+      //   {
+      //     name: "南水塔",
+      //     value: "2.32",
+      //     isOverproof: 1,
+      //     longitude:'32.54573',
+      //     latitude:'32.54573',
+      //   },
+      //   {
+      //     name: "南水塔",
+      //     value: "2.32",
+      //     isOverproof: 1,
+      //     longitude:'32.54573',
+      //     latitude:'32.54573',
+      //   },
+      //   {
+      //     name: "南水塔",
+      //     value: "2.32",
+      //     isOverproof: 3,
+      //     longitude:'32.54573',
+      //     latitude:'32.54573',
+      //   },
+      //   {
+      //     name: "南水塔",
+      //     value: "2.32",
+      //     isOverproof: 1,
+      //     longitude:'32.54573',
+      //     latitude:'32.54573',
+      //   },
+      //   {
+      //     name: "南水塔",
+      //     value: "2.32",
+      //     isOverproof: 1,
+      //     longitude:'32.54573',
+      //     latitude:'32.54573',
+      //   },
+      //   {
+      //     name: "南水塔",
+      //     value: "2.32",
+      //     isOverproof: 1,
+      //     longitude:'32.54573',
+      //     latitude:'32.54573',
+      //   },
+      //   {
+      //     name: "南水塔",
+      //     value: "2.32",
+      //     isOverproof: 1,
+      //     longitude:'32.54573',
+      //     latitude:'32.54573',
+      //   },
+      //   {
+      //     name: "南水塔",
+      //     value: "2.32",
+      //     isOverproof: 1,
+      //     longitude:'32.54573',
+      //     latitude:'32.54573',
+      //   },
+      // ]
       this.waterList = data;
       this.waterList.splice();
     },

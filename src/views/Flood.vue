@@ -12,9 +12,11 @@
             <div class="main-box">
                 <div class="colum">
                     <OnDuty />
+                    <!-- 防汛 -->
                     <Weather v-if="!show"/>
-                    <WeatherPlus v-if="show"/>
                     <Rainfall v-if="!show"/>
+                    <!-- 生态 -->
+                    <WeatherPlus v-if="show"/>
                     <WaterQuality v-if="show"/>
                 </div>
                 <div class="colum center">
