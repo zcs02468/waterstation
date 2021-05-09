@@ -2,8 +2,7 @@
 <template>
   <div class="panel left-container-angle">
     <div class="panel-header">
-      <Title title="气象信息111" />
-      <!-- <div class="unit"><span>当前平均温度：</span>{{weatherData.temperature}}&#8451;</div> -->
+      <Title title="气象信息" />
       <div class="unit">
         <span>当前平均温度：</span
         >{{ parsingNumber(weatherData.temperature.value) }}&#8451;
