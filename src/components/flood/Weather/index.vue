@@ -63,7 +63,7 @@
                   <img :src="item.image" alt="" />
                 </div>
                 <div class="weather-slider-level" style="margin-left:21px">
-                  <span>{{ item.warningLevel }}级</span>
+                  <span>{{ item.warningLevel }}</span>
                 </div>
                 <div class="weather-slider-info">{{ item.weather }}</div>
               </div>
@@ -255,7 +255,7 @@ export default {
     height: 60px;
     background: #2a629a;
     border-radius: 5px;
-    border: 4px solid #2a629a;
+    // border: 4px solid #2a629a;
     img {
       width: 100%;
       height: 100%;
