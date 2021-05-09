@@ -228,7 +228,7 @@ export default {
                     if( type == "singlePawn" ) {
                         //待定打开 vlc
                         that.copyToClipboard(eaData.videoUrl)
-                        window.location.href = "szztClient://"
+                        window.location.href = "vlc://"
                     }
                     //河道水位
                     if( type == "water" ) {

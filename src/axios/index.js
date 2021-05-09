@@ -17,7 +17,6 @@ export const getDetectionRate = async () => await get({ url: baseUrl + "/smartEn
 
 //供水检测率趋势
 export const getWaterTendency = async () => await get({ url: baseUrl + "/smartEnergy/waterTendency" });
-// export const getWaterTendency = async () => await get({ url: 'http://218.242.28.28:800/smartEnergy/waterTendency' });
 
 //用水情况
 export const getWaterUsage = async () => await get({ url: baseUrl + "/smartEnergy/waterUsage" });
