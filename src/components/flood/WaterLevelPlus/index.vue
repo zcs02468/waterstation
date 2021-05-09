@@ -4,7 +4,7 @@
     <div class="panel-header">
       <Title title="河道及水池水位" />
     </div>
-    <div class="panel-bodyer">
+    <div class="panel-bodyer" v-if="waterList.length > 0">
       <div class="panel-top body-content">
         <div class="content-header">
           <span class="iconfont iconbolangn3 default"></span
@@ -167,41 +167,11 @@ export default {
   mixins: [comMinxins],
   data() {
     return {
-      defaultColor: "default",
       categoryArr: ["排水通畅", "排水放缓", "排水困难"],
       categoryArr1: ["安全水位", "可控水位", "警戒水位"],
       colorArr: ["default", "yellow", "orange"],
       waterList: [],
-      list: {
-        value1: "2.244",
-        value2: "1.966",
-        value3: "2.33",
-        value4: "2.327",
-
-        youle_level: "",
-        north_out_level: "",
-        south_out_level: "",
-        south_east_level: "",
-        south_west_level: "",
-        north_east_level: "",
-        north_west_level: "",
-        standardList: [],
-      },
-      classType: {
-        value1: "",
-        value2: "",
-        value3: "",
-
-        youle_level: "default",
-        north_out_level: "default",
-        south_out_level: "default",
-        south_east_level: "default",
-        south_west_level: "default",
-        north_east_level: "default",
-        north_west_level: "default",
-      },
       standardList: [2, 3],
-      alarmList: [0, 0, 0],
     };
   },
 
@@ -223,92 +193,6 @@ export default {
       let [err, res] = await getFloodControlAndWaterLevel();
       if (err || res.result != "true") return;
       const data = res.data;
-      // const data = [
-      //   {
-      //     name: "南水塔",
-      //     value: "2.32",
-      //     isOverproof: 1,
-      //     longitude: "32.54573",
-      //     latitude: "32.54573",
-      //   },
-      //   {
-      //     name: "南水塔",
-      //     value: "2.32",
-      //     isOverproof: 2,
-      //     longitude: "32.54573",
-      //     latitude: "32.54573",
-      //   },
-      //   {
-      //     name: "南水塔",
-      //     value: "2.32",
-      //     isOverproof: 3,
-      //     longitude: "32.54573",
-      //     latitude: "32.54573",
-      //   },
-      //   {
-      //     name: "南水塔",
-      //     value: "2.32",
-      //     isOverproof: 1,
-      //     longitude: "32.54573",
-      //     latitude: "32.54573",
-      //   },
-      //   {
-      //     name: "南水塔",
-      //     value: "2.32",
-      //     isOverproof: 1,
-      //     longitude: "32.54573",
-      //     latitude: "32.54573",
-      //   },
-      //   {
-      //     name: "南水塔",
-      //     value: "2.32",
-      //     isOverproof: 1,
-      //     longitude: "32.54573",
-      //     latitude: "32.54573",
-      //   },
-      //   {
-      //     name: "南水塔",
-      //     value: "2.32",
-      //     isOverproof: 3,
-      //     longitude: "32.54573",
-      //     latitude: "32.54573",
-      //   },
-      //   {
-      //     name: "南水塔",
-      //     value: "2.32",
-      //     isOverproof: 1,
-      //     longitude: "32.54573",
-      //     latitude: "32.54573",
-      //   },
-      //   {
-      //     name: "南水塔",
-      //     value: "2.32",
-      //     isOverproof: 1,
-      //     longitude: "32.54573",
-      //     latitude: "32.54573",
-      //   },
-      //   {
-      //     name: "南水塔",
-      //     value: "2.32",
-      //     isOverproof: 1,
-      //     longitude: "32.54573",
-      //     latitude: "32.54573",
-      //   },
-      //   {
-      //     name: "南水塔",
-      //     value: "2.32",
-      //     isOverproof: 1,
-      //     longitude: "32.54573",
-      //     latitude: "32.54573",
-      //   },
-      //   {
-      //     name: "南水塔",
-      //     value: "2.32",
-      //     isOverproof: 1,
-      //     longitude: "32.54573",
-      //     latitude: "32.54573",
-      //   },
-      // ];
       let flag = false;
       data.forEach((item) => {
         if (Number(item.isOverproof) > 1) flag = true;

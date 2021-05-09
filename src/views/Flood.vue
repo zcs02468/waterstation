@@ -134,9 +134,11 @@ export default {
     },
     watch: {
         autoUrlNum() {
-            let buttonAudio = document.getElementById("eventAudio");
-            buttonAudio.setAttribute("src", audioFile);
-            buttonAudio.play();
+            setTimeout(()=> {
+                let buttonAudio = document.getElementById("eventAudio");
+                buttonAudio.setAttribute("src", audioFile);
+                buttonAudio.play();
+            },100)
         }
     },
 };

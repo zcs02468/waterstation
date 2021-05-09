@@ -135,7 +135,7 @@ export default {
     },
     async getData() {
       let [err, res] = await getFloodWeatherInfo();
-      if (err || res.result == "true") return;
+      if (err || res.result != "true") return;
       let data = res.data;
       const { advisories, weatherInfos } = data;
       weatherInfos.forEach((item) => {

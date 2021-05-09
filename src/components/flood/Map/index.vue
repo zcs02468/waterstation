@@ -221,6 +221,10 @@ export default {
                     if( type == "wristband" ) {
                         that.info.location = `手环名称：${eaData.wristbandName}`
                         that.info.name = `设备描述：${eaData.deviceInfo}`
+
+                        that.info.num = ""
+                        that.info.userName = ""
+                        that.info.phone = "" 
                         that.isShowList = true;
                         that.isShowBtn = false;
                     }
@@ -234,6 +238,10 @@ export default {
                     if( type == "water" ) {
                         that.info.location = `名称：${eaData.name}`
                         that.info.name = `水位值：${eaData.value}`
+
+                        that.info.num = ""
+                        that.info.userName = ""
+                        that.info.phone = "" 
                         that.isShowList = true;
                         that.isShowBtn = false;
                     }
@@ -347,196 +355,30 @@ export default {
             this.isShowSuppliesModal = false;
             this.isShowList = false;
         },
-        getWristbandList() {
-            let arr = {
-                result: "true",
-                data: [
-                    {
-                        wristbandName:'示例：手环1（手环名称）',
-                        longitude:'113.50000',
-                        latitude:'22.20000',
-                        deviceInfo:'手环（设备描述）',
-                    },
-                    {
-                        wristbandName:'示例：手环1（手环名称）',
-                        longitude:'113.50000',
-                        latitude:'22.20000',
-                        deviceInfo:'手环（设备描述）',
-                    },
-                    {
-                        wristbandName:'示例：手环1（手环名称）',
-                        longitude:'113.50000',
-                        latitude:'22.20000',
-                        deviceInfo:'手环（设备描述）',
-                    }
-                ]
-            }
-            return [null,arr]
-        },
-        getSinglePawn() {
-            let arr = {
-                result: "true",
-                data: [
-                    {
-                        singlePawnName:'示例：设备1（设备名称）',
-                        longitude:'117.17',
-                        latitude:'31.52',
-                        videoUrl:'/dsfds/dsfsd',
-                    },
-                    {
-                        singlePawnName:'示例：设备1（设备名称）',
-                        longitude:'117.17',
-                        latitude:'31.52',
-                        videoUrl:'/dsfds/dsfsd',
-                    },
-                    {
-                        singlePawnName:'示例：设备1（设备名称）',
-                        longitude:'117.17',
-                        latitude:'31.52',
-                        videoUrl:'/dsfds/dsfsd',
-                    }
-                ]
-            }
-            return [null,arr]
-        },
-        getRiverCourseLevel() {
-            let arr = {
-                result: "true",
-                data: [
-                    {
-                    name: "南水塔",
-                    value: "2.32",
-                    isOverproof: 1,
-                        longitude:'116.46',
-                        latitude:'39.92',
-                    },
-                    {
-                    name: "南水塔",
-                    value: "2.32",
-                    isOverproof: 2,
-                        longitude:'106.26667',
-                        latitude:'38.46667',
-                    },
-                    {
-                    name: "南水塔",
-                    value: "2.32",
-                    isOverproof: 3,
-                        longitude:'116.46',
-                        latitude:'39.92',
-                    },
-                    {
-                    name: "南水塔",
-                    value: "2.32",
-                    isOverproof: 1,
-                        longitude:'116.46',
-                        latitude:'39.92',
-                    },
-                    {
-                    name: "南水塔",
-                    value: "2.32",
-                    isOverproof: 1,
-                        longitude:'116.46',
-                        latitude:'39.92',
-                    },
-                    {
-                    name: "南水塔",
-                    value: "2.32",
-                    isOverproof: 1,
-                        longitude:'116.46',
-                        latitude:'39.92',
-                    },
-                    {
-                    name: "南水塔",
-                    value: "2.32",
-                    isOverproof: 3,
-                        longitude:'114.48333',
-                        latitude:'38.03333',
-                    },
-                    {
-                    name: "南水塔",
-                    value: "2.32",
-                    isOverproof: 1,
-                        longitude:'116.46',
-                        latitude:'39.92',
-                    },
-                    {
-                    name: "南水塔",
-                    value: "2.32",
-                    isOverproof: 1,
-                        longitude:'116.46',
-                        latitude:'39.92',
-                    },
-                    {
-                    name: "南水塔",
-                    value: "2.32",
-                    isOverproof: 1,
-                        longitude:'116.46',
-                        latitude:'39.92',
-                    },
-                    {
-                    name: "南水塔",
-                    value: "2.32",
-                    isOverproof: 1,
-                        longitude:'116.46',
-                        latitude:'39.92',
-                    },
-                    {
-                    name: "南水塔",
-                    value: "2.32",
-                    isOverproof: 1,
-                        longitude:'116.46',
-                        latitude:'39.92',
-                    },
-                ]
-            }
-            return [null,arr]
-        },
         async getEaAllData() {
             // 地图手环点位 WristbandList
             // 地图执法记录仪点位 SinglePawn
             // 河道及水池水位和地图点位 RiverCourseLevel
 
-            const [EmergencyInfo,DeviceList,WristbandList,SinglePawn,RiverCourseLevel ] = Promise.all[
+            const [EmergencyInfo,DeviceList,WristbandList,SinglePawn,RiverCourseLevel ] = await Promise.all([
                 getEmergencyInfo(),
                 this.getDeviceList(),
                 getWristbandList(),
                 getSinglePawn(),
                 getFloodControlAndWaterLevel()
-            ]
+            ])
             if (EmergencyInfo[0]) throw '获取 应急队伍 应急物资 出错'
-            if (DeviceList[0] || DeviceList[1].result != 'true') throw '获取视频设备列表出错'
+            // if (DeviceList[0] || DeviceList[1].result != 'true') throw '获取视频设备列表出错'
             if (WristbandList[0] || WristbandList[1].result != 'true') throw '获取地图手环点位出错'
             if (SinglePawn[0] || SinglePawn[1].result != 'true') throw '获取地图执法记录仪点位出错'
             if (RiverCourseLevel[0] || RiverCourseLevel[1].result != 'true') throw '获取河道及水池水位和地图点位出错'
             return {
                 emergencyInfoData: JSON.parse(EmergencyInfo[1].message),
-                deviceListData: DeviceList[1].list,
+                deviceListData: DeviceList.list,
                 wristbandListData: WristbandList[1].data,
                 singlePawnData: SinglePawn[1].data,
                 riverCourseLevelData: RiverCourseLevel[1].data,
             }
-
-
-            
-            // let [WristbandList,SinglePawn,RiverCourseLevel ] = await Promise.all([
-            //     // getEmergencyInfo(),
-            //     // this.getDeviceList(),
-            //     this.getWristbandList(),
-            //     this.getSinglePawn(),
-            //     this.getRiverCourseLevel()
-            // ])
-            // // if (EmergencyInfo[0]) throw '获取 应急队伍 应急物资 出错'
-            // // if (DeviceList[0] || DeviceList[1].result != 'true') throw '获取视频设备列表出错'
-            // if (WristbandList[0] || WristbandList[1].result != 'true') throw '获取地图手环点位出错'
-            // if (SinglePawn[0] || SinglePawn[1].result != 'true') throw '获取地图执法记录仪点位出错'
-            // if (RiverCourseLevel[0] || RiverCourseLevel[1].result != 'true') throw '获取河道及水池水位和地图点位出错'
-            // return {
-            //     emergencyInfoData: {eaList:[],emList:[]},
-            //     deviceListData: [],
-            //     wristbandListData: WristbandList[1].data,
-            //     singlePawnData: SinglePawn[1].data,
-            //     riverCourseLevelData: RiverCourseLevel[1].data,
-            // }
         },
         async getData() {
             // this.getVideoToken();
@@ -562,11 +404,8 @@ export default {
             }else {
                 this.isShowTop = true;
                 const { emergencyInfoData,deviceListData,wristbandListData,singlePawnData,riverCourseLevelData } = await this.getEaAllData()
-                this.eaLists = emergencyInfoData.eaList;
-                this.emLists = emergencyInfoData.emList;
                 let eaList = [...emergencyInfoData.eaList,...deviceListData,...wristbandListData,...singlePawnData,...riverCourseLevelData];
                 let emList = [...emergencyInfoData.emList,...deviceListData];
-
                 // this.isShowTop = true;
                 // let [err,res] = await getEmergencyInfo()
                 // if( err ) return;
