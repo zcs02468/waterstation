@@ -12,7 +12,7 @@ export const get = ({ url, params }) =>
   })
     .then((res) => [null, res])
     .catch((err) => {
-      console.log("报错接口：" + url, err);
+      console.error("报错接口：" + url, err);
       return [err, null];
     });
 
@@ -27,6 +27,6 @@ export const post = ({ url, params, config }) =>
   Request.post(url, params, config)
     .then((res) => [null, res])
     .catch((err) => {
-      console.log(err);
+      console.error(err);
       return [err, null];
     });

@@ -12,17 +12,32 @@
             <div class="main-box">
                 <div class="colum">
                     <OnDuty />
-                    <WeatherPlus/>
-                    <Rainfall v-if="!show" />
-                    <WaterQuality v-if="show" />
+                    <!-- 生态环境监测  normal -->
+                    <template v-if="show">
+                        <WeatherPlus/>
+                        <WaterQuality/>
+                    </template>
+                    <!-- 防汛监测  flood -->
+                    <template v-if="!show">
+                        <Weather/>
+                        <Rainfall/>
+                    </template>
                 </div>
                 <div class="colum center">
                     <Map />
                     <EmergencyInfo />
                 </div>
                 <div class="colum">
-                    <WaterLevel />
-                    <Drainage />
+                    <!-- 生态环境监测  normal -->
+                    <template v-if="show">
+                        <WaterLevel/>
+                        <Drainage />
+                    </template>
+                    <!-- 防汛监测  flood -->
+                    <template v-else>
+                        <WaterLevelPlus/>
+                        <DrainagePlus/>
+                    </template>
                 </div>
             </div>
             <audio id="eventAudio" src=""></audio>
@@ -37,7 +52,7 @@ import Time from "../components/flood/Time";
 import Phone from "../components/flood/Phone";
 
 import OnDuty from "../components/flood/OnDuty";
-// import Weather from "../components/flood/Weather";
+import Weather from "../components/flood/Weather";
 import WeatherPlus from "../components/flood/WeatherPlus";
 import Rainfall from "../components/flood/Rainfall";
 // import Hydrops from "../components/flood/Hydrops";
@@ -48,7 +63,9 @@ import Map from "../components/flood/Map";
 import EmergencyInfo from "../components/flood/EmergencyInfo";
 
 import WaterLevel from "../components/flood/WaterLevel";
+import WaterLevelPlus from "../components/flood/WaterLevelPlus";
 import Drainage from "../components/flood/Drainage";
+import DrainagePlus from "../components/flood/DrainagePlus";
 
 //音频文件
 import audioFile from "../assets/audio/jinbao.mp3";
@@ -65,7 +82,7 @@ export default {
         Phone,
 
         OnDuty,
-        // Weather,
+        Weather,
         Rainfall,
         // Hydrops,
         WaterQuality,
@@ -75,7 +92,9 @@ export default {
         EmergencyInfo,
 
         WaterLevel,
+        WaterLevelPlus,
         Drainage,
+        DrainagePlus,
     },
     data() {
         return {

@@ -103,3 +103,18 @@ export const getDeviceList = async ()=> await get({url: baseUrl + '/smartEnergy/
 export const getDeviceUrl = async (deviceSerial)=> await get({url: baseUrl + `/smartEnergy/getDeviceUrl?deviceSerial=${deviceSerial}`});
 
 
+
+//获取气象信息
+export const getFloodWeatherInfo = async()=> await get({url: baseUrl + '/smartEnergy/getFloodWeatherInfo'});
+
+//地图手环点位
+export const getWristbandList = async ()=> await get({url: baseUrl + '/smartEnergy/findWristbandList'});
+
+//地图执法记录仪点位
+export const getSinglePawn = async ()=> await get({url: baseUrl + '/smartEnergy/findSinglePawn'});
+
+//河道及水池水位和地图点位
+export const getFloodControlAndWaterLevel = async()=> await get({url: baseUrl + '/smartEnergy/floodControlAndWaterLevel'});
+
+//排水泵运行情况
+export const getFloodControlAndDrainage = async()=> await get({url: baseUrl + '/smartEnergy/floodControlAndDrainage'});

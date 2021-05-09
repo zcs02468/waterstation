@@ -94,7 +94,7 @@ export default {
                 this.consumptionArr[2].list = this.parsingDayData(data.monthList, 'month');
                 this.setData();
             } catch (error) {
-                console.log('error', error);
+                console.error('error', error);
             }
         },
         setData() {
