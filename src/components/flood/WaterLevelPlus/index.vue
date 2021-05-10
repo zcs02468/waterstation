@@ -26,7 +26,7 @@
                 :textType="waterList[0].isOverproof"
                 :num="waterList[0].value"
               />
-              <div class="title">东泵站</div>
+              <div class="title">南水塔</div>
             </div>
             <div class="water-box">
               <Box
@@ -144,7 +144,7 @@
                 boxType="111111"
               />
               <div class="title text-center">
-                外环西河（雨水）友乐路泵站雨水
+                外环西河
               </div>
             </div>
           </div>

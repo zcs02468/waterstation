@@ -219,7 +219,7 @@ export default {
                     }
                     //手环
                     if( type == "wristband" ) {
-                        that.info.location = `手环名称：${eaData.wristbandName}`
+                        that.info.location = `名称：${eaData.wristbandName}`
                         that.info.name = `设备描述：${eaData.deviceInfo}`
 
                         that.info.num = ""
