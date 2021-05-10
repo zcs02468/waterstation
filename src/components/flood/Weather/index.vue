@@ -50,7 +50,7 @@
         >
       </div>
       <div class="weather-wrapper">
-        <div class="weather-box">
+        <div class="weather-box" v-if="advisories.length > 0">
           <el-carousel
             class="weather-carousel-box"
             direction="vertical"
@@ -69,6 +69,9 @@
               </div>
             </el-carousel-item>
           </el-carousel>
+        </div>
+        <div class="weather-box-info">
+          当前无天气预警信息
         </div>
       </div>
     </div>
@@ -276,5 +279,14 @@ export default {
     color: #ffffff;
     line-height: 25px;
   }
+}
+.weather-box-info {
+  width: 470px;
+  height: 80px;
+  border: 1px solid rgba(87, 189, 255, 0.56);
+  padding: 0 10px;
+  text-align: center;
+  line-height: 80px;
+  font-size: 18px;
 }
 </style>

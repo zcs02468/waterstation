@@ -7,19 +7,24 @@
             </div>
             <div class="select-box" v-if="isShowTop">
                 <ul>
+                    <li @click="selectClick('water')" class="li-water">
+                        <span>河道水位</span>
+                        <b :class="selectType == 'water' ? 'select' : ''"></b>
+                    </li>
                     <li @click="selectClick('team')">
                         <span>应急队伍</span>
                         <b :class="selectType == 'team' ? 'select' : ''"></b>
                     </li>
                     <li @click="selectClick('supplices')">
                         <span>应急仓库</span>
-                        <b :class="selectType == 'supplices' ? 'select' : ''"
-                        ></b>
+                        <b :class="selectType == 'supplices' ? 'select' : ''"></b>
                     </li>
                 </ul>
             </div>
         </div>
-        <div class="map-bodyer" :class="[ selectType == 'team' ? 'selectEaMap':'selectEmMap']">
+        <!-- <div class="map-bodyer" :class="[ selectType == 'team' ? 'selectEaMap':'selectEmMap']"> -->
+        <div class="map-bodyer" :class="[`select-${selectType}`]">
+            <div id="waterMap"></div>
             <div id="eaMap"></div>
             <div id="emMap"></div>
             <div class="team-mark" v-show="isShowList" @click="closeList">
@@ -86,7 +91,7 @@ export default {
     data() {
         return {
             isShowTop: false,
-            selectType: "team",
+            selectType: "water",
             showDialog: false,
             isShowList: false,
             isShowBtn: false,
@@ -97,7 +102,9 @@ export default {
             emLists: [],
             eaList: [],
             emList: [],
+            waterList:[],
             suppliesList:[],
+            waterBMap: null,
             eaBMap: null,
             emBMap: null,
             info:{
@@ -126,6 +133,48 @@ export default {
     methods: {
         updateData() {
             this.getData();
+        },
+        //河道水位
+        createWaterMap() {
+            if( !this.waterBMap ) {
+                this.waterBMap = new BMap.Map("waterMap");
+                // 创建地图实例yanmou
+                this.eaPoint = new BMap.Point(121.346817, 31.203347);
+                // 创建点坐标
+                this.waterBMap.centerAndZoom(this.eaPoint, 15);
+                this.waterBMap.enableScrollWheelZoom();
+                // 初始化地图，设置中心点坐标和地图级别
+                this.waterBMap.setMapStyleV2({
+                    styleId: "beda1b53ef0b60c06200da39068b025e",
+                });
+            }
+            // 编写自定义函数,创建标注
+            let that = this;
+            function addMarker(point,index) {
+                let nowData = that.eaList[index];
+                let marker;
+                let url = `/images/status${nowData.isOverproof}.png`
+                var myIcon = new BMap.Icon(url, new BMap.Size(30, 30));
+                marker = new BMap.Marker(point,{
+                    icon: myIcon
+                });
+                that.waterBMap.addOverlay(marker);
+                marker.addEventListener("click",function() {
+                    let eaData = that.eaList[index];
+                    //河道水位
+                    that.info.location = `名称：${eaData.name}`
+                    that.info.name = `水位值：${eaData.value}`
+
+                    that.info.num = ""
+                    that.info.userName = ""
+                    that.info.phone = "" 
+                    that.isShowList = true;
+                    that.isShowBtn = false;
+                });
+            }
+            this.waterList.forEach( (item,index)=> {
+                addMarker(new BMap.Point(item.longitude, item.latitude),index)
+            })
         },
         //应急队伍
         createEaMap() {
@@ -404,7 +453,7 @@ export default {
             }else {
                 this.isShowTop = true;
                 const { emergencyInfoData,deviceListData,wristbandListData,singlePawnData,riverCourseLevelData } = await this.getEaAllData()
-                let eaList = [...emergencyInfoData.eaList,...deviceListData,...wristbandListData,...singlePawnData,...riverCourseLevelData];
+                let eaList = [...emergencyInfoData.eaList,...deviceListData,...wristbandListData,...singlePawnData];
                 let emList = [...emergencyInfoData.emList,...deviceListData];
                 // this.isShowTop = true;
                 // let [err,res] = await getEmergencyInfo()
@@ -417,8 +466,10 @@ export default {
                 // let emList = [...data.emList,...list.list];
                 this.eaList = eaList;
                 this.emList = emList;
+                this.waterList = riverCourseLevelData
                 this.createEaMap();
                 this.createEmMap();
+                this.createWaterMap()
             }
         },
         async initNormal() {
@@ -474,7 +525,8 @@ export default {
     }
 }
 .select-box {
-    width: 215.5px;
+    // width: 327px;
+    // width: 215.5px;
     height: 30.5px;
     ul {
         width: 100%;
@@ -488,6 +540,7 @@ export default {
             height: 30.5px;
             line-height: 30.5px;
             position: relative;
+            width: 109px;
             span {
                 display: inline-block;
                 position: relative;
@@ -496,10 +549,10 @@ export default {
                 cursor: pointer;
             }
             &:nth-child(1) b {
-                border-right: none;
+                // border-right: none;
             }
             &:nth-child(2) b {
-                border-left: none;
+                // border-left: none;
             }
             .select {
                 background: #1847b9;
@@ -523,22 +576,57 @@ export default {
     margin-top: 13.5px;
     position: relative;
 }
-.selectEaMap {
-    #eaMap{
+//supplices   team     water
+.select-water {
+    #waterMap {
         z-index: 3;
     }
-    #emMap{
-        z-index: -1;
-    }
-}
-.selectEmMap {
     #eaMap{
         z-index: -1;
     }
     #emMap{
-        z-index: 3;
+        z-index: -2;
     }
 }
+.select-team {
+    #eaMap{
+        z-index: 3;
+    }
+    #waterMap {
+        z-index: -1;
+    }
+    #emMap{
+        z-index: -2;
+    }
+}
+.select-supplices {
+    #emMap{
+        z-index: 3;
+    }
+    #waterMap {
+        z-index: -1;
+    }
+    #eaMap{
+        z-index: -2;
+    }
+}
+
+// .selectEaMap {
+//     #eaMap{
+//         z-index: 3;
+//     }
+//     #emMap{
+//         z-index: -1;
+//     }
+// }
+// .selectEmMap {
+//     #eaMap{
+//         z-index: -1;
+//     }
+//     #emMap{
+//         z-index: 3;
+//     }
+// }
 #emMap {
     height: 100%;
     width: 100%;
@@ -549,6 +637,13 @@ export default {
 #eaMap {
     height: 100%;
     width: 100%;
+}
+#waterMap {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 .team-mark {
     position: absolute;
