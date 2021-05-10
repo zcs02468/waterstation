@@ -240,6 +240,7 @@ export default {
                         marker = new BMap.Marker(point,{
                             icon: myIcon
                         });
+                        marker.setTitle(nowData.singlePawnName)
                     }
                     if( type == 'water' ) {
                         let url = `/images/status${nowData.isOverproof}.png`
