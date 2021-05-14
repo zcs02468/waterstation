@@ -33,7 +33,7 @@
                         <div class="back"></div>
                     </div>
                     <div class="info-back"></div>
-                    <button class="look-detail" @click="opSuppliesModal(info.materialsWarehouse)" v-show="isShowBtn">详细物资</button>
+                    <button class="look-detail" @click="opSuppliesModal(info.key)" v-show="isShowBtn">详细物资</button>
                     <ul>
                         <li v-show="info.location"><span></span>{{info.location}}</li>
                         <li v-show="info.name"><span></span>{{info.name}}</li>
@@ -67,6 +67,11 @@
                 :type="suppliesModalType" 
                 @closeDailog="closeDailog"
             />
+            <TeamModal 
+                v-if="isShowTeamModal" 
+                :type="teamModalType" 
+                @closeDailog="closeDailog"
+            />
             <videoDialog
                 ref="videoDialogRef"
                 v-if="isShowVideo"
@@ -82,6 +87,7 @@ import Title from "../../common/Title";
 import TeamDialog from "./TeamDialog";
 import SuppliesDialog from "./SuppliesDialog";
 import SuppliesModal from "./suppliesModal"
+import TeamModal from "./TeamModal"
 import videoDialog from "./videoDialog"
 import comMinxins from "../../common/comMinxins"
 import {getEmergencyInfo, getDeviceList, getDeviceUrl, getWristbandList, getSinglePawn, getFloodControlAndWaterLevel} from "../../../axios"
@@ -97,6 +103,8 @@ export default {
             isShowBtn: false,
             isShowSuppliesModal: false,
             suppliesModalType: '',
+            isShowTeamModal: false,
+            teamModalType:'',
             teamIndex: '',
             eaLists: [],
             emLists: [],
@@ -124,7 +132,8 @@ export default {
         TeamDialog,
         SuppliesDialog,
         SuppliesModal,
-        videoDialog
+        videoDialog,
+        TeamModal
     },
 
     mounted() {
@@ -151,7 +160,8 @@ export default {
             // 编写自定义函数,创建标注
             let that = this;
             function addMarker(point,index) {
-                let nowData = that.eaList[index];
+                let nowData = that.waterList[index];
+                console.log( "nowData", nowData );
                 let marker;
                 let url = `/images/status${nowData.isOverproof}.png`
                 var myIcon = new BMap.Icon(url, new BMap.Size(30, 30));
@@ -160,7 +170,7 @@ export default {
                 });
                 that.waterBMap.addOverlay(marker);
                 marker.addEventListener("click",function() {
-                    let eaData = that.eaList[index];
+                    let eaData = that.waterList[index];
                     //河道水位
                     that.info.location = `名称：${eaData.name}`
                     that.info.name = `水位值：${eaData.value}`
@@ -265,7 +275,8 @@ export default {
                         that.info.userName = `现场负责人：${eaData.chargeLeadName}`       //现场负责人：13555555555
                         that.info.phone = `联系电话：${eaData.phone}`       //联系电话：13555555555
                         that.isShowList = true;
-                        that.isShowBtn = false;
+                        that.isShowBtn = true;
+                        that.info.key = eaData.id
                     }
                     //手环
                     if( type == "wristband" ) {
@@ -366,7 +377,7 @@ export default {
                         that.info.num = ''        //人数：XXXXX
                         that.info.userName = `保管人：${emList.keeperName}`          //现场负责人联系电话：13555555555
                         that.info.phone = `联系电话：${emList.phone}`          //现场负责人联系电话：13555555555
-                        that.info.materialsWarehouse = emList.materialsWarehouse
+                        that.info.key = emList.materialsWarehouse
                         that.isShowList = true;
                         that.isShowBtn = true;
                     }
@@ -376,10 +387,15 @@ export default {
                 addMarker(new BMap.Point(item.longitude, item.latitude),index)
             })
         },
-        opSuppliesModal(location) {
+        opSuppliesModal(key) {
             this.closeDailog();
-            this.suppliesModalType = location;
-            this.isShowSuppliesModal = true;
+            if( this.selectType == 'supplices' ){
+                this.suppliesModalType = key;
+                this.isShowSuppliesModal = true;
+            }else {
+                this.teamModalType = key;
+                this.isShowTeamModal = true;
+            }
         },
         openDialog() {
             if( this.isShowVideo ) {
@@ -395,6 +411,8 @@ export default {
             this.isShowList = false;
             this.showDialog = false;
             this.isShowSuppliesModal = false;
+            this.teamModalType = null;
+            this.isShowTeamModal = false;
         },
         closeVideoDailog() {
             this.isShowVideo = false;
@@ -465,6 +483,7 @@ export default {
                 // this.emLists = data.emList;
                 // let eaList = [...data.eaList,...list.list];
                 // let emList = [...data.emList,...list.list];
+                console.log( "riverCourseLevelData",riverCourseLevelData );
                 this.eaList = eaList;
                 this.emList = emList;
                 this.waterList = riverCourseLevelData
@@ -655,6 +674,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 5;
     // pointer-events: none;
 }
 //rgba(109, 214, 255, 0.44)

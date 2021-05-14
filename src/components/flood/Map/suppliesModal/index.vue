@@ -10,6 +10,8 @@
                         <li>
                             <div>物资仓库点位</div>
                             <div>物资名称</div>
+                            <div>规格型号</div>
+                            <div>计量单位</div>
                             <div>数量</div>
                         </li>
                     </ul>
@@ -17,6 +19,8 @@
                         <li v-for="(item, i) in dataList" :key="`supplies${i}`">
                             <div>{{ item.materialsWarehouse }}</div>
                             <div>{{ item.materialsName }}</div>
+                            <div>{{ item.specification}}</div>
+                            <div>{{ item.measurementUnit}}</div>
                             <div>{{ item.materials || 0 }}</div>
                         </li>
                     </ul>
@@ -151,7 +155,7 @@ export default {
                 text-align: center;
                 // line-height: 34px;
                 border-right: 1px solid rgba(87, 189, 255, 0.56);
-                padding: 0 10px;
+                // padding: 0 10px;
                 display: table-cell;
                 vertical-align: middle;
                 width: 166px;
@@ -161,9 +165,9 @@ export default {
                 // &:nth-child(2) {
                 //     width: 120px;
                 // }
-                // &:nth-child(3) {
-                //     width: 80px;
-                // }
+                &:nth-child(3) {
+                    width: 90px;
+                }
                 // &:nth-child(1) {
                 //     width: 180px;
                 // }
@@ -173,9 +177,12 @@ export default {
                 // &:nth-child(3) {
                 //     width: 80px;
                 // }
-                // &:nth-child(4) {
-                //     width: 120px;
-                // }
+                &:nth-child(4) {
+                    width: 90px;
+                }
+                &:nth-child(5) {
+                    width: 80px;
+                }
             }
         }
         .head {
