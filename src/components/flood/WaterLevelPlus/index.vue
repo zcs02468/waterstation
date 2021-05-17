@@ -310,5 +310,6 @@ export default {
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  margin-left: 10px;
 }
 </style>

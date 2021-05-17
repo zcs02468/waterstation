@@ -3,7 +3,7 @@
     <div class="panel">
         <div class="map-header">
             <div @click="openDialog">
-                <Title class="title" :title="isShowVideo ? '关闭监控' : '查看全部' " />
+                <Title class="title" :title="isShowVideo ? '关闭监控' : '查看全部'" />
             </div>
             <div class="select-box" v-if="isShowTop">
                 <ul>
@@ -161,13 +161,13 @@ export default {
             let that = this;
             function addMarker(point,index) {
                 let nowData = that.waterList[index];
-                console.log( "nowData", nowData );
                 let marker;
                 let url = `/images/status${nowData.isOverproof}.png`
                 var myIcon = new BMap.Icon(url, new BMap.Size(30, 30));
                 marker = new BMap.Marker(point,{
                     icon: myIcon
                 });
+                marker.setTitle(nowData.name)
                 that.waterBMap.addOverlay(marker);
                 marker.addEventListener("click",function() {
                     let eaData = that.waterList[index];
@@ -479,11 +479,10 @@ export default {
                 // if( err ) return;
                 // let data = JSON.parse(res.message);
                 // let list = await this.getDeviceList();
-                // this.eaLists = data.eaList;
-                // this.emLists = data.emList;
+                this.eaLists = [...emergencyInfoData.eaList];
+                this.emLists = [...emergencyInfoData.emList];
                 // let eaList = [...data.eaList,...list.list];
                 // let emList = [...data.emList,...list.list];
-                console.log( "riverCourseLevelData",riverCourseLevelData );
                 this.eaList = eaList;
                 this.emList = emList;
                 this.waterList = riverCourseLevelData
@@ -523,9 +522,7 @@ export default {
             document.execCommand('copy');
             document.body.removeChild(el);
         }
-    },
-
-    computed: {},
+    }
 };
 </script>
 <style lang="scss" scoped>
