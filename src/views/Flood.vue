@@ -29,15 +29,15 @@
                 </div>
                 <div class="colum">
                     <!-- 生态环境监测  normal -->
-                    <template v-if="show">
+                    <!-- <template v-if="show">
                         <WaterLevel/>
                         <Drainage />
-                    </template>
+                    </template> -->
                     <!-- 防汛监测  flood -->
-                    <template v-else>
+                    <!-- <template v-else> -->
                         <WaterLevelPlus/>
                         <DrainagePlus/>
-                    </template>
+                    <!-- </template> -->
                 </div>
             </div>
             <audio id="eventAudio" src=""></audio>

@@ -135,7 +135,7 @@
                 :num="waterList[10].value"
                 boxType="111111"
               />
-              <div class="title text-center">友乐路泵站</div>
+              <div class="title">友乐路泵站</div>
             </div>
             <div class="water-box end-water-content-box">
               <Box
@@ -143,7 +143,7 @@
                 :num="waterList[11].value"
                 boxType="111111"
               />
-              <div class="title text-center">
+              <div class="title">
                 外环西河
               </div>
             </div>
