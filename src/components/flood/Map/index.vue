@@ -232,6 +232,7 @@ export default {
                         background:'none',color:'#fff',border:'none'//只要对label样式进行设置就可达到在标注图标上显示数字的效果
                     });
                     marker.setLabel(label);//显示地理名称 a 
+                    marker.setTitle(nowData.armyPlace)
                 }else {
                     if( type == 'video' ) {
                         var myIcon = new BMap.Icon("/images/camera.png", new BMap.Size(30, 30));
@@ -357,11 +358,11 @@ export default {
                     if( index >= 10 ) {
                         var label = new BMap.Label(index+1, {
                             offset : new BMap.Size(0, 4)
-                        }); 
+                        });
                     }else {
                         var label = new BMap.Label(index+1, {
                             offset : new BMap.Size(4, 4)
-                        }); 
+                        });
                     }
                     label.setStyle({
                         background:'none',color:'#fff',border:'none'//只要对label样式进行设置就可达到在标注图标上显示数字的效果
@@ -374,12 +375,13 @@ export default {
                     if( emList.deviceSerial ) {
                         that.getDeviceUrl(emList.deviceSerial);
                     }else {
-                        that.info.location = `存放地点：${emList.materialsWarehouse}`   //队伍驻点：
+                        // that.info.location = `存放地点：${emList.materialsWarehouse}`   //队伍驻点：
+                        that.info.location = `存放地点：${emList.storagePlace}`   //队伍驻点：
                         that.info.name = ``      //队伍名称：XXXXX
                         that.info.num = ''        //人数：XXXXX
                         that.info.userName = `保管人：${emList.keeperName}`          //现场负责人联系电话：13555555555
                         that.info.phone = `联系电话：${emList.phone}`          //现场负责人联系电话：13555555555
-                        that.info.key = emList.materialsWarehouse
+                        that.info.key = emList.id
                         that.isShowList = true;
                         that.isShowBtn = true;
                     }
@@ -424,6 +426,7 @@ export default {
             this.showDialog = false;
             this.isShowSuppliesModal = false;
             this.isShowList = false;
+            this.isShowTeamModal = false;
         },
         async getEaAllData() {
             // 地图手环点位 WristbandList

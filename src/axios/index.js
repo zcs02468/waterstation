@@ -90,7 +90,7 @@ export const getAlarm = async ()=> await get({url: baseUrl + '/smartEnergy/getAl
 
 // 二十六、	根据物资仓库点位获取应急物资信息接口
 // 1.	接口访问地址：http://47.110.226.205:8980/smartEnergy/getEmergencyMaterials?materialsWarehouse=
-export const getEmergencyMaterials = async (location)=> await get({url: baseUrl + `/smartEnergy/getEmergencyMaterials?materialsWarehouse=${location}`});
+export const getEmergencyMaterials = async (materialsId)=> await get({url: baseUrl + `/smartEnergy/getEmergencyMaterials?materialsId=${materialsId}`});
 
 //获取视频token
 export const getVideoToken = async ()=> await get({url: baseUrl + '/smartEnergy/token'});

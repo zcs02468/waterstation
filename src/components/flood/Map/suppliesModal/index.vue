@@ -17,7 +17,8 @@
                     </ul>
                     <ul class="body">
                         <li v-for="(item, i) in dataList" :key="`supplies${i}`">
-                            <div>{{ item.materialsWarehouse }}</div>
+                            <!-- <div>{{ item.materialsWarehouse }}</div> -->
+                            <div>{{ item.storagePlace }}</div>
                             <div>{{ item.materialsName }}</div>
                             <div>{{ item.specification}}</div>
                             <div>{{ item.measurementUnit}}</div>
@@ -79,8 +80,8 @@ export default {
             let nextVal = val * this.pageSize;
             this.dataList = this.propList.slice(lastVal, nextVal);
         },
-        async getEmergencyMaterials(location) {
-            let [err,res] = await getEmergencyMaterials(location);
+        async getEmergencyMaterials(materialsId) {
+            let [err,res] = await getEmergencyMaterials(materialsId);
             if( err ) return;
             let data = JSON.parse(res.message);
             this.propList = [];
@@ -109,8 +110,8 @@ export default {
     background: rgba(7, 7, 7, 0.43);
     z-index: 999;
     .dialog-box {
-        width: 530px;
-        height: 293px;
+        width: 700px;
+        min-height: 293px;
         border: 1px solid #57bdff;
         position: relative;
         padding: 0 15px;
@@ -166,7 +167,7 @@ export default {
                 //     width: 120px;
                 // }
                 &:nth-child(3) {
-                    width: 90px;
+                    width: 160px;
                 }
                 // &:nth-child(1) {
                 //     width: 180px;

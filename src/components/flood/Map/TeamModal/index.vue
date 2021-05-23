@@ -112,7 +112,7 @@ export default {
   z-index: 999;
   .dialog-box {
     width: 700px;
-    height: 293px;
+    min-height: 293px;
     border: 1px solid #57bdff;
     position: relative;
     padding: 0 15px;
