@@ -33,7 +33,8 @@
                         <div class="back"></div>
                     </div>
                     <div class="info-back"></div>
-                    <button class="look-detail" @click="opSuppliesModal(info.key)" v-show="isShowBtn">详细物资</button>
+                    <!-- <button class="look-detail" @click="opSuppliesModal(info.key)" v-show="isShowBtn">详细物资</button> -->
+                    <button class="look-detail" @click="opSuppliesModal(info.key)" v-show="isShowBtn">{{selectType == 'team' ? '详细人员' : '详细物资'}}</button>
                     <ul>
                         <li v-show="info.location"><span></span>{{info.location}}</li>
                         <li v-show="info.name"><span></span>{{info.name}}</li>
@@ -244,6 +245,7 @@ export default {
                         marker = new BMap.Marker(point,{
                             icon: myIcon
                         });
+                        marker.setTitle(nowData.wristbandName)
                     }
                     if( type == 'singlePawn' ) {
                         var myIcon = new BMap.Icon("/images/lawEnforcement.png", new BMap.Size(30, 30));
@@ -372,7 +374,7 @@ export default {
                     if( emList.deviceSerial ) {
                         that.getDeviceUrl(emList.deviceSerial);
                     }else {
-                        that.info.location = `物资仓库点位：${emList.materialsWarehouse}`   //队伍驻点：
+                        that.info.location = `存放地点：${emList.materialsWarehouse}`   //队伍驻点：
                         that.info.name = ``      //队伍名称：XXXXX
                         that.info.num = ''        //人数：XXXXX
                         that.info.userName = `保管人：${emList.keeperName}`          //现场负责人联系电话：13555555555
@@ -428,7 +430,7 @@ export default {
             // 地图执法记录仪点位 SinglePawn
             // 河道及水池水位和地图点位 RiverCourseLevel
 
-            const [EmergencyInfo,DeviceList,WristbandList,SinglePawn,RiverCourseLevel ] = await Promise.all([
+            const [EmergencyInfo,DeviceList,WristbandList,SinglePawn,RiverCourseLevel] = await Promise.all([
                 getEmergencyInfo(),
                 this.getDeviceList(),
                 getWristbandList(),

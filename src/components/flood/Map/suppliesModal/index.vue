@@ -8,7 +8,7 @@
                 <div class="content" v-if="isShow">
                     <ul class="head">
                         <li>
-                            <div>物资仓库点位</div>
+                            <div>存放地点</div>
                             <div>物资名称</div>
                             <div>规格型号</div>
                             <div>计量单位</div>
