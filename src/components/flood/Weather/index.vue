@@ -70,7 +70,7 @@
             </el-carousel-item>
           </el-carousel>
         </div>
-        <div class="weather-box-info">
+        <div class="weather-box-info" v-else>
           当前无天气预警信息
         </div>
       </div>
