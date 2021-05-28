@@ -136,7 +136,11 @@ export default {
         videoDialog,
         TeamModal
     },
-
+    created() {
+        if( this.$route.name == "Normal" ) {
+            this.selectType = 'team'
+        }
+    },
     mounted() {
         this.getData()
     },
