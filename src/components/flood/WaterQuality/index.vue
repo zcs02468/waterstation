@@ -59,7 +59,6 @@ export default {
       let [err, res] = await getRiverWaterQuality();
       if (err) return;
       const data = res.data;
-      console.log( "data", data );
       this.gradeName1 = data.gradeName1;
       this.gradeName2 = data.gradeName2;
       this.list = data.riverWaterQualitys;
