@@ -83,6 +83,7 @@ export const getRainfall = async () => await get({ url: baseUrl + "/smartEnergy/
 export const getWeather = async () => await get({url:baseUrl + '/smartEnergy/weatherInformation'});
 
 //二十四、	河道水质（五类水）接口
+// export const getRiverWaterQuality = async ()=> await get({url: baseUrl + '/smartEnergy/riverWaterQuality'});
 export const getRiverWaterQuality = async ()=> await get({url: baseUrl + '/smartEnergy/riverWaterQuality'});
 
 //二十五、	获取声音报警配置接口
