@@ -17,17 +17,11 @@
             <div class="line">
               标准：{{ item.standardJudge }}{{ item.standardValue }}
             </div>
-            <div
-              class="line"
-              :class="{ select: isSelect(item, 'isQualified1') }"
-            >
-              1#：{{ item.isQualified1 }}
+            <div class="line" :class="{ select: !item.isQualified1 }">
+              1#：{{ item.currentValue1 }}
             </div>
-            <div
-              class="line"
-              :class="{ select: isSelect(item, 'isQualified2') }"
-            >
-              2#：{{ item.isQualified2 }}
+            <div class="line" :class="{ select: !item.isQualified2 }">
+              2#：{{ item.currentValue2 }}
             </div>
           </div>
         </div>
@@ -65,6 +59,7 @@ export default {
       let [err, res] = await getRiverWaterQuality();
       if (err) return;
       const data = res.data;
+      console.log( "data", data );
       this.gradeName1 = data.gradeName1;
       this.gradeName2 = data.gradeName2;
       this.list = data.riverWaterQualitys;
@@ -94,30 +89,7 @@ export default {
       // });
       // this.list = arr;
       // this.list.splice();
-    },
-    isSelect(item, key) {
-      const value = item[key];
-      let flag = false;
-      if (item.standardJudge == "＜=" || item.standardJudge == "<=") {
-        value > item.standardValue && (flag = true);
-      }
-      if (item.standardJudge == "<") {
-        value >= item.standardValue && (flag = true);
-      }
-      if (item.standardJudge == ">") {
-        value <= item.standardValue && (flag = true);
-      }
-      if (item.standardJudge == ">=") {
-        value < item.standardValue && (flag = true);
-      }
-      if (item.standardJudge == "") {
-        let arr1 = item.standardValue.split("~");
-        if (value < arr1[0] || value > arr1[1]) {
-          flag = true;
-        }
-      }
-      return flag;
-    },
+    }
   },
 
   computed: {},
