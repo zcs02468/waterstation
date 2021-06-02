@@ -25,7 +25,7 @@
           </ul>
         </div>
       </div>
-      <ul class="tooltip" v-if="selectType == 'RainfallPerHour'">
+      <!-- <ul class="tooltip">
         <li v-for="(item, index) in tooltipArr" :key="`Rainfall${index}`">
           <span
             class="iconfont iconquxian"
@@ -34,7 +34,7 @@
           <span class="name">{{ item }}</span>
         </li>
       </ul>
-      <div class="markline-box" v-if="selectType == 'RainfallPerHour'">
+      <div class="markline-box">
         <div class="markline-item">
           <div class="line-box">
             <span class="round"></span>
@@ -59,14 +59,24 @@
           </div>
           <div class="name">五年一遇</div>
         </div>
-      </div>
+      </div> -->
     </div>
     <div class="warp-container">
       <!-- <div class="back"></div> -->
       <div
         class="charts"
-        :class="`${selectType}_charts`"
-        id="chart_Rainfall"
+        id="chart_Rainfall1"
+        v-if="selectType == 'CumulativeRainfallDay'"
+      ></div>
+      <div
+        class="charts"
+        id="chart_Rainfall2"
+        v-if="selectType == 'RainIntensityPerHour'"
+      ></div>
+      <div
+        class="charts"
+        id="chart_Rainfall3"
+        v-if="selectType == 'RainfallPerHour'"
       ></div>
     </div>
   </div>
@@ -112,6 +122,222 @@ const color2 = [
     bg: "rgba(109, 200, 236, .42)",
   },
 ];
+const tooltipArr = [
+  "北调节泵站雨量",
+  "南调节泵站雨量",
+  "北雨污水泵站雨量",
+  "南雨污水泵站雨量",
+  "北水塔河道雨量",
+  "南水塔河道雨量",
+];
+const RainfallPerHourOptions = {
+  color: color,
+  tooltip: {
+    // trigger: "axis",
+  },
+  grid: {
+    left: "5%",
+    right: "7%",
+    bottom: "10%",
+    top: "10%",
+    containLabel: true,
+  },
+  xAxis: {
+    type: "category",
+    axisLine: {
+      show: false,
+    },
+    axisTick: {
+      show: false,
+    },
+    //   splitLine: {
+    //     show: true,
+    //     lineStyle: {
+    //       color: "rgba(245, 245, 245, 0.33)",
+    //     },
+    //   },
+    axisLabel: {
+      show: true,
+      textStyle: {
+        color: "#fff",
+      },
+    },
+    data: [],
+  },
+  yAxis: {
+    type: "value",
+    min: 70,
+    axisLine: {
+      show: false,
+    },
+    axisTick: {
+      show: false,
+    },
+    //   splitLine: {
+    //     lineStyle: {
+    //       color: "rgba(245, 245, 245, 0.33)",
+    //     },
+    //   },
+    axisLabel: {
+      show: true,
+      textStyle: {
+        color: "#fff",
+      },
+    },
+  },
+  series: [],
+};
+
+const CumulativeRainfallDayOptions = {
+  color: color,
+  tooltip: {
+    // trigger: "axis",
+  },
+  legend: {
+    show: true,
+    x: "30",
+    y: "35",
+    icon: "stack",
+    itemWidth: 10,
+    itemHeight: 10,
+    textStyle: {
+      color: "rgba(255, 255, 255, 1)",
+    },
+    data: tooltipArr,
+  },
+  dataZoom: [
+    {
+      //   type: "slider",
+      show: true,
+      //   xAxisIndex: [0],
+      //   left: "9%",
+      bottom: 20,
+      start: 0,
+      end: 100, //初始化滚动条
+    },
+  ],
+  grid: {
+    left: "5%",
+    right: "7%",
+    bottom: "13%",
+    top: "25%",
+    containLabel: true,
+  },
+  xAxis: {
+    type: "category",
+    axisLine: {
+      show: false,
+    },
+    axisTick: {
+      show: false,
+    },
+    //   splitLine: {
+    //     show: true,
+    //     lineStyle: {
+    //       color: "rgba(245, 245, 245, 0.33)",
+    //     },
+    //   },
+    axisLabel: {
+      show: true,
+      textStyle: {
+        color: "#fff",
+      },
+    },
+    data: [],
+  },
+  yAxis: {
+    type: "value",
+    min: 0,
+    axisLine: {
+      show: false,
+    },
+    axisTick: {
+      show: false,
+    },
+    //   splitLine: {
+    //     lineStyle: {
+    //       color: "rgba(245, 245, 245, 0.33)",
+    //     },
+    //   },
+    axisLabel: {
+      show: true,
+      textStyle: {
+        color: "#fff",
+      },
+    },
+  },
+  series: [],
+};
+const RainIntensityPerHourOptions = {
+  color: color,
+  tooltip: {
+    // trigger: "axis",
+  },
+  legend: {
+    show: true,
+    x: "30",
+    y: "35",
+    icon: "stack",
+    itemWidth: 10,
+    itemHeight: 10,
+    textStyle: {
+      color: "rgba(255, 255, 255, 1)",
+    },
+    data: tooltipArr,
+  },
+  grid: {
+    left: "5%",
+    right: "7%",
+    bottom: "13%",
+    top: "25%",
+    containLabel: true,
+  },
+  xAxis: {
+    type: "category",
+    axisLine: {
+      show: false,
+    },
+    axisTick: {
+      show: false,
+    },
+    //   splitLine: {
+    //     show: true,
+    //     lineStyle: {
+    //       color: "rgba(245, 245, 245, 0.33)",
+    //     },
+    //   },
+    axisLabel: {
+      show: true,
+      textStyle: {
+        color: "#fff",
+      },
+    },
+    data: [],
+  },
+  yAxis: {
+    type: "value",
+    min: 0,
+    axisLine: {
+      show: false,
+    },
+    axisTick: {
+      show: false,
+    },
+    //   splitLine: {
+    //     lineStyle: {
+    //       color: "rgba(245, 245, 245, 0.33)",
+    //     },
+    //   },
+    axisLabel: {
+      show: true,
+      textStyle: {
+        color: "#fff",
+      },
+    },
+  },
+  series: [],
+};
+
 export default {
   name: "Rainfall",
   mixins: [comMinxins],
@@ -119,14 +345,7 @@ export default {
     return {
       color: color,
       color2: color2,
-      tooltipArr: [
-        "北调节泵站雨量",
-        "南调节泵站雨量",
-        "北雨污水泵站雨量",
-        "南雨污水泵站雨量",
-        "北水塔河道雨量",
-        "南水塔河道雨量",
-      ],
+      tooltipArr: tooltipArr,
       myChart: null,
       allData: {
         //小时雨量
@@ -140,6 +359,9 @@ export default {
         heavyRainOnceInFiveYears: 0, //示例：56（五年一遇）
       },
       selectType: "RainfallPerHour",
+      RainfallPerHourOptions: RainfallPerHourOptions,
+      CumulativeRainfallDayOptions: CumulativeRainfallDayOptions,
+      RainIntensityPerHourOptions: RainIntensityPerHourOptions,
     };
   },
 
@@ -156,9 +378,6 @@ export default {
     liClick(type) {
       this.selectType = type;
       this[`show${type}`]();
-      let h = this.selectType == "RainfallPerHour" ? 380 : 450;
-      this.myChart.getDom().style.height = h + "px";
-      this.myChart.resize();
     },
     updateData() {
       this.getData();
@@ -183,10 +402,9 @@ export default {
       this.setCumulativeRainfallDay(cumulativeRainfallDay);
       this.setRainIntensityPerHour(rainIntensityPerHour);
 
-      this[`show${this.selectType}`]();
-      let h = this.selectType == "RainfallPerHour" ? 380 : 460;
-      this.myChart.getDom().style.height = h + "px";
-      this.myChart.resize();
+      //   this.showRainfallPerHour();
+      //   this.showCumulativeRainfallDay();
+      //   this.showRainIntensityPerHour();
     },
     //每小时雨强
     //当日累计雨量
@@ -289,71 +507,89 @@ export default {
     },
 
     showRainfallPerHour() {
-      this.option.series = this.allData.rainfallPerHour.series;
-      this.option.xAxis.data = this.allData.rainfallPerHour.x;
-      this.option.yAxis.min = 70;
-      this.option.grid = {
-        left: "5%",
-        right: "7%",
-        bottom: "10%",
-        top: "10%",
-        containLabel: true,
-      };
-      this.option.dataZoom[0].show = false;
-      this.option.legend && (this.option.legend.show = false);
-      this.myChart.setOption(this.option);
+      this.RainfallPerHourOptions.series = this.allData.rainfallPerHour.series;
+      this.RainfallPerHourOptions.xAxis.data = this.allData.rainfallPerHour.x;
+      //   this.option.yAxis.min = 70;
+      //   this.option.grid = {
+      //     left: "5%",
+      //     right: "7%",
+      //     bottom: "10%",
+      //     top: "10%",
+      //     containLabel: true,
+      //   };
+      //   this.option.dataZoom = [
+      //     {
+      //       show: false,
+      //     },
+      //   ];
+      this.myChart.setOption(this.RainfallPerHourOptions);
+
     },
     showCumulativeRainfallDay() {
-      this.option.series = this.allData.cumulativeRainfallDay.series;
-      this.option.xAxis.data = this.allData.cumulativeRainfallDay.x;
-      this.option.yAxis.min = 0;
-      this.option.grid = {
-        left: "5%",
-        right: "7%",
-        bottom: "13%",
-        top: "25%",
-        containLabel: true,
-      };
-      this.option.legend = {
-        show: true,
-        x: "30",
-        y: "35",
-        icon: "stack",
-        itemWidth: 10,
-        itemHeight: 10,
-        textStyle: {
-          color: "rgba(255, 255, 255, 1)",
-        },
-        data: this.tooltipArr,
-      };
-      this.option.dataZoom[0].show = true;
-      this.myChart.setOption(this.option);
+      this.CumulativeRainfallDayOptions.series = this.allData.cumulativeRainfallDay.series;
+      this.CumulativeRainfallDayOptions.xAxis.data = this.allData.cumulativeRainfallDay.x;
+      //   this.option.yAxis.min = 0;
+      //   this.option.grid = {
+      //     left: "5%",
+      //     right: "7%",
+      //     bottom: "13%",
+      //     top: "25%",
+      //     containLabel: true,
+      //   };
+      //   this.option.legend = {
+      //     show: true,
+      //     x: "30",
+      //     y: "35",
+      //     icon: "stack",
+      //     itemWidth: 10,
+      //     itemHeight: 10,
+      //     textStyle: {
+      //       color: "rgba(255, 255, 255, 1)",
+      //     },
+      //     data: this.tooltipArr,
+      //   };
+      //   this.option.dataZoom = [
+      //     {
+      //       //   type: "slider",
+      //       show: true,
+      //       //   xAxisIndex: [0],
+      //       //   left: "9%",
+      //       bottom: 20,
+      //       start: 0,
+      //       end: 100, //初始化滚动条
+      //     },
+      //   ];
+      this.myChart.setOption(this.CumulativeRainfallDayOptions);
     },
     showRainIntensityPerHour() {
-      this.option.series = this.allData.rainIntensityPerHour.series;
-      this.option.xAxis.data = this.allData.rainIntensityPerHour.x;
-      this.option.yAxis.min = 0;
-      this.option.grid = {
-        left: "5%",
-        right: "7%",
-        bottom: "13%",
-        top: "25%",
-        containLabel: true,
-      };
-      this.option.legend = {
-        show: true,
-        x: "30",
-        y: "35",
-        icon: "stack",
-        itemWidth: 10,
-        itemHeight: 10,
-        textStyle: {
-          color: "rgba(255, 255, 255, 1)",
-        },
-        data: this.tooltipArr,
-      };
-      this.option.dataZoom[0].show = false;
-      this.myChart.setOption(this.option);
+      this.RainIntensityPerHourOptions.series = this.allData.rainIntensityPerHour.series;
+      this.RainIntensityPerHourOptions.xAxis.data = this.allData.rainIntensityPerHour.x;
+      //   this.option.yAxis.min = 0;
+      //   this.option.grid = {
+      //     left: "5%",
+      //     right: "7%",
+      //     bottom: "13%",
+      //     top: "25%",
+      //     containLabel: true,
+      //   };
+      //   this.option.legend = {
+      //     show: true,
+      //     x: "30",
+      //     y: "35",
+      //     icon: "stack",
+      //     itemWidth: 10,
+      //     itemHeight: 10,
+      //     textStyle: {
+      //       color: "rgba(255, 255, 255, 1)",
+      //     },
+      //     data: this.tooltipArr,
+      //   };
+      //   this.option.dataZoom = [
+      //     {
+      //       show: false,
+      //     },
+      //   ];
+      this.myChart.setOption(this.RainIntensityPerHourOptions);
     },
     getMarkLine(value, name, index) {
       let colorArr = ["rgba(0,244,255,1)", "#F6BA16", "red", "red", "red"];
@@ -469,17 +705,6 @@ export default {
           },
         },
         series: [],
-        dataZoom: [
-          {
-            //   type: "slider",
-            show: false,
-            //   xAxisIndex: [0],
-            //   left: "9%",
-            bottom: 20,
-            start: 0,
-            end: 100, //初始化滚动条
-          },
-        ],
       };
       // 基于准备好的dom，初始化this.$echarts实例
       this.myChart = this.$echarts.init(
@@ -517,21 +742,10 @@ export default {
   height: 503px;
   margin-top: 20px;
 }
-
-.RainfallPerHour_charts {
-  height: 380px;
-}
-.CumulativeRainfallDay_charts {
-  height: 450px;
-}
-.RainIntensityPerHour_charts {
-  height: 450px;
-}
 .charts {
   width: 540px;
-  overflow: hidden;
   //   height: 420px;
-  //   height: 460px;
+  height: 460px;
 }
 .panel-header {
   padding: 20px 0 0 22.5px;
