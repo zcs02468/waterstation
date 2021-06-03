@@ -54,18 +54,21 @@
           <el-carousel
             class="weather-carousel-box"
             direction="vertical"
-            :interval="5000"
+            :interval="50000"
             indicator-position="none"
           >
-            <el-carousel-item v-for="item in advisories" :key="item.id">
+            <el-carousel-item
+              v-for="(item, index) in advisories"
+              :key="`${index}_key`"
+            >
               <div class="weather-slider-box">
-                <div class="img-box">
-                  <img :src="item.image" alt="" />
+                <div class="img-box" v-for="ele in item" :key="ele.id">
+                  <img :src="ele.image" alt="" />
                 </div>
-                <div class="weather-slider-level" style="margin-left:21px">
+                <!-- <div class="weather-slider-level" style="margin-left:21px">
                   <span>{{ item.warningLevel }}</span>
                 </div>
-                <div class="weather-slider-info">{{ item.weather }}</div>
+                <div class="weather-slider-info">{{ item.weather }}</div> -->
               </div>
             </el-carousel-item>
           </el-carousel>
@@ -147,8 +150,17 @@ export default {
         this.weatherData[key].value = item.factorValue;
         this.weatherData[key].unit = item.factorUnit;
       });
-      this.advisories = advisories;
+      if (!advisories && advisories.length == 0) return;
+      let arr = this.filterData(advisories);
+      this.advisories = arr;
       this.advisories.splice();
+    },
+    filterData(dataArr, colomns = 4) {
+      let allArr = [];
+      for (var i = 0, len = dataArr.length; i < len; i += colomns) {
+        allArr.push([...dataArr.slice(i, i + colomns)]);
+      }
+      return allArr;
     },
   },
 
@@ -241,6 +253,7 @@ export default {
   display: flex;
   height: 100%;
   padding: 10px 0;
+  justify-content: space-around;
 }
 .weather-carousel-box {
   height: 100%;
@@ -251,7 +264,7 @@ export default {
 .weather-box {
   width: 470px;
   height: 80px;
-  border: 1px solid rgba(87, 189, 255, 0.56);
+  // border: 1px solid rgba(87, 189, 255, 0.56);
   padding: 0 10px;
   .img-box {
     width: 98.5px;
@@ -283,7 +296,7 @@ export default {
 .weather-box-info {
   width: 470px;
   height: 80px;
-  border: 1px solid rgba(87, 189, 255, 0.56);
+  // border: 1px solid rgba(87, 189, 255, 0.56);
   padding: 0 10px;
   text-align: center;
   line-height: 80px;

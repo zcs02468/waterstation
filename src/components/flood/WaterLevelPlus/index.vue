@@ -26,35 +26,40 @@
                 :textType="waterList[0].isOverproof"
                 :num="waterList[0].value"
               />
-              <div class="title">南水塔</div>
+              <!-- <div class="title">南水塔</div> -->
+              <div class="title">{{ waterList[0].name }}</div>
             </div>
             <div class="water-box">
               <Box
                 :textType="waterList[1].isOverproof"
                 :num="waterList[1].value"
               />
-              <div class="title">迎宾三路</div>
+              <!-- <div class="title">迎宾三路</div> -->
+              <div class="title">{{ waterList[1].name }}</div>
             </div>
             <div class="water-box">
               <Box
                 :textType="waterList[2].isOverproof"
                 :num="waterList[2].value"
               />
-              <div class="title">南调东侧</div>
+              <!-- <div class="title">南调东侧</div> -->
+              <div class="title">{{ waterList[2].name }}</div>
             </div>
             <div class="water-box">
               <Box
                 :textType="waterList[3].isOverproof"
                 :num="waterList[3].value"
               />
-              <div class="title">南调西侧</div>
+              <!-- <div class="title">南调西侧</div> -->
+              <div class="title">{{ waterList[3].name }}</div>
             </div>
             <div class="water-box">
               <Box
                 :textType="waterList[4].isOverproof"
                 :num="waterList[4].value"
               />
-              <div class="title">南北横泾</div>
+              <!-- <div class="title">南北横泾</div> -->
+              <div class="title">{{ waterList[4].name }}</div>
             </div>
           </div>
         </div>
@@ -80,35 +85,40 @@
                 :textType="waterList[5].isOverproof"
                 :num="waterList[5].value"
               />
-              <div class="title">东泵站</div>
+              <!-- <div class="title">东泵站</div> -->
+              <div class="title">{{ waterList[5].name }}</div>
             </div>
             <div class="water-box">
               <Box
                 :textType="waterList[6].isOverproof"
                 :num="waterList[6].value"
               />
-              <div class="title">北水塔</div>
+              <!-- <div class="title">北水塔</div> -->
+              <div class="title">{{ waterList[6].name }}</div>
             </div>
             <div class="water-box">
               <Box
                 :textType="waterList[7].isOverproof"
                 :num="waterList[7].value"
               />
-              <div class="title">北调东侧</div>
+              <!-- <div class="title">北调东侧</div> -->
+              <div class="title">{{ waterList[7].name }}</div>
             </div>
             <div class="water-box">
               <Box
                 :textType="waterList[8].isOverproof"
                 :num="waterList[8].value"
               />
-              <div class="title">北调西侧</div>
+              <!-- <div class="title">北调西侧</div> -->
+              <div class="title">{{ waterList[8].name }}</div>
             </div>
             <div class="water-box">
               <Box
                 :textType="waterList[9].isOverproof"
                 :num="waterList[9].value"
               />
-              <div class="title">张正浦</div>
+              <!-- <div class="title">张正浦</div> -->
+              <div class="title">{{ waterList[9].name }}</div>
             </div>
           </div>
         </div>
@@ -135,7 +145,8 @@
                 :num="waterList[10].value"
                 boxType="111111"
               />
-              <div class="title">友乐路泵站</div>
+              <div class="title">{{ waterList[10].name }}</div>
+              <!-- <div class="title">友乐路泵站</div> -->
             </div>
             <div class="water-box end-water-content-box">
               <Box
@@ -143,9 +154,26 @@
                 :num="waterList[11].value"
                 boxType="111111"
               />
-              <div class="title">
+              <div class="title">{{ waterList[11].name }}</div>
+              <!-- <div class="title">
                 外环西河
-              </div>
+              </div> -->
+            </div>
+            <div class="water-box end-water-content-box">
+              <Box
+                :textType="waterList[12].isOverproof"
+                :num="waterList[12].value"
+                boxType="111111"
+              />
+              <div class="title">{{ waterList[12].name }}</div>
+            </div>
+            <div class="water-box end-water-content-box">
+              <Box
+                :textType="waterList[13].isOverproof"
+                :num="waterList[13].value"
+                boxType="111111"
+              />
+              <div class="title">{{ waterList[13].name }}</div>
             </div>
           </div>
         </div>

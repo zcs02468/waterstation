@@ -164,6 +164,7 @@ export default {
             }
             // 编写自定义函数,创建标注
             let that = this;
+            const waterColor= ['','#3C94E5','#F6B910','#E3462E']
             function addMarker(point,index) {
                 let nowData = that.waterList[index];
                 let marker;
@@ -172,6 +173,21 @@ export default {
                 marker = new BMap.Marker(point,{
                     icon: myIcon
                 });
+                let waterValue = nowData.value
+                let len = String(waterValue).length
+                if( len <= 3 ) {
+                    var label = new BMap.Label(waterValue, {
+                        offset : new BMap.Size(5, -17)
+                    }); 
+                }else {
+                    var label = new BMap.Label(waterValue, {
+                        offset : new BMap.Size(0, -17)
+                    }); 
+                }
+                label.setStyle({
+                    background:'none',color:waterColor[Number(nowData.isOverproof)],border:'none'//只要对label样式进行设置就可达到在标注图标上显示数字的效果
+                });
+                marker.setLabel(label);//显示地理名称 a 
                 marker.setTitle(nowData.name)
                 that.waterBMap.addOverlay(marker);
                 marker.addEventListener("click",function() {
@@ -180,8 +196,10 @@ export default {
                     that.info.location = `名称：${eaData.name}`
                     that.info.name = `水位值：${eaData.value}`
 
-                    that.info.num = ""
-                    that.info.userName = ""
+                    that.info.num = eaData.drainability ? `排水能力：${eaData.drainability}` : ''
+                    that.info.userName = eaData.poolArea ? `水池面积：${eaData.poolArea}` : ''
+                    // that.info.num = ""
+                    // that.info.userName = ""
                     that.info.phone = "" 
                     that.isShowList = true;
                     that.isShowBtn = false;
@@ -222,20 +240,24 @@ export default {
                 //河道水位
                 if( nowData.isOverproof ) type = "water"
                 if( type == 'ea' ) {
-                    marker = new BMap.Marker(point);
-                    if( index >= 10 ) {
-                        var label = new BMap.Label(index+1, {
-                            offset : new BMap.Size(0, 4)
-                        }); 
-                    }else {
-                        var label = new BMap.Label(index+1, {
-                            offset : new BMap.Size(4, 4)
-                        }); 
-                    }
-                    label.setStyle({
-                        background:'none',color:'#fff',border:'none'//只要对label样式进行设置就可达到在标注图标上显示数字的效果
+                    // marker = new BMap.Marker(point);
+                    // if( index >= 10 ) {
+                    //     var label = new BMap.Label(index+1, {
+                    //         offset : new BMap.Size(0, 4)
+                    //     }); 
+                    // }else {
+                    //     var label = new BMap.Label(index+1, {
+                    //         offset : new BMap.Size(4, 4)
+                    //     }); 
+                    // }
+                    // label.setStyle({
+                    //     background:'none',color:'#fff',border:'none'//只要对label样式进行设置就可达到在标注图标上显示数字的效果
+                    // });
+                    // marker.setLabel(label);//显示地理名称 a 
+                    var myIcon = new BMap.Icon("/images/ea.png", new BMap.Size(30, 30));
+                    marker = new BMap.Marker(point,{
+                        icon: myIcon
                     });
-                    marker.setLabel(label);//显示地理名称 a 
                     marker.setTitle(nowData.armyPlace)
                 }else {
                     if( type == 'video' ) {
@@ -306,10 +328,13 @@ export default {
                     if( type == "water" ) {
                         that.info.location = `名称：${eaData.name}`
                         that.info.name = `水位值：${eaData.value}`
-
-                        that.info.num = ""
-                        that.info.userName = ""
+                        that.info.num = eaData.drainability ? `排水能力：${eaData.drainability}` : ''
+                        that.info.userName = eaData.poolArea ? `水池面积：${eaData.poolArea}` : ''
+                        // that.info.num = ""
+                        // that.info.userName = ""
                         that.info.phone = "" 
+
+
                         that.isShowList = true;
                         that.isShowBtn = false;
                     }
@@ -358,20 +383,25 @@ export default {
                     });
                     marker.setTitle(nowData.deviceName)
                 }else {
-                    marker = new BMap.Marker(point);
-                    if( index >= 10 ) {
-                        var label = new BMap.Label(index+1, {
-                            offset : new BMap.Size(0, 4)
-                        });
-                    }else {
-                        var label = new BMap.Label(index+1, {
-                            offset : new BMap.Size(4, 4)
-                        });
-                    }
-                    label.setStyle({
-                        background:'none',color:'#fff',border:'none'//只要对label样式进行设置就可达到在标注图标上显示数字的效果
+                    // marker = new BMap.Marker(point);
+                    // if( index >= 10 ) {
+                    //     var label = new BMap.Label(index+1, {
+                    //         offset : new BMap.Size(0, 4)
+                    //     });
+                    // }else {
+                    //     var label = new BMap.Label(index+1, {
+                    //         offset : new BMap.Size(4, 4)
+                    //     });
+                    // }
+                    // label.setStyle({
+                    //     background:'none',color:'#fff',border:'none'//只要对label样式进行设置就可达到在标注图标上显示数字的效果
+                    // });
+                    // marker.setLabel(label);//显示地理名称 a 
+                    var myIcon = new BMap.Icon("/images/em.png", new BMap.Size(30, 30));
+                    marker = new BMap.Marker(point,{
+                        icon: myIcon
                     });
-                    marker.setLabel(label);//显示地理名称 a 
+                    marker.setTitle(nowData.storagePlace)
                 }
                 that.emBMap.addOverlay(marker);
                 marker.addEventListener("click",function() {
@@ -494,7 +524,8 @@ export default {
                 // let emList = [...data.emList,...list.list];
                 this.eaList = eaList;
                 this.emList = emList;
-                this.waterList = riverCourseLevelData
+                this.waterList = riverCourseLevelData.filter(item => item.location == 1 || item.location == 3)
+                this.waterList.splice()
                 this.createEaMap();
                 this.createEmMap();
                 this.createWaterMap()

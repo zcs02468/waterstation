@@ -1,18 +1,22 @@
 <!--  -->
 <template>
-  <div class="panel left-container-angle">
-    <div class="panel-header">
+  <div class="panel left-container-angle rainfall-box">
+    <div class="panel-header rainfall-box_header">
       <div class="header-box">
         <Title class="title" title="雨量" />
         <div class="select-box">
           <ul>
             <li @click="liClick('CumulativeRainfallDay')">
               <span>日累计雨量</span>
-              <b :class="selectType == 'CumulativeRainfallDay' ? 'select' : ''"></b>
+              <b
+                :class="selectType == 'CumulativeRainfallDay' ? 'select' : ''"
+              ></b>
             </li>
             <li @click="liClick('RainIntensityPerHour')">
               <span>实际雨量</span>
-              <b :class="selectType == 'RainIntensityPerHour' ? 'select' : ''"></b>
+              <b
+                :class="selectType == 'RainIntensityPerHour' ? 'select' : ''"
+              ></b>
             </li>
             <li @click="liClick('RainfallPerHour')">
               <span>小时雨量</span>
@@ -23,7 +27,10 @@
       </div>
       <ul class="tooltip" v-if="selectType == 'RainfallPerHour'">
         <li v-for="(item, index) in tooltipArr" :key="`Rainfall${index}`">
-          <span class="iconfont iconquxian" :style="{ color: `${color[index]}` }"></span>
+          <span
+            class="iconfont iconquxian"
+            :style="{ color: `${color[index]}` }"
+          ></span>
           <span class="name">{{ item }}</span>
         </li>
       </ul>
@@ -56,7 +63,11 @@
     </div>
     <div class="warp-container">
       <!-- <div class="back"></div> -->
-      <div class="charts" :class="`${selectType}_charts`" id="chart_Rainfall"></div>
+      <div
+        class="charts"
+        :class="`${selectType}_charts`"
+        id="chart_Rainfall"
+      ></div>
     </div>
   </div>
 </template>
@@ -66,7 +77,15 @@ import Title from "../../common/Title";
 import comMinxins from "../../common/comMinxins";
 import { getRainfall } from "../../../axios";
 import { mapState } from "vuex";
-const color = ["#5C87ED", "#6FCCE6", "#F6BA16", "#E8764A", "#9270CA", "#DA4545", "#B2E76A"];
+const color = [
+  "#5C87ED",
+  "#6FCCE6",
+  "#F6BA16",
+  "#E8764A",
+  "#9270CA",
+  "#DA4545",
+  "#B2E76A",
+];
 const color2 = [
   {
     line: "rgba(91, 143, 249, 1)",
@@ -100,7 +119,14 @@ export default {
     return {
       color: color,
       color2: color2,
-      tooltipArr: ["北调节泵站雨量", "南调节泵站雨量", "北雨污水泵站雨量", "南雨污水泵站雨量", "北水塔河道雨量", "南水塔河道雨量"],
+      tooltipArr: [
+        "北调节泵站雨量",
+        "南调节泵站雨量",
+        "北雨污水泵站雨量",
+        "南雨污水泵站雨量",
+        "北水塔河道雨量",
+        "南水塔河道雨量",
+      ],
       myChart: null,
       allData: {
         //小时雨量
@@ -113,7 +139,7 @@ export default {
         heavyRainOnceInThreeYears: 0, //示例：49（三年一遇）
         heavyRainOnceInFiveYears: 0, //示例：56（五年一遇）
       },
-      selectType: "RainfallPerHour",
+      selectType: "CumulativeRainfallDay",
     };
   },
 
@@ -130,12 +156,23 @@ export default {
     liClick(type) {
       this.selectType = type;
       this[`show${type}`]();
-      let h = this.selectType == "RainfallPerHour" ? 380 : 450;
-      this.myChart.getDom().style.height = h + "px";
-      this.myChart.resize();
+      this.updateH();
+      // let h = this.selectType == "RainfallPerHour" ? 380 : 450;
+      // this.updateH();
+      // this.myChart.getDom().style.height = h + "px";
+      // this.myChart.resize();
     },
     updateData() {
       this.getData();
+    },
+    updateH() {
+      setTimeout(() => {
+        let h =
+          document.querySelector(".rainfall-box").offsetHeight -
+          document.querySelector(".rainfall-box_header").offsetHeight;
+        this.myChart.getDom().style.height = h + "px";
+        this.myChart.resize();
+      }, 500);
     },
     async getData() {
       let [err, res] = await getRainfall();
@@ -148,21 +185,32 @@ export default {
         heavyRainOnceInFiveYears,
         heavyRainOnceInOneYears,
       } = res.data;
-      this.setRainfallPerHour(rainfallPerHour, heavyRainOnceInThreeYears, heavyRainOnceInFiveYears, heavyRainOnceInOneYears);
+      this.setRainfallPerHour(
+        rainfallPerHour,
+        heavyRainOnceInThreeYears,
+        heavyRainOnceInFiveYears,
+        heavyRainOnceInOneYears
+      );
       this.setCumulativeRainfallDay(cumulativeRainfallDay);
       this.setRainIntensityPerHour(rainIntensityPerHour);
 
       this[`show${this.selectType}`]();
-      let h = this.selectType == "RainfallPerHour" ? 380 : 460;
-      this.myChart.getDom().style.height = h + "px";
-      this.myChart.resize();
+      // let h = this.selectType == "RainfallPerHour" ? 380 : 450;
+      this.updateH();
+      // this.myChart.getDom().style.height = h + "px";
+      // this.myChart.resize();
     },
     //每小时雨强
     //当日累计雨量
     //小时雨量
 
     //计算初始 小时雨量
-    setRainfallPerHour(rainfallPerHour, heavyRainOnceInThreeYears, heavyRainOnceInFiveYears, heavyRainOnceInOneYears) {
+    setRainfallPerHour(
+      rainfallPerHour,
+      heavyRainOnceInThreeYears,
+      heavyRainOnceInFiveYears,
+      heavyRainOnceInOneYears
+    ) {
       let xAxisData = [];
       let yAxisData = [[], [], [], [], [], []];
       let standardArr = [];
@@ -175,7 +223,12 @@ export default {
         yAxisData[3].push(item.southSewageLevel);
         yAxisData[4].push(item.southSewageLevel);
         yAxisData[5].push(item.southSewageLevel);
-        standardArr.push(item.northLevel, item.southLevel, item.northSewageLevel, item.southSewageLevel);
+        standardArr.push(
+          item.northLevel,
+          item.southLevel,
+          item.northSewageLevel,
+          item.southSewageLevel
+        );
       });
       const seriesData = [
         this.getLineData({ arr: yAxisData[0], index: 0 }),
@@ -388,7 +441,7 @@ export default {
       this.option = {
         color: this.color,
         tooltip: {
-          // trigger: "axis",
+          trigger: "axis",
         },
         grid: {},
         xAxis: {
@@ -422,11 +475,11 @@ export default {
           axisTick: {
             show: false,
           },
-          //   splitLine: {
-          //     lineStyle: {
-          //       color: "rgba(245, 245, 245, 0.33)",
-          //     },
-          //   },
+          splitLine: {
+            lineStyle: {
+              color: "rgba(245, 245, 245, 0.2)",
+            },
+          },
           axisLabel: {
             show: true,
             textStyle: {
@@ -448,7 +501,9 @@ export default {
         ],
       };
       // 基于准备好的dom，初始化this.$echarts实例
-      this.myChart = this.$echarts.init(document.getElementById("chart_Rainfall"));
+      this.myChart = this.$echarts.init(
+        document.getElementById("chart_Rainfall")
+      );
       // 绘制图表
       this.myChart.setOption(this.option);
       window.addEventListener("resize", () => {
@@ -498,7 +553,7 @@ export default {
   //   height: 460px;
 }
 .panel-header {
-  padding: 20px 0 0 22.5px;
+  padding: 20px 22.5px 0 22.5px;
 }
 .tooltip {
   display: flex;
