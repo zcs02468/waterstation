@@ -159,7 +159,7 @@
                 外环西河
               </div> -->
             </div>
-            <div class="water-box end-water-content-box">
+            <!-- <div class="water-box end-water-content-box">
               <Box
                 :textType="waterList[12].isOverproof"
                 :num="waterList[12].value"
@@ -174,7 +174,7 @@
                 boxType="111111"
               />
               <div class="title">{{ waterList[13].name }}</div>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>

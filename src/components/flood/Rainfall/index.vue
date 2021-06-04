@@ -13,7 +13,7 @@
               ></b>
             </li>
             <li @click="liClick('RainIntensityPerHour')">
-              <span>实际雨量</span>
+              <span>小时雨强</span>
               <b
                 :class="selectType == 'RainIntensityPerHour' ? 'select' : ''"
               ></b>

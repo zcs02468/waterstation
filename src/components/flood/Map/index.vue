@@ -495,6 +495,9 @@ export default {
             if( this.emBMap ) {
                 this.emBMap.clearOverlays();
             }
+            if( this.waterBMap ) {
+                this.waterBMap.clearOverlays();
+            }
             // eaList	应急队伍对象
             // emList	应急物资对象
             if( this.$route.name == "Normal" ) {
