@@ -119,5 +119,8 @@ export const getFloodControlAndWaterLevel = async()=> await get({url: baseUrl + 
 //排水泵运行情况
 export const getFloodControlAndDrainage = async()=> await get({url: baseUrl + '/smartEnergy/floodControlAndDrainage'});
 
+//西区泵站排水运行情况
+export const getWestPumpingStation = async()=> await get({url: baseUrl + '/smartEnergy/westPumpingStation'});
+
 //根据应急队伍ID获取应急队伍详细信息
 export const getEmergencyPersonnelByTeamId = async(teamId)=> await get({url: baseUrl + `/smartEnergy/getEmergencyPersonnelByTeamId?teamId=${teamId}`});
