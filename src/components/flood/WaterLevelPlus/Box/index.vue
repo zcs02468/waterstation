@@ -23,7 +23,7 @@ export default {
       default: "default",
     },
     textType: {
-      type: [String,Number],
+      type: [String, Number],
       default: "1",
     },
     num: {
@@ -33,7 +33,7 @@ export default {
   },
   data() {
     return {
-      classArr: ["", "default", "yellow", "orange"],
+      classArr: ["", "default", "yellow", "orange", "gray"],
     };
   },
 };
@@ -130,6 +130,14 @@ export default {
     background: linear-gradient(281deg, #9a1d04 0%, #e35f44 100%);
     .inside-top {
       background: linear-gradient(281deg, #e35f44 0%, #9a1d04 100%);
+    }
+  }
+}
+.water-gray {
+  .right-inside-cylinder {
+    background: linear-gradient(281deg, #747474 0%, #c8c8c8 100%);
+    .inside-top {
+      background: linear-gradient(281deg, #bababa 0%, #616161 100%);
     }
   }
 }

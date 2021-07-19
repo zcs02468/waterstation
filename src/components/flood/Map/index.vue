@@ -164,7 +164,7 @@ export default {
             }
             // 编写自定义函数,创建标注
             let that = this;
-            const waterColor= ['','#3C94E5','#F6B910','#E3462E']
+            const waterColor= ['','#3C94E5','#F6B910','#E3462E',"#C8C8C8"]
             function addMarker(point,index) {
                 let nowData = that.waterList[index];
                 let marker;

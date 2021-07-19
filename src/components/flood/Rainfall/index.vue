@@ -34,6 +34,17 @@
           <span class="name">{{ item }}</span>
         </li>
       </ul>
+      <div class="date-picker-box">
+        日期：
+        <el-date-picker
+          v-model="dateValue"
+          type="date"
+          placeholder="选择日期"
+          @change="dateChange"
+          format="yyyy-MM-dd"
+        >
+        </el-date-picker>
+      </div>
       <div class="markline-box" v-if="selectType == 'RainfallPerHour'">
         <div class="markline-item">
           <div class="line-box">
@@ -77,6 +88,7 @@ import Title from "../../common/Title";
 import comMinxins from "../../common/comMinxins";
 import { getRainfall } from "../../../axios";
 import { mapState } from "vuex";
+import dayjs from "dayjs";
 const color = [
   "#5C87ED",
   "#6FCCE6",
@@ -140,6 +152,8 @@ export default {
         heavyRainOnceInFiveYears: 0, //示例：56（五年一遇）
       },
       selectType: "CumulativeRainfallDay",
+      dateValue: "",
+      paramsValue: "",
     };
   },
 
@@ -151,8 +165,15 @@ export default {
     this.drawLine();
     this.getData();
   },
-
+  watch: {
+    paramsValue() {
+      this.getData()
+    },
+  },
   methods: {
+    dateChange() {
+      this.paramsValue = dayjs(this.dateValue).format("YYYY-MM-DD");
+    },
     liClick(type) {
       this.selectType = type;
       this[`show${type}`]();
@@ -175,7 +196,12 @@ export default {
       }, 500);
     },
     async getData() {
-      let [err, res] = await getRainfall();
+      let params = this.paramsValue
+        ? {
+            selectDate: this.paramsValue
+          }
+        : {};
+      let [err, res] = await getRainfall(params);
       if (err) return;
       const {
         rainfallPerHour,
@@ -663,6 +689,38 @@ export default {
         z-index: -1;
         transform: skewX(-10deg);
       }
+    }
+  }
+}
+
+//日期选择组件
+.date-picker-box {
+  position: absolute;
+  right: 24px;
+  z-index: 2;
+  top: 106px;
+  font-size: 10px;
+  /deep/ .el-date-editor {
+    width: 125px;
+  }
+  /deep/ input {
+    border: 1px solid #478df7;
+    color: #478df7;
+    height: 24px;
+    line-height: 24px;
+    background: transparent;
+    font-size: 10px;
+  }
+  /deep/ .el-input__prefix {
+    i {
+      line-height: 24px;
+      font-size: 10px;
+      color: #478df7;
+    }
+  }
+  /deep/ .el-input__suffix {
+    i {
+      line-height: 24px;
     }
   }
 }
