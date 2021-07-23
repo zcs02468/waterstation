@@ -5,7 +5,7 @@
                 <Header :title="title"/>
                 <div class="info">
                     <Time />
-                    <Phone :phoneArr="['22341515', '22344388']" />
+                    <Phone :phoneArr="['62333', '69831']" />
                 </div>
             </div>
 

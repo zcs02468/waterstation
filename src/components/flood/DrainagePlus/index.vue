@@ -6,7 +6,7 @@
       <div class="select-box">
         <ul>
           <li @click="liClick('default')">
-            <span>南北泵站</span>
+            <span>南北调节水池</span>
             <b :class="selectType == 'default' ? 'select' : ''"></b>
           </li>
           <li @click="liClick('west')">
@@ -251,7 +251,7 @@ export default {
 }
 .select-box {
   height: 28px;
-  width: 200px;
+  width: 240px;
   ul {
     width: 100%;
     display: flex;
@@ -264,11 +264,11 @@ export default {
       height: 28px;
       line-height: 28px;
       position: relative;
-      width: 100px;
+      width: 120px;
       span {
         display: inline-block;
         position: relative;
-        width: 80px;
+        width: 100px;
         color: #fff;
         cursor: pointer;
       }
