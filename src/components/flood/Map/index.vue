@@ -227,61 +227,48 @@ export default {
             let that = this;
             function addMarker(point,index) {
                 let nowData = that.eaList[index];
+                let myType = nowData.myType 
                 let marker;
-                let type = "video"
-                //视频列表
-                if( nowData.deviceSerial ) type = "video"
-                //应急队伍
-                if( nowData.armyPlace && nowData.phone ) type = "ea"
-                //手环
-                if( nowData.wristbandName ) type = "wristband"
-                //执法仪
-                if( nowData.singlePawnName ) type = "singlePawn"
-                //河道水位
-                if( nowData.isOverproof ) type = "water"
-                if( type == 'ea' ) {
-                    // marker = new BMap.Marker(point);
-                    // if( index >= 10 ) {
-                    //     var label = new BMap.Label(index+1, {
-                    //         offset : new BMap.Size(0, 4)
-                    //     }); 
-                    // }else {
-                    //     var label = new BMap.Label(index+1, {
-                    //         offset : new BMap.Size(4, 4)
-                    //     }); 
-                    // }
-                    // label.setStyle({
-                    //     background:'none',color:'#fff',border:'none'//只要对label样式进行设置就可达到在标注图标上显示数字的效果
-                    // });
-                    // marker.setLabel(label);//显示地理名称 a 
+                // let type = "video"
+                // //视频列表
+                // if( nowData.deviceSerial && nowData.deviceType ) type = "video"
+                // //应急队伍
+                // if( nowData.armyPlace && nowData.phone ) type = "ea"
+                // //手环
+                // if( nowData.wristbandName ) type = "wristband"
+                // //执法仪
+                // if( nowData.singlePawnName ) type = "singlePawn"
+                // //河道水位
+                // if( nowData.isOverproof ) type = "water"
+                if( myType == 'ea' ) {
                     var myIcon = new BMap.Icon("/images/ea.png", new BMap.Size(30, 30));
                     marker = new BMap.Marker(point,{
                         icon: myIcon
                     });
                     marker.setTitle(nowData.armyPlace)
                 }else {
-                    if( type == 'video' ) {
+                    if( myType == 'video' ) {
                         var myIcon = new BMap.Icon("/images/camera.png", new BMap.Size(30, 30));
                         marker = new BMap.Marker(point,{
                             icon: myIcon
                         });
                         marker.setTitle(nowData.deviceName)
                     }
-                    if( type == 'wristband' ) {
+                    if( myType == 'wristband' ) {
                         var myIcon = new BMap.Icon("/images/wristband.png", new BMap.Size(30, 30));
                         marker = new BMap.Marker(point,{
                             icon: myIcon
                         });
                         marker.setTitle(nowData.wristbandName)
                     }
-                    if( type == 'singlePawn' ) {
+                    if( myType == 'singlePawn' ) {
                         var myIcon = new BMap.Icon("/images/lawEnforcement.png", new BMap.Size(30, 30));
                         marker = new BMap.Marker(point,{
                             icon: myIcon
                         });
                         marker.setTitle(nowData.singlePawnName)
                     }
-                    if( type == 'water' ) {
+                    if( myType == 'water' ) {
                         let url = `/images/status${nowData.isOverproof}.png`
                         var myIcon = new BMap.Icon(url, new BMap.Size(30, 30));
                         marker = new BMap.Marker(point,{
@@ -293,11 +280,11 @@ export default {
                 marker.addEventListener("click",function() {
                     let eaData = that.eaList[index];
                     //视频列表
-                    if( type == "video" ) {
+                    if( myType == "video" ) {
                         that.getDeviceUrl(eaData.deviceSerial);
                     }
                     //应急队伍
-                    if( type == "ea" ) {
+                    if( myType == "ea" ) {
                         that.info.location = `队伍驻点：${eaData.armyPlace}`   //队伍驻点：
                         that.info.name = `队伍名称：${eaData.armyName}`      //队伍名称：XXXXX
                         that.info.num = `人数：${eaData.headcount || 0}`        //人数：XXXXX
@@ -308,7 +295,7 @@ export default {
                         that.info.key = eaData.id
                     }
                     //手环
-                    if( type == "wristband" ) {
+                    if( myType == "wristband" ) {
                         that.info.location = `名称：${eaData.wristbandName}`
                         that.info.name = `设备描述：${eaData.deviceInfo}`
 
@@ -319,38 +306,23 @@ export default {
                         that.isShowBtn = false;
                     }
                     //执法仪
-                    if( type == "singlePawn" ) {
+                    if( myType == "singlePawn" ) {
                         //待定打开 vlc
                         that.copyToClipboard(eaData.videoUrl)
                         window.location.href = "vlc://"
                     }
                     //河道水位
-                    if( type == "water" ) {
+                    if( myType == "water" ) {
                         that.info.location = `名称：${eaData.name}`
                         that.info.name = `水位值：${eaData.value}`
                         that.info.num = eaData.drainability ? `排水能力：${eaData.drainability}` : ''
                         that.info.userName = eaData.poolArea ? `水池面积：${eaData.poolArea}` : ''
                         // that.info.num = ""
                         // that.info.userName = ""
-                        that.info.phone = "" 
-
-
+                        that.info.phone = ""
                         that.isShowList = true;
                         that.isShowBtn = false;
                     }
-
-                    // let eaList = that.eaList[index];
-                    // if( eaList.deviceSerial ) {
-                    //     that.getDeviceUrl(eaList.deviceSerial);
-                    // }else {
-                    //     that.info.location = `队伍驻点：${eaList.armyPlace}`   //队伍驻点：
-                    //     that.info.name = `队伍名称：${eaList.armyName}`      //队伍名称：XXXXX
-                    //     that.info.num = `人数：${eaList.headcount || 0}`        //人数：XXXXX
-                    //     that.info.userName = `现场负责人：${eaList.chargeLeadName}`       //现场负责人：13555555555
-                    //     that.info.phone = `联系电话：${eaList.phone}`       //联系电话：13555555555
-                    //     that.isShowList = true;
-                    //     that.isShowBtn = false;
-                    // }
                 });
             }
             this.eaList.forEach( (item,index)=> {
@@ -507,6 +479,8 @@ export default {
                 let eaList = [...list.list];
                 let emList = [...list.list];
                 
+                eaList.forEach(item => item.myType = 'ea')
+                emList.forEach(item => item.myType = 'em')
                 this.eaList = eaList;
                 this.emList = emList;
                 this.createEaMap();
@@ -514,6 +488,13 @@ export default {
             }else {
                 this.isShowTop = true;
                 const { emergencyInfoData,deviceListData,wristbandListData,singlePawnData,riverCourseLevelData } = await this.getEaAllData()
+                emergencyInfoData.eaList.forEach(item => item.myType = 'ea')
+                emergencyInfoData.emList.forEach(item => item.myType = 'em')
+                deviceListData.forEach(item => item.myType = 'video')
+                wristbandListData.forEach(item => item.myType = 'wristband')
+                singlePawnData.forEach(item => item.myType = 'singlePawn')
+                riverCourseLevelData.forEach(item => item.myType = 'water')
+
                 let eaList = [...emergencyInfoData.eaList,...deviceListData,...wristbandListData,...singlePawnData];
                 let emList = [...emergencyInfoData.emList,...deviceListData];
                 // this.isShowTop = true;
