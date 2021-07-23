@@ -477,14 +477,14 @@ export default {
                 this.isShowTop = false;
                 let list = await this.getDeviceList();
                 let eaList = [...list.list];
-                let emList = [...list.list];
+                // let emList = [...list.list];
                 
-                eaList.forEach(item => item.myType = 'ea')
-                emList.forEach(item => item.myType = 'em')
+                eaList.forEach(item => item.myType = 'video')
+                // emList.forEach(item => item.myType = 'video')
                 this.eaList = eaList;
-                this.emList = emList;
+                // this.emList = emList;
                 this.createEaMap();
-                this.createEmMap();
+                // this.createEmMap();
             }else {
                 this.isShowTop = true;
                 const { emergencyInfoData,deviceListData,wristbandListData,singlePawnData,riverCourseLevelData } = await this.getEaAllData()
