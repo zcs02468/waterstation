@@ -8,15 +8,11 @@
           <ul>
             <li @click="liClick('CumulativeRainfallDay')">
               <span>日累计雨量</span>
-              <b
-                :class="selectType == 'CumulativeRainfallDay' ? 'select' : ''"
-              ></b>
+              <b :class="selectType == 'CumulativeRainfallDay' ? 'select' : ''"></b>
             </li>
             <li @click="liClick('RainIntensityPerHour')">
               <span>小时雨强</span>
-              <b
-                :class="selectType == 'RainIntensityPerHour' ? 'select' : ''"
-              ></b>
+              <b :class="selectType == 'RainIntensityPerHour' ? 'select' : ''"></b>
             </li>
             <li @click="liClick('RainfallPerHour')">
               <span>小时雨量</span>
@@ -27,23 +23,13 @@
       </div>
       <ul class="tooltip" v-if="selectType == 'RainfallPerHour'">
         <li v-for="(item, index) in tooltipArr" :key="`Rainfall${index}`">
-          <span
-            class="iconfont iconquxian"
-            :style="{ color: `${color[index]}` }"
-          ></span>
+          <span class="iconfont iconquxian" :style="{ color: `${color[index]}` }"></span>
           <span class="name">{{ item }}</span>
         </li>
       </ul>
-      <div class="date-picker-box">
+      <div class="date-picker-box" v-if="selectType == 'CumulativeRainfallDay'">
         日期：
-        <el-date-picker
-          v-model="dateValue"
-          type="date"
-          placeholder="选择日期"
-          @change="dateChange"
-          format="yyyy-MM-dd"
-        >
-        </el-date-picker>
+        <el-date-picker v-model="dateValue" type="date" placeholder="选择日期" @change="dateChange" format="yyyy-MM-dd"> </el-date-picker>
       </div>
       <div class="markline-box" v-if="selectType == 'RainfallPerHour'">
         <div class="markline-item">
@@ -74,11 +60,7 @@
     </div>
     <div class="warp-container">
       <!-- <div class="back"></div> -->
-      <div
-        class="charts"
-        :class="`${selectType}_charts`"
-        id="chart_Rainfall"
-      ></div>
+      <div class="charts" :class="`${selectType}_charts`" id="chart_Rainfall"></div>
     </div>
   </div>
 </template>
@@ -89,15 +71,7 @@ import comMinxins from "../../common/comMinxins";
 import { getRainfall } from "../../../axios";
 import { mapState } from "vuex";
 import dayjs from "dayjs";
-const color = [
-  "#5C87ED",
-  "#6FCCE6",
-  "#F6BA16",
-  "#E8764A",
-  "#9270CA",
-  "#DA4545",
-  "#B2E76A",
-];
+const color = ["#5C87ED", "#6FCCE6", "#F6BA16", "#E8764A", "#9270CA", "#DA4545", "#B2E76A"];
 const color2 = [
   {
     line: "rgba(91, 143, 249, 1)",
@@ -131,14 +105,7 @@ export default {
     return {
       color: color,
       color2: color2,
-      tooltipArr: [
-        "北调节泵站雨量",
-        "南调节泵站雨量",
-        "北雨污水泵站雨量",
-        "南雨污水泵站雨量",
-        "北水塔河道雨量",
-        "南水塔河道雨量",
-      ],
+      tooltipArr: ["北调节泵站雨量", "南调节泵站雨量", "北雨污水泵站雨量", "南雨污水泵站雨量", "北水塔河道雨量", "南水塔河道雨量"],
       myChart: null,
       allData: {
         //小时雨量
@@ -154,6 +121,7 @@ export default {
       selectType: "CumulativeRainfallDay",
       dateValue: "",
       paramsValue: "",
+      isShowDate: true,
     };
   },
 
@@ -167,7 +135,7 @@ export default {
   },
   watch: {
     paramsValue() {
-      this.getData()
+      this.getData();
     },
   },
   methods: {
@@ -188,9 +156,7 @@ export default {
     },
     updateH() {
       setTimeout(() => {
-        let h =
-          document.querySelector(".rainfall-box").offsetHeight -
-          document.querySelector(".rainfall-box_header").offsetHeight;
+        let h = document.querySelector(".rainfall-box").offsetHeight - document.querySelector(".rainfall-box_header").offsetHeight;
         this.myChart.getDom().style.height = h + "px";
         this.myChart.resize();
       }, 500);
@@ -198,7 +164,7 @@ export default {
     async getData() {
       let params = this.paramsValue
         ? {
-            selectDate: this.paramsValue
+            selectDate: this.paramsValue,
           }
         : {};
       let [err, res] = await getRainfall(params);
@@ -211,12 +177,7 @@ export default {
         heavyRainOnceInFiveYears,
         heavyRainOnceInOneYears,
       } = res.data;
-      this.setRainfallPerHour(
-        rainfallPerHour,
-        heavyRainOnceInThreeYears,
-        heavyRainOnceInFiveYears,
-        heavyRainOnceInOneYears
-      );
+      this.setRainfallPerHour(rainfallPerHour, heavyRainOnceInThreeYears, heavyRainOnceInFiveYears, heavyRainOnceInOneYears);
       this.setCumulativeRainfallDay(cumulativeRainfallDay);
       this.setRainIntensityPerHour(rainIntensityPerHour);
 
@@ -231,12 +192,7 @@ export default {
     //小时雨量
 
     //计算初始 小时雨量
-    setRainfallPerHour(
-      rainfallPerHour,
-      heavyRainOnceInThreeYears,
-      heavyRainOnceInFiveYears,
-      heavyRainOnceInOneYears
-    ) {
+    setRainfallPerHour(rainfallPerHour, heavyRainOnceInThreeYears, heavyRainOnceInFiveYears, heavyRainOnceInOneYears) {
       let xAxisData = [];
       let yAxisData = [[], [], [], [], [], []];
       let standardArr = [];
@@ -249,12 +205,7 @@ export default {
         yAxisData[3].push(item.southSewageLevel);
         yAxisData[4].push(item.southSewageLevel);
         yAxisData[5].push(item.southSewageLevel);
-        standardArr.push(
-          item.northLevel,
-          item.southLevel,
-          item.northSewageLevel,
-          item.southSewageLevel
-        );
+        standardArr.push(item.northLevel, item.southLevel, item.northSewageLevel, item.southSewageLevel);
       });
       const seriesData = [
         this.getLineData({ arr: yAxisData[0], index: 0 }),
@@ -527,9 +478,7 @@ export default {
         ],
       };
       // 基于准备好的dom，初始化this.$echarts实例
-      this.myChart = this.$echarts.init(
-        document.getElementById("chart_Rainfall")
-      );
+      this.myChart = this.$echarts.init(document.getElementById("chart_Rainfall"));
       // 绘制图表
       this.myChart.setOption(this.option);
       window.addEventListener("resize", () => {

@@ -14,15 +14,9 @@
         <div class="block" v-for="item in list" :key="item.type">
           <div class="left">{{ item.type }}<br />{{ item.unit }}</div>
           <div class="right" :class="[item.standardValue ? '' : 'center']">
-            <div class="line">
-              标准：{{ item.standardJudge }}{{ item.standardValue }}
-            </div>
-            <div class="line" :class="{ select: !item.isQualified1 }">
-              1#：{{ item.currentValue1 }}
-            </div>
-            <div class="line" :class="{ select: !item.isQualified2 }">
-              2#：{{ item.currentValue2 }}
-            </div>
+            <div class="line">标准：{{ item.standardJudge }}{{ item.standardValue }}</div>
+            <div class="line" :class="{ select: !Number(item.isQualified1) }">1#：{{ item.currentValue1 }}</div>
+            <div class="line" :class="{ select: !Number(item.isQualified2) }">2#：{{ item.currentValue2 }}</div>
           </div>
         </div>
       </div>
@@ -88,7 +82,7 @@ export default {
       // });
       // this.list = arr;
       // this.list.splice();
-    }
+    },
   },
 
   computed: {},
