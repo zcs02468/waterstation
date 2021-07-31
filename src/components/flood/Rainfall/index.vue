@@ -122,6 +122,7 @@ export default {
       dateValue: "",
       paramsValue: "",
       isShowDate: true,
+      option: null,
     };
   },
 
@@ -146,10 +147,6 @@ export default {
       this.selectType = type;
       this[`show${type}`]();
       this.updateH();
-      // let h = this.selectType == "RainfallPerHour" ? 380 : 450;
-      // this.updateH();
-      // this.myChart.getDom().style.height = h + "px";
-      // this.myChart.resize();
     },
     updateData() {
       this.getData();
@@ -182,10 +179,7 @@ export default {
       this.setRainIntensityPerHour(rainIntensityPerHour);
 
       this[`show${this.selectType}`]();
-      // let h = this.selectType == "RainfallPerHour" ? 380 : 450;
       this.updateH();
-      // this.myChart.getDom().style.height = h + "px";
-      // this.myChart.resize();
     },
     //每小时雨强
     //当日累计雨量
@@ -227,7 +221,6 @@ export default {
           this.$store.commit("setAutoUrlNum");
         }
       }
-
       this.allData.rainfallPerHour.x = xAxisData;
       this.allData.rainfallPerHour.series = seriesData;
     },
@@ -281,13 +274,16 @@ export default {
       ];
 
       this.allData.rainIntensityPerHour.x = xAxisData;
+      this.allData.rainIntensityPerHour.series = [];
       this.allData.rainIntensityPerHour.series = seriesData;
     },
 
     showRainfallPerHour() {
+      this.option.series = [];
+      this.option.xAxis.data = [];
       this.option.series = this.allData.rainfallPerHour.series;
       this.option.xAxis.data = this.allData.rainfallPerHour.x;
-      this.option.yAxis.min = 70;
+      this.option.yAxis.min = 0;
       this.option.grid = {
         left: "5%",
         right: "7%",
@@ -297,9 +293,11 @@ export default {
       };
       this.option.dataZoom[0].show = false;
       this.option.legend && (this.option.legend.show = false);
-      this.myChart.setOption(this.option);
+      this.myChart.setOption(this.option, true);
     },
     showCumulativeRainfallDay() {
+      this.option.series = [];
+      this.option.xAxis.data = [];
       this.option.series = this.allData.cumulativeRainfallDay.series;
       this.option.xAxis.data = this.allData.cumulativeRainfallDay.x;
       this.option.yAxis.min = 0;
@@ -323,9 +321,11 @@ export default {
         data: this.tooltipArr,
       };
       this.option.dataZoom[0].show = true;
-      this.myChart.setOption(this.option);
+      this.myChart.setOption(this.option, true);
     },
     showRainIntensityPerHour() {
+      this.option.series = [];
+      this.option.xAxis.data = [];
       this.option.series = this.allData.rainIntensityPerHour.series;
       this.option.xAxis.data = this.allData.rainIntensityPerHour.x;
       this.option.yAxis.min = 0;
@@ -349,7 +349,7 @@ export default {
         data: this.tooltipArr,
       };
       this.option.dataZoom[0].show = false;
-      this.myChart.setOption(this.option);
+      this.myChart.setOption(this.option, true);
     },
     getMarkLine(value, name, index) {
       let colorArr = ["rgba(0,244,255,1)", "#F6BA16", "red", "red", "red"];
